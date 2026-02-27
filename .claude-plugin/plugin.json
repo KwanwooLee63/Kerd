@@ -1,0 +1,12 @@
+{
+  "name": "kerd",
+  "description": "Opinionated workflow toolkit — session discipline, machine handoff, knowledge management, project audits, and human writing voice",
+  "version": "0.1.0",
+  "author": {
+    "name": "Anthony Maley"
+  },
+  "homepage": "https://github.com/anthonymaley/Kerd",
+  "repository": "https://github.com/anthonymaley/Kerd",
+  "license": "MIT",
+  "keywords": ["skills", "workflow", "session-management", "writing", "audit"]
+}

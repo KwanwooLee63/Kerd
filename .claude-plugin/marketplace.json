@@ -1,0 +1,22 @@
+{
+  "name": "kerd-marketplace",
+  "owner": {
+    "name": "Anthony Maley"
+  },
+  "metadata": {
+    "description": "Kerd — opinionated workflow skills for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "kerd",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/anthonymaley/Kerd.git"
+      },
+      "description": "Opinionated workflow toolkit — session discipline, machine handoff, knowledge management, project audits, and human writing voice",
+      "version": "0.1.0",
+      "strict": true
+    }
+  ]
+}
