@@ -9,13 +9,13 @@ One-time setup for a new project. Creates Kerd directory structure, initial docs
 
 ## Usage
 
-`/startup` — run in the root of a git repo
+`/kerd:startup` — run in the root of a git repo
 
 ## The Process
 
 ### 1. Verify git
 
-Confirm `.git` exists. If not, stop: "No git repo found. Initialize a repo and set up a remote first, then run `/startup` again."
+Confirm `.git` exists. If not, stop: "No git repo found. Initialize a repo and set up a remote first, then run `/kerd:startup` again."
 
 ### 2. Gather context
 
