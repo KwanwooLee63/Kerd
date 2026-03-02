@@ -32,6 +32,9 @@ SOTU uses a `.sotu` config file at the project root to know what to audit. If no
 ## deps
 - package.json
 - package-lock.json
+
+## playbook
+- docs/playbook.md
 ```
 
 ## Commands
@@ -42,13 +45,13 @@ Show the current `.sotu` config — what's registered under each area. If no con
 
 ### `/sotu add <area> <path>`
 
-Register a file or directory under an area. Create `.sotu` if it doesn't exist. Valid areas: `docs`, `code`, `site`, `deps`.
+Register a file or directory under an area. Create `.sotu` if it doesn't exist. Valid areas: `docs`, `code`, `site`, `deps`, `playbook`.
 
 Example: `/sotu add docs README.md`
 
 ### `/sotu <area>`
 
-Run the audit for the specified area. Valid areas: `docs`, `code`, `site`, `deps`, `all`.
+Run the audit for the specified area. Valid areas: `docs`, `code`, `site`, `deps`, `playbook`, `all`.
 
 #### docs
 
@@ -89,6 +92,17 @@ For each target registered under `## deps`:
 1. **Dependency freshness** — run package manager outdated commands (npm outdated, pip list --outdated, cargo outdated, etc.)
 2. **Lock file consistency** — lock files match manifests
 3. **Security vulnerabilities** — run `npm audit`, `pip audit`, or equivalent if available
+
+#### playbook
+
+For each target registered under `## playbook`:
+
+1. **Existence** — does `docs/playbook.md` exist? If not, high severity ("No playbook found — run a dian session to create one")
+2. **Current Status accuracy** — compare the "Current Status" section against actual project state (working build, test results, deployed state if detectable)
+3. **Tech stack drift** — are the tools/frameworks listed in the playbook still in `package.json` / `pyproject.toml` / equivalent? Flag removed or added deps not reflected in playbook
+4. **Setup steps validity** — do the setup commands reference files and scripts that still exist?
+5. **Freshness** — when was playbook last modified relative to recent commits? If 10+ commits have landed since the last playbook update, flag as medium
+6. **Section completeness** — are any major sections empty or still showing skeleton placeholder text?
 
 #### all
 

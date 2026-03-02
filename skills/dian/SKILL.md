@@ -19,6 +19,7 @@ Read these files if they exist (skip any that don't):
 2. `CLAUDE.md` — project conventions and structure
 3. Progress tracking — check `docs/project/progress.md`, `progress.md`, or `CHANGELOG.md`
 4. Decision log — check `docs/project/decisions.md` or `decisions.md` if the work involves architecture choices
+5. `docs/playbook.md` — project playbook (how to rebuild this project from scratch)
 
 Summarize the current state for the user.
 
@@ -41,8 +42,37 @@ Before ending the session:
 
 1. **Update TODO.md** — check off completed tasks, add new ones discovered during work, update roadmap statuses, clear the `## Current Session` block.
 2. **Doc impact assessment** — if the project has a Doc Impact Table in CLAUDE.md, check it. Update ALL affected docs.
-3. **Staleness sweep** — search for any renamed or changed concepts across `docs/`, `README.md`, and other documentation.
-4. **Run checks** — run the project's build/test command if one exists. Do not close out with failing tests.
+3. **Update playbook** — if `docs/playbook.md` exists, update it with anything learned this session: new setup steps, new integrations, gotchas discovered, tech stack changes, updated Current Status section. If it doesn't exist, create it from the skeleton:
+
+```markdown
+# Playbook — [Project Name]
+
+How to rebuild this project from scratch.
+
+## Tech Stack
+[What tools/frameworks and why they were chosen]
+
+## Setup
+[Steps to get the project running locally]
+
+## Architecture
+[Key structural decisions and why]
+
+## Integrations
+[External services, APIs, config needed]
+
+## Deployment
+[How to deploy, environment variables needed]
+
+## Gotchas
+[Things that broke, non-obvious behavior, workarounds]
+
+## Current Status
+[What's working, what's in progress, what's next]
+```
+
+4. **Staleness sweep** — search for any renamed or changed concepts across `docs/`, `README.md`, and other documentation.
+5. **Run checks** — run the project's build/test command if one exists. Do not close out with failing tests.
 
 ## Principles
 

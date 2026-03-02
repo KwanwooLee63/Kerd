@@ -62,7 +62,11 @@ Stage all work including the session log and doc updates. Use a descriptive comm
 
 Push to remote. Verify the push succeeds.
 
-### 6. Confirm
+### 6. Verify
+
+Run `git status` and confirm the working tree is clean and nothing remains uncommitted. If uncommitted changes remain, go back to step 4 — do not proceed to the confirm step until the tree is clean.
+
+### 7. Confirm
 
 Print a short summary: what was pushed, what the next session should start with.
 
