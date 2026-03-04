@@ -50,6 +50,8 @@ skills/           # SKILL.md per skill (dian, kivna, skriv, sotu, startup, switc
 commands/         # one .md per command (thin wrappers)
 docs/plans/       # historical design docs
 docs/playbook.md  # this file
+kivna/context.md  # living working context, overwritten each checkpoint
+kivna/checkpoints/ # daily archives of previous context versions
 kivna/sessions/   # session logs written by switch
 .claude-plugin/   # plugin.json + marketplace.json
 ```
@@ -57,7 +59,7 @@ kivna/sessions/   # session logs written by switch
 **Six skills, each with a single responsibility:**
 - **dian** — session discipline (orient/plan/execute/close-out protocol)
 - **switch** — git boundary operations (pull on arrive, commit+push on leave)
-- **kivna** — knowledge management (import, export, quick memory notes)
+- **kivna** — knowledge management (import, export, quick memory notes, context checkpoints)
 - **sotu** — project health audits (docs, code, site, deps, playbook)
 - **skriv** — human writing voice enforcement (audit, fix, session mode)
 - **startup** — one-time project scaffold for new repos
@@ -95,14 +97,16 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.2.4
+**Version:** 0.3.0
 
 **Working:**
 - All six skills functional: dian, switch, kivna, sotu, skriv, startup
 - Plugin installs from marketplace
 - Session logs, playbook creation, and health audits all operational
+- Context checkpointing with kivna/context.md and daily archives
 
-**Recent changes (as of 2026-03-02):**
+**Recent changes (as of 2026-03-04):**
+- Added context checkpointing — living kivna/context.md updated at dian task boundaries
 - Added startup skill for project scaffolding
 - Added playbook integration to dian (creates/updates on close-out)
 - Added playbook audit area to sotu
