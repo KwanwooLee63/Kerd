@@ -19,6 +19,8 @@ Dian gives a session structure. You start it when you sit down to work, and it w
 
 On close-out, dian creates or updates `docs/playbook.md` — a living guide for rebuilding the project from scratch. Tech stack, setup steps, architecture decisions, integrations, gotchas, current status. It grows with the project, session by session.
 
+During execution, dian auto-checkpoints your working context to `kivna/context.md` after each task completes — decisions made, approaches rejected, assumptions discovered, what's in progress. On close-out it finalizes the context for the next session. If context compacts mid-session, re-read context.md and you're caught up.
+
 Dian doesn't touch git. No pulls, no pushes. That's switch's job.
 
 ```
@@ -38,12 +40,14 @@ If you run it without arguments, it checks for uncommitted changes. Changes pres
 
 ### kivna — Knowledge Management
 
-Kivna owns the project's knowledge layer. It has three modes. Import (`/kivna in`) reads files you drop into `kivna/input/`, extracts what matters, and writes it into the project. Works with PDFs, markdown, JSON session exports, plain text. Export (`/kivna out`) packages your current session into a portable markdown file another LLM can pick up cold. Quick save (`/kivna memory`) appends a timestamped note to `kivna/memories/` without ceremony.
+Kivna owns the project's knowledge layer. It has four modes. Import (`/kivna in`) reads files you drop into `kivna/input/`, extracts what matters, and writes it into the project. Works with PDFs, markdown, JSON session exports, plain text. Export (`/kivna out`) packages your current session into a portable markdown file another LLM can pick up cold. Quick save (`/kivna memory`) appends a timestamped note to `kivna/memories/` without ceremony. Checkpoint (`/kivna checkpoint`) snapshots your full working context — decisions, reasoning, rejected approaches, assumptions — to `kivna/context.md`.
 
 The folder structure:
 
 ```
 kivna/
+  context.md   # living working context (overwritten each checkpoint)
+  checkpoints/ # daily archives of previous context versions
   sessions/    # session logs from switch (committed)
   memories/    # quick notes (committed)
   input/       # drop files here for import (gitignored)
@@ -54,6 +58,7 @@ kivna/
 /kivna in                                          # import from inbox
 /kivna out                                         # export session context
 /kivna memory decided to use Postgres over SQLite  # quick note
+/kivna checkpoint                                  # snapshot working context
 ```
 
 ### sotu — Project Health Audit
@@ -96,7 +101,7 @@ It won't overwrite files that already exist. If you created a README during repo
 
 New project: you create a repo, clone it, run `/startup`. It scaffolds everything. Then `/dian` to start your first session.
 
-Day to day: you sit down at your laptop and run `/switch in`. It pulls, reads the session logs, tells you what happened last time. You run `/dian` to plan the session. Mid-work, you make a decision worth remembering, so you run `/kivna memory switching to Redis for the cache layer`. When the work is done, dian's close-out updates the playbook with anything new you learned. You run `/sotu docs` to check nothing drifted. Then `/switch out` commits, pushes, and writes the session log. Tomorrow, different machine, same state. The playbook grows with every session — if someone else picks up the project, they can rebuild it from that doc alone.
+Day to day: you sit down at your laptop and run `/switch in`. It pulls, reads the session logs, tells you what happened last time. It also reads `kivna/context.md` — the decisions, reasoning, and working assumptions from last time — and offers to start a dian session. You run `/dian` to plan the session. Mid-work, you make a decision worth remembering, so you run `/kivna memory switching to Redis for the cache layer`. When the work is done, dian's close-out updates the playbook and finalizes `kivna/context.md` with the session's full context. You run `/sotu docs` to check nothing drifted. Then `/switch out` commits, pushes, and writes the session log. Tomorrow, different machine, same state. The playbook grows with every session — if someone else picks up the project, they can rebuild it from that doc alone.
 
 ## Naming
 
