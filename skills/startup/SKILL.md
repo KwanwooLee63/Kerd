@@ -28,6 +28,7 @@ Ask the user two things:
 ```
 kivna/
 kivna/sessions/
+kivna/checkpoints/
 docs/
 ```
 
@@ -111,6 +112,33 @@ How to rebuild this project from scratch.
 
 ## playbook
 - docs/playbook.md
+```
+
+**`kivna/context.md`**
+
+```markdown
+# Context — [Project Name]
+
+## Current Focus
+[Not started yet — run `/kerd:dian` to begin your first session.]
+
+## Mental Model
+[Will be populated as decisions are made.]
+
+## Decisions
+[No decisions yet.]
+
+## Rejected Approaches
+[Nothing rejected yet.]
+
+## Working Assumptions
+[No assumptions recorded yet.]
+
+## Active Threads
+[No active work yet.]
+
+## Open Questions
+[No open questions yet.]
 ```
 
 ### 5. Commit
