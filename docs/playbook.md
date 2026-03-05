@@ -97,7 +97,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.3.1
+**Version:** 0.4.0
 
 **Working:**
 - All six skills functional: dian, switch, kivna, sotu, skriv, startup
