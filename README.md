@@ -15,7 +15,7 @@ claude plugins install kerd
 
 ### dian — Session Discipline
 
-Dian gives a session structure. You start it when you sit down to work, and it walks through four phases: orient (read the project state, including the playbook), plan (propose what to do), execute (do the work), close out (update docs, update the playbook, run checks, clear the session block). It writes the session plan to TODO.md and keeps you honest about scope creep. If something comes up that isn't in the plan, it goes on the list for later.
+Dian gives a session structure. You start it when you sit down to work, and it walks through four phases: orient (read the project state, cross-check for inconsistencies), plan (propose what to do, ask questions, push back on ambiguity), execute (do the work, verify each task, record decisions immediately), close out (diff review, update docs, update the playbook, run checks, clear the session block). It writes the session plan to TODO.md and keeps you honest about scope creep. If something comes up that isn't in the plan, it goes on the list for later.
 
 On close-out, dian creates or updates `docs/playbook.md` — a living guide for rebuilding the project from scratch. Tech stack, setup steps, architecture decisions, integrations, gotchas, current status. It grows with the project, session by session.
 
@@ -31,7 +31,7 @@ Dian doesn't touch git. No pulls, no pushes. That's switch's job.
 
 ### switch — Machine Handoff
 
-Switch owns git boundary operations. All of them. When you leave a machine, it writes session state to TODO.md, creates a session log in `kivna/sessions/`, commits everything, and pushes. When you arrive on a new machine, it pulls, reads the session logs, and tells you where you left off.
+Switch owns git boundary operations. All of them. When you leave a machine, it reflects on the session (capturing learnings to CLAUDE.md and memory files), writes session state to TODO.md, creates a session log in `kivna/sessions/`, commits everything, and pushes. When you arrive on a new machine, it pulls, runs a smoke test if tests exist, reads the session logs, and tells you where you left off.
 
 If you run it without arguments, it checks for uncommitted changes. Changes present means you're leaving. Clean repo means you're arriving.
 

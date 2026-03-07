@@ -61,19 +61,34 @@ If `kivna/context.md` exists and a `/kerd:dian` session was active, close-out sh
 
 If progress tracking exists (check for `docs/project/progress.md`, `progress.md`, or similar), update it.
 
-### 5. Stage and commit
+### 5. Reflect and capture learnings
+
+Before committing, reflect on the session:
+
+- **What patterns emerged?** Any recurring problems, useful approaches, or workflow improvements worth codifying?
+- **What should be remembered?** Best practices discovered, gotchas encountered, conventions that worked well or didn't.
+- **What would make the next session better?** Anything about the project, tooling, or workflow that should be adjusted.
+
+Write actionable learnings to the appropriate place:
+- **Project conventions and rules** → add to `CLAUDE.md` (so they're enforced in future sessions)
+- **Working knowledge and context** → add to Claude Code memory files (so they persist across conversations)
+- **Project-specific gotchas** → add to `docs/playbook.md` Gotchas section
+
+Skip this step if the session was trivial (quick fix, single file change). But for any session with meaningful work, take the time — compounding small improvements across sessions is how projects stay healthy.
+
+### 6. Stage and commit
 
 Stage all work including the session log and doc updates. Use a descriptive commit message.
 
-### 6. Push
+### 7. Push
 
 Push to remote. Verify the push succeeds.
 
-### 7. Verify
+### 8. Verify
 
-Run `git status` and confirm the working tree is clean and nothing remains uncommitted. If uncommitted changes remain, go back to step 5 — do not proceed to the confirm step until the tree is clean.
+Run `git status` and confirm the working tree is clean and nothing remains uncommitted. If uncommitted changes remain, go back to step 6 — do not proceed to the confirm step until the tree is clean.
 
-### 8. Confirm
+### 9. Confirm
 
 Print a short summary: what was pushed, what the next session should start with.
 
@@ -85,35 +100,40 @@ Pick up where the other machine left off.
 
 `git pull`. If there are conflicts, resolve them before proceeding.
 
-### 2. Read TODO.md
+### 2. Smoke test
+
+If the project has a test command (check `package.json` scripts, `Makefile`, `pyproject.toml`, or similar), run it. If tests fail, report the failures in the summary — the user should know the state of the codebase before planning new work. If no test command exists, skip this step.
+
+### 3. Read TODO.md
 
 Focus on the `## Current Session` block. This is where the last session left off.
 
-### 3. Read working context
+### 4. Read working context
 
 If `kivna/context.md` exists, read it. This has the decisions, reasoning, active threads, and assumptions from the last session. It's the richest source for picking up where things left off.
 
-### 4. Check session logs
+### 5. Check session logs
 
 Read the latest file(s) in `kivna/sessions/` for detailed context on what happened recently.
 
-### 5. Read progress tracking
+### 6. Read progress tracking
 
 If progress tracking exists, read it.
 
-### 6. Check active modes
+### 7. Check active modes
 
 If `kivna/.active-modes` exists and is non-empty, read it. Report any active modes in the summary (e.g., "**Active modes:** `dian: execute`"). If the file doesn't exist or is empty, skip this — don't mention modes.
 
-### 7. Summarize
+### 8. Summarize
 
 Tell the user:
 - What was done last session
 - What's in progress or queued next
 - Any open questions or decisions from the previous session
+- Any test failures from the smoke test (if applicable)
 - Suggest what to work on
 
-### 8. Offer dian
+### 9. Offer dian
 
 Ask: "Start a `/kerd:dian` session?" If yes, flow into `/kerd:dian` orient. If no, stop — user wants to do something quick without full session discipline.
 

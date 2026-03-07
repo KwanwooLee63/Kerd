@@ -43,7 +43,9 @@ Read these files if they exist (skip any that don't):
 5. Decision log — check `docs/project/decisions.md` or `decisions.md` if the work involves architecture choices
 6. `docs/playbook.md` — project playbook (how to rebuild this project from scratch)
 
-Summarize the current state for the user.
+**Consistency sniff test:** After reading, do a quick cross-check. Does CLAUDE.md reference files or conventions that don't match the codebase? Does the playbook's tech stack or architecture still match reality? Does context.md mention things that have since changed? Flag any contradictions to the user before planning — don't build on stale assumptions.
+
+Summarize the current state for the user, including any inconsistencies found.
 
 ### 2. Plan
 
@@ -53,14 +55,29 @@ Propose a session plan to the user:
 - What we'll do (numbered steps)
 - What files we'll touch
 - What docs need updating
+- How we'll verify each task worked (what does "done" look like?)
 
-Write this as a `## Current Session` block in TODO.md with today's date. Wait for user approval before executing.
+**Before writing the plan, interrogate the task.** Ask clarifying questions about anything ambiguous. Push back on things that don't make sense or seem underspecified. Do not guess or infer context — if you're unsure about something, ask. It's cheaper to spend two minutes clarifying than to build the wrong thing and rework it.
+
+**Specifically, challenge yourself on:**
+- Do I actually understand what the user wants, or am I filling in gaps with assumptions?
+- Are there dependencies between tasks that affect the order?
+- Is anything in the plan vague enough that I might interpret it differently than the user intended?
+- What could go wrong, and how will I catch it?
+
+Write this as a `## Current Session` block in TODO.md with today's date. Wait for user approval before executing. Do not proceed until the user confirms the plan — a good plan prevents rework.
 
 ### 3. Execute
 
 Output `[dian: execute]` at the top of your response when entering this phase.
 
 Do the work. Commit incrementally if it makes sense. Stay focused on the plan — if scope creep appears, flag it and add it to TODO.md for later rather than chasing it now.
+
+**Verify after each task.** Before moving to the next task, confirm the work actually does what was intended. Run tests if they exist, re-read the changed files, check for obvious issues. If something isn't right, fix it now — don't accumulate problems for close-out to discover.
+
+**Record decisions immediately.** When a significant decision is made during execution (architecture choice, rejected approach, key trade-off), write it to `kivna/context.md` right then. Don't defer decision recording to close-out — decisions lose their reasoning if you wait.
+
+**Docs travel with code, enforced.** If a task changes behavior, update the affected docs (README, playbook, CLAUDE.md) in the same commit. Don't defer doc updates to close-out. The principle is: no commit should leave docs inconsistent with code.
 
 **Auto-save:** After completing each task in the plan, update `kivna/context.md` with the current working context using the `/kerd:kivna save` mechanic (archive previous version, write new one). This ensures context survives compaction mid-session.
 
@@ -102,9 +119,10 @@ How to rebuild this project from scratch.
 [What's working, what's in progress, what's next]
 ```
 
-5. **Staleness sweep** — search for any renamed or changed concepts across `docs/`, `README.md`, and other documentation.
-6. **Run checks** — run the project's build/test command if one exists. Do not close out with failing tests.
-7. **Clear mode marker** — remove the dian line from `kivna/.active-modes`. Output `[dian: closed]` as the final marker.
+5. **Diff review** — run `git diff` (or `git diff --cached` if staged) to review everything changed this session. Look for: accidental changes, forgotten files, inconsistencies between code and docs, anything that doesn't match the plan. Fix issues before proceeding.
+6. **Staleness sweep** — search for any renamed or changed concepts across `docs/`, `README.md`, and other documentation.
+7. **Run checks** — run the project's build/test command if one exists. Do not close out with failing tests.
+8. **Clear mode marker** — remove the dian line from `kivna/.active-modes`. Output `[dian: closed]` as the final marker.
 
 ## Principles
 

@@ -97,7 +97,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.5.0
+**Version:** 0.6.0
 
 **Working:**
 - All six skills functional: dian, switch, kivna, sotu, skriv, startup
@@ -107,11 +107,13 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Startup scaffold verified — produces correct directory structure and files
 - Dian playbook creation verified — skeleton matches startup's template
 - Mode markers on dian and skriv — visible phase/state announcements with `.active-modes` state file
+- Dian rigorous planning (interrogate tasks, push back, no guessing) and execute verification (check each task, record decisions immediately, docs with code)
+- Switch-out reflection — captures learnings to CLAUDE.md and memory files
+- Switch-in smoke test — runs project tests if they exist
 
 **Recent changes (as of 2026-03-06):**
-- Mode markers for dian (phase transitions) and skriv (session mode on/off) — `[dian: execute]`, `[skriv: active]`, etc.
-- State file `kivna/.active-modes` written by modal skills, read by switch-in
-- Switch-in reports active modes from previous session
+- v0.6.0: Strengthened dian (consistency check in orient, rigorous planning, verify-as-you-go in execute, diff review in close-out) and switch (reflection step on out, smoke test on in)
+- v0.5.0: Mode markers for dian and skriv, `.active-modes` state file, switch-in reports active modes
 
 **Next:**
 - Test sotu playbook audit on a project with a playbook
