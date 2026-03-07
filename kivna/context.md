@@ -1,7 +1,7 @@
 # Context — Kerd
 
 ## Current Focus
-v0.5.0 shipped. Added mode markers to dian and skriv — visible phase/state announcements (`[dian: execute]`, `[skriv: active]`) with a shared state file (`kivna/.active-modes`) that switch-in reads. Also added commit rules to CLAUDE.md: always push after commit, always run release checklist first. Backlog: sotu playbook audit test, version bump automation, third-person descriptions.
+v0.6.0 shipped. Two feature releases this session: mode markers (v0.5.0) and strengthened dian/switch (v0.6.0). Backlog: sotu playbook audit test, third-person descriptions, description optimization retry with API key.
 
 ## Mental Model
 Kerd is a Claude Code plugin with six skills defined in markdown (SKILL.md). Each skill has a thin command wrapper in commands/. The plugin is pure markdown + JSON — no build step, no dependencies.
@@ -20,17 +20,23 @@ Cold start reads: CLAUDE.md + playbook + context.md. Three files, fully caught u
 - **Switch in offers dian (ask first, don't auto-start)**
 - **No sidebar skill** — deferred. Context checkpointing reduces the need.
 - **Subagents must not expand command files** — commands stay thin wrappers.
-- **Resume IDs not worth tracking in switch** — they're local to one machine, and switch is for cross-machine handoff.
-- **Anthropic plugin-dev review: no urgent changes** — skills are lean (<1,000 words), trigger well. Third-person descriptions worth adopting opportunistically.
-- **Mode markers over kerd:status skill** — user's real problem was not knowing when skills are active. Solved with visible markers (`[dian: phase]`, `[skriv: active/off]`) and a state file (`kivna/.active-modes`) rather than a new status skill. Lighter, no new skill needed.
-- **Only modal skills get markers** — dian (4 phases + closed) and skriv (session mode). One-shot skills (switch, kivna, sotu, startup) don't need them.
-- **Always push after commit, always run release checklist first** — added to CLAUDE.md as commit rules.
+- **Resume IDs not worth tracking in switch** — they're local to one machine.
+- **Mode markers over kerd:status skill** — user's real problem was not knowing when skills are active. Solved with visible markers and a state file, not a new skill.
+- **Only modal skills get markers** — dian (4 phases + closed) and skriv (session mode). One-shot skills don't need them.
+- **Always push after commit, always run release checklist first** — codified in CLAUDE.md.
+- **Decision recording in execute, not close-out** — decisions lose reasoning context if deferred.
+- **Verify each task before moving on** — catch issues early, don't accumulate for close-out.
+- **Docs travel with code, enforced in execute** — no commit should leave docs inconsistent with code.
+- **Switch-out reflection** — capture learnings to CLAUDE.md, memory files, playbook gotchas. Sessions compound.
+- **Switch-in smoke test** — run project tests if they exist before building on top.
+- **Dian plan pushback** — ask questions, challenge assumptions, don't infer. Cheaper to clarify than rework.
 
 ## Rejected Approaches
 - **Detecting context limits automatically** — not possible from inside the conversation.
 - **Sidebar skill** — single-turn subagent works but multi-turn can't be isolated.
-- **Recording --resume IDs in switch** — local to one machine, defeats the purpose of cross-machine handoff.
-- **kerd:status as a separate skill** — the problem (user not knowing what's active) is better solved by skills self-announcing their state than by a queryable status command.
+- **Recording --resume IDs in switch** — local to one machine, defeats cross-machine handoff.
+- **kerd:status as a separate skill** — self-announcing markers solve the problem more simply.
+- **Automated description optimization** — eval harness (`claude -p` with temp commands) doesn't replicate real plugin triggering. Current descriptions work in practice.
 
 ## Working Assumptions
 - Plugin system loads skills from SKILL.md with YAML frontmatter (name, description).
@@ -40,7 +46,7 @@ Cold start reads: CLAUDE.md + playbook + context.md. Three files, fully caught u
 
 ## Active Threads
 - Sotu playbook audit still untested on a project with a real playbook (not blocking)
-- Version bump automation question open (switch-out vs release skill)
+- Description optimization could be retried with ANTHROPIC_API_KEY if triggering issues arise
 
 ## Open Questions
-- Should version bumping be part of switch-out or a separate release skill?
+- None currently blocking
