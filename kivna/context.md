@@ -1,7 +1,7 @@
 # Context — Kerd
 
 ## Current Focus
-v0.6.0 shipped. Two feature releases this session: mode markers (v0.5.0) and strengthened dian/switch (v0.6.0). Backlog: sotu playbook audit test, third-person descriptions, description optimization retry with API key.
+v0.6.0 stable. Obsidian vault set up at ~/ObsidianLLM/kerd/ — symlinks to all repo .md files, plus vault-native MOC (Kerd.md), Decisions.md, Kerd Context.md (append-only snapshots), and Kerd Log.md (flat changelog). Backlog: sotu playbook audit test, third-person descriptions, description optimization retry with API key.
 
 ## Mental Model
 Kerd is a Claude Code plugin with six skills defined in markdown (SKILL.md). Each skill has a thin command wrapper in commands/. The plugin is pure markdown + JSON — no build step, no dependencies.
@@ -47,6 +47,7 @@ Cold start reads: CLAUDE.md + playbook + context.md. Three files, fully caught u
 ## Active Threads
 - Sotu playbook audit still untested on a project with a real playbook (not blocking)
 - Description optimization could be retried with ANTHROPIC_API_KEY if triggering issues arise
+- Obsidian vault pattern is now repeatable — user has a standard prompt for setting up any project. Could become a kivna or startup feature.
 
 ## Open Questions
 - None currently blocking

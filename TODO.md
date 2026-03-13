@@ -1,7 +1,10 @@
 # TODO
 
 ## Current Session
-(no active session)
+- [x] Switch in — read session state, context, logs
+- [x] Set up Obsidian vault at ~/ObsidianLLM/kerd/ — symlinks, MOC, Decisions
+- [x] Updated vault to match revised pattern — added Kerd Context.md, Kerd Log.md, updated MOC links
+- Next: test strengthened dian in a real session, test sotu playbook audit
 
 ## Backlog
 - Test sotu playbook audit on a project with a playbook
