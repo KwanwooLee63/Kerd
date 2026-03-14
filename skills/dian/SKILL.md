@@ -38,12 +38,11 @@ Read these files if they exist (skip any that don't):
 
 1. `TODO.md` — current session plan, roadmap, task queue
 2. `CLAUDE.md` — project conventions and structure
-3. `kivna/context.md` — working context from the last checkpoint (decisions, reasoning, active threads, assumptions)
+3. Vault `[Name] Context.md` — working context from the last session. Discover the vault path using `kivna/vault.json` or convention (see `/kerd:kivna` vault discovery). Read the latest section (the first `## YYYY-MM-DD` block). Also read vault `Decisions.md` for project rules and conventions.
 4. Progress tracking — check `docs/project/progress.md`, `progress.md`, or `CHANGELOG.md`
-5. Decision log — check `docs/project/decisions.md` or `decisions.md` if the work involves architecture choices
-6. `docs/playbook.md` — project playbook (how to rebuild this project from scratch)
+5. `docs/playbook.md` — project playbook (how to rebuild this project from scratch)
 
-**Consistency sniff test:** After reading, do a quick cross-check. Does CLAUDE.md reference files or conventions that don't match the codebase? Does the playbook's tech stack or architecture still match reality? Does context.md mention things that have since changed? Flag any contradictions to the user before planning — don't build on stale assumptions.
+**Consistency sniff test:** After reading, do a quick cross-check. Does CLAUDE.md reference files or conventions that don't match the codebase? Does the playbook's tech stack or architecture still match reality? Does the vault Context mention things that have since changed? Flag any contradictions to the user before planning — don't build on stale assumptions.
 
 Summarize the current state for the user, including any inconsistencies found.
 
@@ -75,11 +74,11 @@ Do the work. Commit incrementally if it makes sense. Stay focused on the plan �
 
 **Verify after each task.** Before moving to the next task, confirm the work actually does what was intended. Run tests if they exist, re-read the changed files, check for obvious issues. If something isn't right, fix it now — don't accumulate problems for close-out to discover.
 
-**Record decisions immediately.** When a significant decision is made during execution (architecture choice, rejected approach, key trade-off), write it to `kivna/context.md` right then. Don't defer decision recording to close-out — decisions lose their reasoning if you wait.
+**Record decisions immediately.** When a significant decision is made during execution (architecture choice, rejected approach, key trade-off), decisions go into the vault Context.md section (via the `/kerd:kivna save` mechanic) AND get flagged for vault Decisions.md approval. Don't defer decision recording to close-out — decisions lose their reasoning if you wait.
 
 **Docs travel with code, enforced.** If a task changes behavior, update the affected docs (README, playbook, CLAUDE.md) in the same commit. Don't defer doc updates to close-out. The principle is: no commit should leave docs inconsistent with code.
 
-**Auto-save:** After completing each task in the plan, update `kivna/context.md` with the current working context using the `/kerd:kivna save` mechanic (archive previous version, write new one). This ensures context survives compaction mid-session.
+**Auto-save:** After completing each task in the plan, save to the Obsidian vault using the `/kerd:kivna save` mechanic (prepend to vault Context.md, update Log.md, flag decisions). This ensures context survives compaction mid-session.
 
 ### 4. Close Out
 
@@ -89,7 +88,7 @@ Before ending the session:
 
 1. **Update TODO.md** — check off completed tasks, add new ones discovered during work, update roadmap statuses, clear the `## Current Session` block.
 2. **Doc impact assessment** — if the project has a Doc Impact Table in CLAUDE.md, check it. Update ALL affected docs.
-3. **Finalize context** — update `kivna/context.md` with end-of-session state. Mark "Current Focus" as completed or paused. Update "Active Threads" to reflect what's done and what carries over. This becomes the cold-start document for the next session.
+3. **Finalize context** — write a close-out section to the vault `[Name] Context.md` via `/kerd:kivna save`. Mark "Where We Are" as session complete. Prepend session summary to vault `[Name] Log.md`. This becomes the cold-start context for the next session.
 4. **Update playbook** — if `docs/playbook.md` exists, update it with anything learned this session: new setup steps, new integrations, gotchas discovered, tech stack changes, updated Current Status section. If it doesn't exist, create it from the skeleton:
 
 ```markdown
