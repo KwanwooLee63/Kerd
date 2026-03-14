@@ -55,7 +55,7 @@ If appending to an existing file for today (multiple sessions), add a `---` sepa
 
 ### 3. Ensure context is current
 
-If `kivna/context.md` exists and a `/kerd:dian` session was active, close-out should have already updated it — verify it's current and move on. If no `/kerd:dian` session was running (quick switch without formal session), save context now using the `/kerd:kivna save` mechanic.
+If a `/kerd:dian` session was active, close-out should have already saved to the vault — verify the latest section in vault `[Name] Context.md` reflects this session and move on. If no `/kerd:dian` session was running (quick switch without formal session), save context now using `/kerd:kivna save` (which writes to the vault). Discover the vault path using `kivna/vault.json` or convention (see `/kerd:kivna` vault discovery).
 
 ### 4. Update progress tracking
 
@@ -70,8 +70,8 @@ Before committing, reflect on the session:
 - **What would make the next session better?** Anything about the project, tooling, or workflow that should be adjusted.
 
 Write actionable learnings to the appropriate place:
-- **Project conventions and rules** → add to `CLAUDE.md` (so they're enforced in future sessions)
-- **Working knowledge and context** → add to Claude Code memory files (so they persist across conversations)
+- **Project conventions and enforcement rules** → add to `CLAUDE.md` (so they're enforced in future sessions)
+- **Conventions and patterns** → flag for vault `Decisions.md` with user approval (using the `/kerd:kivna save` decision-flagging mechanic)
 - **Project-specific gotchas** → add to `docs/playbook.md` Gotchas section
 
 Skip this step if the session was trivial (quick fix, single file change). But for any session with meaningful work, take the time — compounding small improvements across sessions is how projects stay healthy.
@@ -110,21 +110,25 @@ Focus on the `## Current Session` block. This is where the last session left off
 
 ### 4. Read working context
 
-If `kivna/context.md` exists, read it. This has the decisions, reasoning, active threads, and assumptions from the last session. It's the richest source for picking up where things left off.
+Read the vault `[Name] Context.md` (latest section — the first `## YYYY-MM-DD` block). This has the working state from the last session. Discover the vault path using `kivna/vault.json` or convention (see `/kerd:kivna` vault discovery). Also read vault `[Name] Log.md` for recent activity at a glance.
 
-### 5. Check session logs
+### 5. Read vault decisions
+
+Read vault `Decisions.md` for project conventions and rules.
+
+### 6. Check session logs
 
 Read the latest file(s) in `kivna/sessions/` for detailed context on what happened recently.
 
-### 6. Read progress tracking
+### 7. Read progress tracking
 
 If progress tracking exists, read it.
 
-### 7. Check active modes
+### 8. Check active modes
 
 If `kivna/.active-modes` exists and is non-empty, read it. Report any active modes in the summary (e.g., "**Active modes:** `dian: execute`"). If the file doesn't exist or is empty, skip this — don't mention modes.
 
-### 8. Summarize
+### 9. Summarize
 
 Tell the user:
 - What was done last session
@@ -133,7 +137,7 @@ Tell the user:
 - Any test failures from the smoke test (if applicable)
 - Suggest what to work on
 
-### 9. Offer dian
+### 10. Offer dian
 
 Ask: "Start a `/kerd:dian` session?" If yes, flow into `/kerd:dian` orient. If no, stop — user wants to do something quick without full session discipline.
 
@@ -142,5 +146,7 @@ Ask: "Start a `/kerd:dian` session?" If yes, flow into `/kerd:dian` orient. If n
 If no TODO.md or session logs exist (fresh repo), say so cleanly:
 
 "Fresh repo — no previous session state found. No TODO.md, no session logs in kivna/sessions/. Ready to start from scratch."
+
+If no vault is found (no `kivna/vault.json` and no vault folder at `~/ObsidianLLM/[folder]/`), fall back to reading `kivna/context.md` if it exists. Report this gracefully — suggest running `/kerd:kivna scaffold` to set up the vault.
 
 Do not fail silently or produce errors for missing files.
