@@ -41,12 +41,8 @@ skills/           # skill definitions (each skill in its own folder with SKILL.m
 commands/         # command definitions (markdown, one per command)
 docs/plans/       # design docs and implementation plans
 docs/playbook.md  # living project guide, updated by dian close-out
-kivna/context.md  # living working context, overwritten each checkpoint
-kivna/checkpoints/ # daily archives of previous context versions
+kivna/vault.json  # Obsidian vault config
 kivna/sessions/   # session logs from switch (committed)
-kivna/memories/   # quick notes from kivna memory (committed)
-kivna/input/      # drop files here for kivna import (gitignored)
-kivna/output/     # kivna exports land here (gitignored)
 .claude-plugin/   # plugin.json and marketplace.json
 ```
 

@@ -50,16 +50,18 @@ skills/           # SKILL.md per skill (dian, kivna, skriv, sotu, startup, switc
 commands/         # one .md per command (thin wrappers)
 docs/plans/       # historical design docs
 docs/playbook.md  # this file
-kivna/context.md  # living working context, overwritten each checkpoint
-kivna/checkpoints/ # daily archives of previous context versions
+kivna/vault.json  # Obsidian vault config
 kivna/sessions/   # session logs written by switch
+kivna/.active-modes # ephemeral mode state
 .claude-plugin/   # plugin.json + marketplace.json
 ```
+
+The project's durable knowledge layer lives in the Obsidian vault at `~/ObsidianLLM/kerd/`. Kivna reads and writes vault files (`Kerd Context.md`, `Kerd Log.md`, `Decisions.md`). The vault config is at `kivna/vault.json`. See `/kerd:kivna` for details.
 
 **Six skills, each with a single responsibility:**
 - **dian** — session discipline (orient/plan/execute/close-out protocol)
 - **switch** — git boundary operations (pull on arrive, commit+push on leave)
-- **kivna** — knowledge management (import, export, quick memory notes, context checkpoints)
+- **kivna** — knowledge management (Obsidian vault integration: context, decisions, activity log, import/export)
 - **sotu** — project health audits (docs, code, site, deps, playbook)
 - **skriv** — human writing voice enforcement (audit, fix, session mode)
 - **startup** — one-time project scaffold for new repos
@@ -97,13 +99,13 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.6.0
+**Version:** 0.7.0
 
 **Working:**
 - All six skills functional: dian, switch, kivna, sotu, skriv, startup
 - Plugin installs from marketplace
 - Session logs, playbook creation, and health audits all operational
-- Context checkpointing with kivna/context.md and daily archives
+- Obsidian vault integration — kivna reads/writes vault for context, decisions, and activity log
 - Startup scaffold verified — produces correct directory structure and files
 - Dian playbook creation verified — skeleton matches startup's template
 - Mode markers on dian and skriv — visible phase/state announcements with `.active-modes` state file
@@ -111,7 +113,8 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Switch-out reflection — captures learnings to CLAUDE.md and memory files
 - Switch-in smoke test — runs project tests if they exist
 
-**Recent changes (as of 2026-03-06):**
+**Recent changes (as of 2026-03-14):**
+- v0.7.0: Obsidian vault integration — kivna now reads/writes context, decisions, and activity log from `~/ObsidianLLM/kerd/` vault instead of local `kivna/context.md` and checkpoints
 - v0.6.0: Strengthened dian (consistency check in orient, rigorous planning, verify-as-you-go in execute, diff review in close-out) and switch (reflection step on out, smoke test on in)
 - v0.5.0: Mode markers for dian and skriv, `.active-modes` state file, switch-in reports active modes
 
