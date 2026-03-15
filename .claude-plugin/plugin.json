@@ -1,7 +1,7 @@
 {
   "name": "kerd",
-  "description": "Opinionated workflow toolkit — session discipline, machine handoff, knowledge management, project audits, human writing voice, and structural health",
-  "version": "0.8.0",
+  "description": "Opinionated workflow toolkit — session discipline, machine handoff, knowledge management, project audits, human writing voice, structural health, and skill discovery",
+  "version": "0.9.0",
   "author": {
     "name": "Anthony Maley"
   },
