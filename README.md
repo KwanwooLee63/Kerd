@@ -42,13 +42,13 @@ If you run it without arguments, it checks for uncommitted changes. Changes pres
 
 ### kivna — Knowledge Management
 
-Kivna owns the project's knowledge layer, stored in an Obsidian vault at `~/ObsidianLLM/[project]/`. Import (`/kivna in`) reads files you drop into `kivna/input/`, extracts what matters, and writes it into the project. Works with PDFs, markdown, JSON session exports, plain text. Export (`/kivna out`) packages your current session into a portable markdown file another LLM can pick up cold. Save (`/kivna save`) writes to vault Context.md and Log.md, and flags decisions for vault Decisions.md (with user approval). Scaffold (`/kivna scaffold`) sets up the Obsidian vault structure for a new project. This is the same save mechanic dian uses automatically at task boundaries, but you can trigger it manually anytime.
+Kivna owns the project's knowledge layer, stored in an Obsidian vault at `~/Obsidian/[project]/`. Import (`/kivna in`) reads files you drop into `kivna/input/`, extracts what matters, and writes it into the project. Works with PDFs, markdown, JSON session exports, plain text. Export (`/kivna out`) packages your current session into a portable markdown file another LLM can pick up cold. Save (`/kivna save`) writes to vault Context.md and Log.md, and flags decisions for vault Decisions.md (with user approval). Scaffold (`/kivna scaffold`) sets up the Obsidian vault structure for a new project. This is the same save mechanic dian uses automatically at task boundaries, but you can trigger it manually anytime.
 
 The folder structure:
 
 ```
 kivna/
-  vault.json   # vault config (points to ~/ObsidianLLM/[project]/)
+  vault.json   # vault config (points to ~/Obsidian/[project]/)
   sessions/    # session logs from switch (committed)
   input/       # drop files here for import (gitignored)
   output/      # exports land here (gitignored)

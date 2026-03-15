@@ -138,7 +138,7 @@ How to rebuild this project from scratch.
 **kivna/vault.json:**
 ```json
 {
-  "vault": "~/ObsidianLLM",
+  "vault": "~/Obsidian",
   "folder": "[project-name-lowercase]",
   "name": "[Project Name]"
 }
@@ -153,6 +153,24 @@ Check:
 - The vault folder at the resolved path exists on disk
 - Vault-native files exist: `[Name].md` (MOC), `[Name] Context.md`, `[Name] Log.md`, `Decisions.md`
 - Symlinks: compare all `.md` files in the repo against symlinks in the vault folder. Report any repo `.md` files missing from vault.
+
+If `kivna/vault.json` does not exist, report with context:
+
+```
+⚠ Vault integration
+  ┌──────────────────┬───────────────┬─────────────────────────────┐
+  │ Item             │ Current       │ Proposed                    │
+  ├──────────────────┼───────────────┼─────────────────────────────┤
+  │ vault.json       │ not configured│ run /kerd:kivna scaffold    │
+  └──────────────────┴───────────────┴─────────────────────────────┘
+  Kerd stores project context, decisions, and activity logs
+  in an Obsidian vault. This works as plain markdown files
+  even without Obsidian installed, but Obsidian adds graph
+  view, search, and cross-project linking.
+
+  To set up: /kerd:kivna scaffold
+  It will ask where your vault lives (or create one).
+```
 
 If vault needs full setup, the fix is to run the `/kerd:kivna scaffold` mechanic (not to reimplement it here — kivna owns vault operations).
 

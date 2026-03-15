@@ -15,16 +15,16 @@ Every kivna command starts here. Resolve the vault location before doing anythin
 
 1. **Check `kivna/vault.json`.** If it exists, read `vault`, `folder`, and `name`. Expand `~` to the user's home directory.
 
-2. **Convention fallback.** If no `vault.json`, derive from the repo directory name:
-   - Vault path: `~/ObsidianLLM/`
+2. **Convention fallback.** If no `vault.json`, check for `~/Obsidian/`:
+   - If `~/Obsidian/` exists, use it as the vault root.
    - Folder: lowercase repo directory name (e.g., repo at `~/Kerd` → folder `kerd`)
    - Display name: title-case the folder name (e.g., `kerd` → `Kerd`)
-   - Check if `~/ObsidianLLM/[folder]/` exists on disk.
+   - Check if `~/Obsidian/[folder]/` exists on disk.
 
-3. **No vault found.** If neither `vault.json` exists nor the convention folder exists on disk, prompt:
-   > No Obsidian vault folder found for this project at `~/ObsidianLLM/[folder]/`. Want me to set it up?
+3. **No vault found.** If neither `vault.json` exists nor `~/Obsidian/` exists on disk, ask:
+   > Where is your Obsidian vault? (default: `~/Obsidian/`)
 
-   If yes → run the scaffold mechanic. If no → stop and tell the user kivna requires a vault.
+   If the user provides a path, use it. If they accept the default, create `~/Obsidian/` and proceed. Then run the scaffold mechanic to set up the project folder within it.
 
 ## Folder Convention
 
@@ -151,7 +151,7 @@ Set up the Obsidian vault folder for this project. Also triggered automatically 
 
 #### The mechanic
 
-1. **Create the vault folder.** `~/ObsidianLLM/[folder]/` and subdirectories that mirror the repo's `.md` file structure. For example, if the repo has `docs/plans/`, create `~/ObsidianLLM/[folder]/docs/plans/`.
+1. **Create the vault folder.** `~/Obsidian/[folder]/` and subdirectories that mirror the repo's `.md` file structure. For example, if the repo has `docs/plans/`, create `~/Obsidian/[folder]/docs/plans/`.
 
 2. **Symlink all `.md` files** from the repo into the vault folder using `ln -sf`, preserving subfolder structure. This makes repo docs visible in Obsidian's graph without duplication.
 
@@ -168,7 +168,7 @@ Set up the Obsidian vault folder for this project. Also triggered automatically 
 
 ```json
 {
-  "vault": "~/ObsidianLLM",
+  "vault": "~/Obsidian",
   "folder": "[folder]",
   "name": "[Name]"
 }

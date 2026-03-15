@@ -53,7 +53,7 @@ kivna/.active-modes # ephemeral mode state
 .claude-plugin/   # plugin.json + marketplace.json
 ```
 
-The project's durable knowledge layer lives in the Obsidian vault at `~/ObsidianLLM/kerd/`. Kivna reads and writes vault files (`Kerd Context.md`, `Kerd Log.md`, `Decisions.md`). The vault config is at `kivna/vault.json`. See `/kerd:kivna` for details.
+The project's durable knowledge layer lives in the Obsidian vault at `~/Obsidian/kerd/`. Kivna reads and writes vault files (`Kerd Context.md`, `Kerd Log.md`, `Decisions.md`). The vault config is at `kivna/vault.json`. See `/kerd:kivna` for details.
 
 **Seven skills, each with a single responsibility:**
 - **dian** — session discipline (orient/plan/execute/close-out protocol)
@@ -97,7 +97,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.9.0
+**Version:** 0.9.1
 
 **Working:**
 - All seven skills functional: dian, discover, switch, kivna, sotu, skriv, tend
@@ -114,7 +114,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 **Recent changes (as of 2026-03-15):**
 - v0.9.0: Discover — skill gap analysis, scans project signals and recommends skills/plugins across three tiers
 - v0.8.0: Tend replaces startup — structural health check and convergence for new and existing repos, seven audit categories, visual report with fix flow
-- v0.7.0: Obsidian vault integration — kivna now reads/writes context, decisions, and activity log from `~/ObsidianLLM/kerd/` vault instead of local `kivna/context.md` and checkpoints
+- v0.7.0: Obsidian vault integration — kivna now reads/writes context, decisions, and activity log from `~/Obsidian/kerd/` vault instead of local `kivna/context.md` and checkpoints
 - v0.6.0: Strengthened dian (consistency check in orient, rigorous planning, verify-as-you-go in execute, diff review in close-out) and switch (reflection step on out, smoke test on in)
 - v0.5.0: Mode markers for dian and skriv, `.active-modes` state file, switch-in reports active modes
 

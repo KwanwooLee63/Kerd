@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.1
+
+- Changed default vault path from `~/ObsidianLLM/` to `~/Obsidian/`
+- Updated kivna scaffold to ask for vault location if `~/Obsidian/` doesn't exist
+- Added vault advisory to tend Category 3 — explains what the vault is and how to set it up
+- Updated all skill references, README, and playbook
+
 ## 0.9.0
 
 **Discover** — skill gap analysis for projects.
