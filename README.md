@@ -2,7 +2,7 @@
 
 "Ceird" means skill in Gaelic. Respelled.
 
-Six workflow skills for Claude Code. They handle the operational side of working across sessions and machines: when to pull, what to commit, where to put notes, how to audit for drift, how to scaffold a new project. They don't generate code or make architectural decisions. They keep the plumbing clean so you can focus on the work.
+Six workflow skills for Claude Code. They handle the operational side of working across sessions and machines: when to pull, what to commit, where to put notes, how to audit for drift, how to maintain structural health. They don't generate code or make architectural decisions. They keep the plumbing clean so you can focus on the work.
 
 ## Install
 
@@ -87,19 +87,19 @@ Three modes. Audit reviews a file and reports violations with line numbers. Fix 
 /skriv on              # session mode on
 ```
 
-### startup — Project Scaffold
+### tend — Structural Health
 
-Startup is a one-time setup for new projects. Point it at a fresh git repo and it creates the Kerd directory structure: `kivna/sessions/`, `docs/`, and all the initial files — README.md, TODO.md, CLAUDE.md with session workflow conventions, `docs/playbook.md` skeleton, `kivna/vault.json`, and a `.sotu` config. It also sets up the Obsidian vault folder at `~/ObsidianLLM/[project]/` with symlinks, MOC, Context, Log, and Decisions files. One commit, one push, ready to go.
+Tend audits repo infrastructure against current Kerd conventions and fixes what's drifted. Run it on a new repo to set up everything from scratch, or on an existing repo to catch drift after a Kerd update. It checks seven categories: directory structure, required files, vault integration, deprecated patterns, naming consistency, stray/stale files, and .gitignore hygiene.
 
-It won't overwrite files that already exist. If you created a README during repo init, startup skips it and moves on.
+The report shows each category as passing (✓), failing (✗), or warning (⚠). Failing and warning items get a current-vs-proposed table with reasons. After the report, choose to fix all, pick individually, or skip. Tend makes changes but never commits — switch owns that boundary.
 
 ```
-/startup
+/tend
 ```
 
 ## How They Fit Together
 
-New project: you create a repo, clone it, run `/startup`. It scaffolds everything. Then `/dian` to start your first session.
+New project: you create a repo, clone it, run `/tend`. It checks what's missing (everything, in this case), shows you the plan, and sets up the full structure with your approval. Then `/dian` to start your first session.
 
 Day to day: you sit down at your laptop and run `/switch in`. It pulls, reads the session logs, tells you what happened last time. It also reads vault Context.md — the decisions, reasoning, and working assumptions from last time — and reports any active modes left from a previous session. Then it offers to start a dian session. You run `/dian` to plan the session. Mid-work, you make a decision worth remembering, so you run `/kivna save`. When the work is done, dian's close-out updates the playbook and saves to the vault with the session's full context. You run `/sotu docs` to check nothing drifted. Then `/switch out` commits, pushes, and writes the session log. Tomorrow, different machine, same state. The playbook grows with every session — if someone else picks up the project, they can rebuild it from that doc alone.
 
@@ -111,6 +111,7 @@ Gaelic-inspired where it adds character:
 - **Dian** — intense, rigorous
 - **Skriv** — the act of writing (scríobh)
 - **Sotu** — state of the union (English acronym)
+- **Tend** — from English "to tend" (care for, maintain)
 
 ## License
 
