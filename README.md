@@ -2,7 +2,7 @@
 
 "Ceird" means skill in Gaelic. Respelled.
 
-Six workflow skills for Claude Code. They handle the operational side of working across sessions and machines: when to pull, what to commit, where to put notes, how to audit for drift, how to maintain structural health. They don't generate code or make architectural decisions. They keep the plumbing clean so you can focus on the work.
+Seven workflow skills for Claude Code. They handle the operational side of working across sessions and machines: when to pull, what to commit, where to put notes, how to audit for drift, how to maintain structural health. They don't generate code or make architectural decisions. They keep the plumbing clean so you can focus on the work.
 
 ## Install
 
@@ -97,11 +97,23 @@ The report shows each category as passing (✓), failing (✗), or warning (⚠)
 /tend
 ```
 
+### discover — Skill Gap Analysis
+
+Discover scans the current project and recommends skills or plugins you should be using but aren't. It works in three tiers. Tier 1 checks what's already installed but not activated in this project — skills gathering dust that match your stack. Tier 2 searches the Claude Code marketplace and a curated list of repos you maintain for plugins that fit your project's tech and themes. Tier 3 goes wider — GitHub and web search for trending or new plugins you haven't heard of yet.
+
+The recommendations aren't just based on file types. Discover reads your README, playbook, TODO, session logs, and vault decisions to extract work themes — fundraising, compliance, content creation, whatever keeps coming up. Each result shows a rich card with what the skill does, why it fits here, and an action prompt (try it, install it, or explore it).
+
+The curated source list lives in your Obsidian vault at `discover-sources.json` — syncs between machines automatically.
+
+```
+/discover
+```
+
 ## How They Fit Together
 
 New project: you create a repo, clone it, run `/tend`. It checks what's missing (everything, in this case), shows you the plan, and sets up the full structure with your approval. Then `/dian` to start your first session.
 
-Day to day: you sit down at your laptop and run `/switch in`. It pulls, reads the session logs, tells you what happened last time. It also reads vault Context.md — the decisions, reasoning, and working assumptions from last time — and reports any active modes left from a previous session. Then it offers to start a dian session. You run `/dian` to plan the session. Mid-work, you make a decision worth remembering, so you run `/kivna save`. When the work is done, dian's close-out updates the playbook and saves to the vault with the session's full context. You run `/sotu docs` to check nothing drifted. Then `/switch out` commits, pushes, and writes the session log. Tomorrow, different machine, same state. The playbook grows with every session — if someone else picks up the project, they can rebuild it from that doc alone.
+Day to day: you sit down at your laptop and run `/switch in`. It pulls, reads the session logs, tells you what happened last time. It also reads vault Context.md — the decisions, reasoning, and working assumptions from last time — and reports any active modes left from a previous session. Then it offers to start a dian session. You run `/dian` to plan the session. Mid-work, you make a decision worth remembering, so you run `/kivna save`. When the work is done, dian's close-out updates the playbook and saves to the vault with the session's full context. You run `/sotu docs` to check nothing drifted. Then `/switch out` commits, pushes, and writes the session log. Tomorrow, different machine, same state. The playbook grows with every session — if someone else picks up the project, they can rebuild it from that doc alone. Periodically run `/discover` to check if new skills have emerged that would help with the project.
 
 ## Naming
 
@@ -112,6 +124,7 @@ Gaelic-inspired where it adds character:
 - **Skriv** — the act of writing (scríobh)
 - **Sotu** — state of the union (English acronym)
 - **Tend** — from English "to tend" (care for, maintain)
+- **Discover** — from English "to discover" (find something new)
 
 ## License
 
