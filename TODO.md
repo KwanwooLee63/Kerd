@@ -1,9 +1,7 @@
 # TODO
 
-## Current Session (2026-03-14)
-- [x] Task 1: Update startup SKILL.md for vault integration
-- [x] Task 2: Fix stale docs and vault files (playbook gotcha, CLAUDE.md, vault Decisions/Context/Log)
-- [ ] Task 3: End-to-end test — run /kerd:kivna save live
+## Current Session
+(no active session)
 
 ## Backlog
 - Test sotu playbook audit on a project with a playbook
