@@ -1,6 +1,6 @@
 ---
 name: tend
-description: "Use when the user says 'tend', 'check structure', 'fix drift', 'health check', 'set up this project', 'initialize kerd', 'scaffold', or needs to audit or converge repo structure to current Kerd conventions. Works on new repos (full setup) and existing repos (detect drift, fix gaps)."
+description: "Use when the user says 'tend', 'check structure', 'fix drift', 'structural health check', 'set up this project', 'initialize kerd', 'scaffold', or needs to audit or converge repo structure to current Kerd conventions. Works on new repos (full setup) and existing repos (detect drift, fix gaps)."
 ---
 
 # Tend — Structural Health & Convergence
@@ -179,7 +179,7 @@ Scan for:
 - Screenshots (`*.png`, `*.jpg`, `*.jpeg`, `*.gif`, `*.webp`) in repo root or committed dirs
 - Temp files (`*.tmp`, `*.log`, `*.bak`, `*.swp`, `*~`)
 - `.DS_Store` anywhere in the repo
-- Files with no git commits touching them in 60+ days that aren't documentation (`.md`), config (`.json`, `.yaml`, `.toml`, `.sotu`), or gitignore. Use `git log --diff-filter=A --format=%at -- <file>` to check.
+- Files with no git commits touching them in 60+ days that aren't documentation (`.md`), config (`.json`, `.yaml`, `.toml`, `.sotu`), or gitignore. Use `git log -1 --format=%at -- <file>` to check the most recent commit touching the file.
 - Orphaned files not referenced by any other file in the repo (check with grep for the filename across all files). Only check for files in the repo root — subdirectory files are more likely intentional.
 
 #### Category 7: .gitignore hygiene
