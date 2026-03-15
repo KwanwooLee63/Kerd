@@ -42,7 +42,7 @@ Scan for these files and extract language, framework, deployment, and CI informa
 
 #### Layer 2: Work signals — theme extraction from prose
 
-Read these files and extract keywords and themes (not categories — a project can be "startup + legal + content" all at once):
+Read these files if they exist and extract keywords and themes (not categories — a project can be "startup + legal + content" all at once). Skip any that don't exist — a missing file is not an error, just fewer signals:
 
 - `README.md` — project description, what it's for
 - `docs/playbook.md` — integrations, architecture intent
@@ -69,10 +69,10 @@ Project profile:
 
 Scan installed plugins and skills:
 
-1. Read `~/.claude/plugins/` to find all installed plugins
+1. Read `~/.claude/plugins/` to find all installed plugins. If the directory does not exist or is empty, skip Tier 1 and note: "No installed plugins found. Tier 1 skipped."
 2. For each plugin, read its skills (check `skills/` subdirectories for SKILL.md files, or read the plugin's manifest)
 3. Match each skill's description and capabilities against the project profile
-4. Filter to skills that are relevant to this project but have not been invoked here (check session logs and git history for mentions of the skill name)
+4. Filter to skills that are relevant to this project but have not been invoked here — check `kivna/sessions/` and git history for `/[plugin:skill-name]` invocations. If the skill has been invoked in this project, exclude it. If no invocation is found, include it as a recommendation.
 5. For each match, read the skill's SKILL.md to get a proper description
 
 Report matches as rich cards:
@@ -96,7 +96,7 @@ Search two sources:
 
 **Source A: Claude Code marketplace**
 
-Search the marketplace for plugins matching the project profile. Use available CLI commands or API to search. Filter out anything already installed.
+Search for Claude Code plugins matching the project profile. Use web search to find plugins on the Claude Code marketplace or plugin directories. Search with terms combining the project's tech stack and themes with "Claude Code plugin" or "Claude Code skill." Filter out anything already installed.
 
 **Source B: Curated repo list**
 
