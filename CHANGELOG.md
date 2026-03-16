@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.2
+
+- Kivna save now refreshes the vault MOC (`[Name].md`) — updates version, skill table, symlinks, and section links so the MOC never drifts
+
 ## 0.9.1
 
 - Changed default vault path from `~/ObsidianLLM/` to `~/Obsidian/`

@@ -71,8 +71,18 @@ Use it at natural breakpoints: after finishing a task, before context gets long,
 
 4. **Flag decisions.** If new decisions were made since the last save, show each one to the user with its reasoning. Wait for approval before writing anything to `Decisions.md`. User can approve, edit, or skip each decision. Kivna does NOT write to `Decisions.md` without explicit approval.
 
-5. **Confirm.** One-line summary:
-   > Saved to vault: Context updated, N log entries, M decisions flagged.
+5. **Refresh the MOC.** Read `[Name].md` (the Map of Content) in the vault folder. Update it to reflect current state:
+   - **Version** — read from `kivna/vault.json` or `.claude-plugin/plugin.json` if available
+   - **Skill table** — scan `skills/*/SKILL.md` in the repo, update the table to match
+   - **Symlinks** — scan all `.md` files in the repo, check for any missing from the vault folder. Add symlinks for any new files. Update the Design & Plans and Session History sections to include new entries.
+   - **Status line** — update skill count and description if changed
+
+   Keep the MOC structure intact — just refresh the data within it. Don't rewrite sections that are manually curated (like Cross-Project Links).
+
+   If the MOC doesn't exist, skip this step — it gets created by `/kerd:kivna scaffold`, not by save.
+
+6. **Confirm.** One-line summary:
+   > Saved to vault: Context updated, N log entries, M decisions flagged, MOC refreshed.
 
 ### `/kivna in` — Import External Knowledge
 
