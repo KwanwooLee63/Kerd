@@ -1,20 +1,22 @@
 ---
-name: switch
-description: "Use when the user says 'switch', 'switching machines', 'wrapping up', 'picking up', 'handoff', or needs to cleanly leave or arrive on a machine. Handles all git boundary operations (pull, push, commit of session state)."
+name: seach
+description: "Use when the user says 'seach', 'switch', 'switching machines', 'wrapping up', 'picking up', 'handoff', or needs to cleanly leave or arrive on a machine. Handles all git boundary operations (pull, push, commit of session state)."
 ---
 
-# Switch (Machine Handoff)
+# Seach (Machine Handoff)
 
-Clean handoff between machines. Switch owns all git boundary operations: pull, push, commit of session state. No other skill should do these things.
+From Gaelic "seachad" (to pass, hand over). Pronounced "SHAKH".
+
+Clean handoff between machines. Seach owns all git boundary operations: pull, push, commit of session state. No other skill should do these things.
 
 ## Usage
 
-`/switch out` leaving this machine
-`/switch in` arriving on a new machine
+`/seach out` leaving this machine
+`/seach in` arriving on a new machine
 
 If no argument is given, check for uncommitted changes. If changes exist, assume `out`. If clean, assume `in`.
 
-## Switch Out (Leaving This Machine)
+## Seach Out (Leaving This Machine)
 
 Wrap up everything so the next machine can pick up cold.
 
@@ -92,7 +94,7 @@ Run `git status` and confirm the working tree is clean and nothing remains uncom
 
 Print a short summary: what was pushed, what the next session should start with.
 
-## Switch In (Arriving on This Machine)
+## Seach In (Arriving on This Machine)
 
 Pick up where the other machine left off.
 

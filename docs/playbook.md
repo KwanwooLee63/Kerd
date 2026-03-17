@@ -44,11 +44,11 @@ The plugin manifest (`.claude-plugin/plugin.json`) declares the plugin name, ver
 
 **Directory layout:**
 ```
-skills/           # SKILL.md per skill (dian, discover, kivna, skriv, sotu, tend, switch)
+skills/           # SKILL.md per skill (dian, lorg, kivna, skriv, slainte, tend, seach)
 docs/plans/       # historical design docs
 docs/playbook.md  # this file
 kivna/vault.json  # Obsidian vault config
-kivna/sessions/   # session logs written by switch
+kivna/sessions/   # session logs written by seach
 kivna/.active-modes # ephemeral mode state
 .claude-plugin/   # plugin.json + marketplace.json
 ```
@@ -57,10 +57,10 @@ The project's knowledge layer lives in the Obsidian vault at `~/Obsidian/kerd/`.
 
 **Seven skills, each with a single responsibility:**
 - **dian**: session discipline (orient/plan/execute/close-out protocol)
-- **discover**: skill gap analysis (scan project signals, recommend skills/plugins across tiers)
-- **switch**: git boundary operations (pull on arrive, commit+push on leave)
+- **lorg**: skill gap analysis (scan project signals, recommend skills/plugins across tiers)
+- **seach**: git boundary operations (pull on arrive, commit+push on leave)
 - **kivna**: knowledge management (Obsidian vault: living Status.md, domain knowledge files, import/export)
-- **sotu**: project health audits (docs, code, site, deps, playbook)
+- **slainte**: project health audits (docs, code, site, deps, playbook)
 - **skriv**: human writing voice enforcement (audit, fix, session mode)
 - **tend**: structural health check and convergence
 
@@ -68,9 +68,9 @@ The project's knowledge layer lives in the Obsidian vault at `~/Obsidian/kerd/`.
 
 No external services or APIs. Kerd operates entirely within the local filesystem and git.
 
-The only integration point is the **Claude Code plugin system**. Kerd registers as a plugin and its skills become available as slash commands (`/kerd:dian`, `/kerd:switch`, etc.).
+The only integration point is the **Claude Code plugin system**. Kerd registers as a plugin and its skills become available as slash commands (`/kerd:dian`, `/kerd:seach`, etc.).
 
-Session logs written by switch go to `kivna/sessions/` and are committed to git, making them available across machines.
+Session logs written by seach go to `kivna/sessions/` and are committed to git, making them available across machines.
 
 ## Deployment
 
@@ -94,7 +94,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - **Namespace prefix**: skill SKILL.md frontmatter uses bare names (`name: dian`), but all references in docs and skills must use `kerd:` prefix (`/kerd:dian`). The plugin system adds the prefix automatically. README examples are exempt for readability.
 - **Vault path convention**: default vault path is `~/Obsidian/`. Kivna scaffold asks for the location if it doesn't exist. All vault.json files point here. If you rename or move the vault folder, update vault.json in every repo.
 - **Vault spec**: the vault spec at `docs/vault-spec.md` defines what belongs in the vault. No symlinks, no append-only files, no generic filenames. When in doubt, check the spec.
-- **Cross-cutting changes**: when modifying a pattern used across multiple skills (like vault file references), grep all skill files for the old pattern after implementation. The plan will miss files. The v0.10.0 vault redesign missed `discover/SKILL.md` entirely, caught only by final code review searching for stale references.
+- **Cross-cutting changes**: when modifying a pattern used across multiple skills (like vault file references), grep all skill files for the old pattern after implementation. The plan will miss files. The v0.10.0 vault redesign missed `lorg/SKILL.md` entirely, caught only by final code review searching for stale references.
 
 
 ## Current Status
@@ -102,7 +102,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 **Version:** 0.10.0
 
 **Working:**
-- All seven skills functional: dian, discover, switch, kivna, sotu, skriv, tend
+- All seven skills functional: dian, lorg, seach, kivna, slainte, skriv, tend
 - Plugin installs from marketplace
 - Session logs, playbook creation, and health audits all operational
 - Obsidian vault integration. Kivna reads/writes living vault files (Status.md, domain knowledge) with approval-gated overwrites
@@ -110,18 +110,18 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Dian playbook creation verified. Skeleton matches expected template
 - Mode markers on dian and skriv. Visible phase/state announcements with `.active-modes` state file
 - Dian rigorous planning (interrogate tasks, push back, no guessing) and execute verification (check each task, record decisions immediately, docs with code)
-- Switch-out reflection. Captures learnings to CLAUDE.md and memory files
-- Switch-in smoke test. Runs project tests if they exist
+- Seach-out reflection. Captures learnings to CLAUDE.md and memory files
+- Seach-in smoke test. Runs project tests if they exist
 
 **Recent changes (as of 2026-03-15):**
 - v0.10.0: Vault redesign. Living human-readable files replace append-only dumps, no symlinks, approval-gated Status.md overwrites, vault spec at docs/vault-spec.md
-- v0.9.0: Discover. Skill gap analysis, scans project signals and recommends skills/plugins across three tiers
+- v0.9.0: Lorg. Skill gap analysis, scans project signals and recommends skills/plugins across three tiers
 - v0.8.0: Tend replaces startup. Structural health check and convergence for new and existing repos, seven audit categories, visual report with fix flow
 - v0.7.0: Obsidian vault integration. Kivna now reads/writes context, decisions, and activity log from `~/Obsidian/kerd/` vault instead of local `kivna/context.md` and checkpoints
-- v0.6.0: Strengthened dian (consistency check in orient, rigorous planning, verify-as-you-go in execute, diff review in close-out) and switch (reflection step on out, smoke test on in)
-- v0.5.0: Mode markers for dian and skriv, `.active-modes` state file, switch-in reports active modes
+- v0.6.0: Strengthened dian (consistency check in orient, rigorous planning, verify-as-you-go in execute, diff review in close-out) and seach (reflection step on out, smoke test on in)
+- v0.5.0: Mode markers for dian and skriv, `.active-modes` state file, seach-in reports active modes
 
 **Next:**
-- Test sotu playbook audit on a project with a playbook
-- Consider adding version bumping to the switch-out process
+- Test slainte playbook audit on a project with a playbook
+- Consider adding version bumping to the seach-out process
 - Adopt third-person description format for skill triggers (low priority)

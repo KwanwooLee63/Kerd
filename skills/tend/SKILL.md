@@ -13,10 +13,10 @@ Run it on a new repo to set up everything. Run it on an existing repo to catch d
 
 `/kerd:tend`: run in the root of a git repo
 
-## Boundary with SOTU
+## Boundary with Slainte
 
 - **tend**: structure and plumbing (dirs, vault, config files, naming, stray files, deprecated patterns).
-- **sotu**: content (doc accuracy, staleness, consistency, CLAUDE.md sections).
+- **slainte**: content (doc accuracy, staleness, consistency, CLAUDE.md sections).
 
 ## The Process
 
@@ -55,7 +55,7 @@ Check these files exist:
 - `CLAUDE.md`
 - `TODO.md`
 - `docs/playbook.md`
-- `.sotu`
+- `.slainte`
 - `kivna/vault.json`
 
 For brand new repos (user provided project name), create missing files using these templates:
@@ -82,7 +82,7 @@ For brand new repos (user provided project name), create missing files using the
 
 ## Session Workflow
 
-When wrapping up a session (`/kerd:switch out` or `/kerd:dian`):
+When wrapping up a session (`/kerd:seach out` or `/kerd:dian`):
 1. Update `TODO.md`: check off completed items, add new ones.
 2. Update `docs/playbook.md`: if any new steps, tools, or config were added during the session, add them to the playbook. Always update the "Current Status" section.
 
@@ -123,9 +123,9 @@ How to rebuild this project from scratch.
 [What's working, what's in progress, what's next]
 ```
 
-**.sotu:**
+**.slainte:**
 ```
-# SOTU Audit Targets
+# Slainte Audit Targets
 
 ## docs
 - README.md
@@ -185,6 +185,7 @@ Detect files/dirs from older Kerd versions:
 - `kivna/checkpoints/`: replaced by vault Status.md in v0.10.0 (was vault Context.md in v0.7.0)
 - `kivna/memories/`: replaced by vault in v0.7.0
 - `commands/`: removed in v0.7.0, plugin system loads skills directly
+- `.sotu`: renamed to `.slainte` in v0.11.0
 
 #### Category 5: Naming consistency
 
@@ -201,7 +202,7 @@ Scan for:
 - Screenshots (`*.png`, `*.jpg`, `*.jpeg`, `*.gif`, `*.webp`) in repo root or committed dirs
 - Temp files (`*.tmp`, `*.log`, `*.bak`, `*.swp`, `*~`)
 - `.DS_Store` anywhere in the repo
-- Files with no git commits touching them in 60+ days that aren't documentation (`.md`), config (`.json`, `.yaml`, `.toml`, `.sotu`), or gitignore. Use `git log -1 --format=%at -- <file>` to check the most recent commit touching the file.
+- Files with no git commits touching them in 60+ days that aren't documentation (`.md`), config (`.json`, `.yaml`, `.toml`, `.slainte`), or gitignore. Use `git log -1 --format=%at -- <file>` to check the most recent commit touching the file.
 - Orphaned files not referenced by any other file in the repo (check with grep for the filename across all files). Only check for files in the repo root (subdirectory files are more likely intentional).
 
 #### Category 7: .gitignore hygiene
@@ -224,7 +225,7 @@ Format the report as a visual table. Show passing categories as one-liners. Show
   kivna/  kivna/sessions/  docs/
 
 ✓ Required files
-  README.md  CLAUDE.md  TODO.md  docs/playbook.md  .sotu  vault.json
+  README.md  CLAUDE.md  TODO.md  docs/playbook.md  .slainte  vault.json
 
 ✗ Vault integration
   ┌──────────────────┬───────────────┬─────────────────────────────┐
@@ -287,13 +288,13 @@ Fix all? [yes / pick individually / skip]
 
 ### 6. Summary
 
-After fixes are applied, print what was changed. Do NOT commit. Switch owns git boundary operations.
+After fixes are applied, print what was changed. Do NOT commit. Seach owns git boundary operations.
 
-If this is a brand new repo and all structure was just created, suggest: "Structure ready. Run `/kerd:dian` to start your first session, or `/kerd:switch out` to commit and push."
+If this is a brand new repo and all structure was just created, suggest: "Structure ready. Run `/kerd:dian` to start your first session, or `/kerd:seach out` to commit and push."
 
 ## No Commit
 
-Tend does NOT commit or push. It makes structural changes and stops. This keeps switch as the sole owner of git boundary operations (Kerd convention). The user commits via `/kerd:switch out` or manually.
+Tend does NOT commit or push. It makes structural changes and stops. This keeps seach as the sole owner of git boundary operations (Kerd convention). The user commits via `/kerd:seach out` or manually.
 
 ## Notes
 

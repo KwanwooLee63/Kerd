@@ -1,9 +1,11 @@
 ---
-name: discover
-description: "Use when the user says 'discover', 'find skills', 'what plugins', 'skill gap', 'what am I missing', 'new skills', 'explore plugins', or wants to find skills and plugins that would help with the current project. Searches installed plugins, marketplace, curated sources, and the web."
+name: lorg
+description: "Use when the user says 'lorg', 'discover', 'find skills', 'what plugins', 'skill gap', 'what am I missing', 'new skills', 'explore plugins', or wants to find skills and plugins that would help with the current project. Searches installed plugins, marketplace, curated sources, and the web."
 ---
 
-# Discover (Skill Gap Analysis)
+# Lorg (Skill Gap Analysis)
+
+From Gaelic "lorg" (to seek, track down). Pronounced "LORG".
 
 Scans the current project and recommends skills or plugins you should be using but aren't. Three tiers of widening search radius, all informed by the same project signals.
 
@@ -11,11 +13,11 @@ Not a health check. Not about what's broken or unused elsewhere. Purely about fi
 
 ## Usage
 
-`/kerd:discover`: run in the root of a git repo
+`/kerd:lorg`: run in the root of a git repo
 
 ## Boundary with Other Skills
 
-- **discover**: skill/plugin opportunities (what tools would help this project)
+- **lorg**: skill/plugin opportunities (what tools would help this project)
 - **tend**: structural health (dirs, vault, config, naming)
 - **sotu**: content health (doc accuracy, staleness)
 
@@ -51,7 +53,7 @@ Read these files if they exist and extract keywords and themes (not categories, 
 - Vault MOC (`[Name].md`) to discover other vault files (Architecture Decisions, Playbook, etc.) and scan any that exist for themes
 - `kivna/sessions/` for last 3-5 session logs, recurring task patterns
 
-Discover the vault path using `kivna/vault.json` (read `vault`, `folder`, `name` fields, expand `~`).
+Resolve the vault path using `kivna/vault.json` (read `vault`, `folder`, `name` fields, expand `~`).
 
 From these docs, extract recurring themes as keywords. Examples: "fundraising", "pitch deck", "compliance", "content writing", "SEO", "API integration", "testing", "deployment". These keywords drive search alongside tech signals.
 
@@ -171,7 +173,7 @@ Combine all tiers into a single report:
 
 ```
 ┌─────────────────────────────────────────────────┐
-│  /kerd:discover: [project-name]                 │
+│  /kerd:lorg: [project-name]                 │
 └─────────────────────────────────────────────────┘
 
 Project profile:
@@ -229,12 +231,12 @@ The curated source list lives in the Obsidian vault, synced between machines:
 - `repos`: GitHub repos to check for Claude Code plugins/skills
 - `urls`: web pages to scan for plugin references and recommendations
 
-To add a source: edit the file directly or ask discover to add one.
+To add a source: edit the file directly or ask lorg to add one.
 
-## What Discover Does NOT Do
+## What Lorg Does NOT Do
 
 - **No auto-install.** Every install is prompted and approved individually.
-- **No removal suggestions.** A skill unused in this project may be critical in another. Discover finds gaps, not waste.
+- **No removal suggestions.** A skill unused in this project may be critical in another. Lorg finds gaps, not waste.
 - **No health checks.** That's tend's job (structure) or sotu's job (content).
 - **No caching of results.** Fresh scan every run. The ecosystem and your project both change.
 - **No rating or ranking.** Presents what it finds with context. You decide what's valuable.
@@ -242,6 +244,6 @@ To add a source: edit the file directly or ask discover to add one.
 ## Notes
 
 - The project profile is computed fresh each run. Not stored. Projects evolve, and stale profiles would mislead.
-- Layer 2 (work signals) is what makes discover genuinely useful beyond simple file-extension matching. It catches non-technical skill gaps like "you keep writing investor updates."
+- Layer 2 (work signals) is what makes lorg genuinely useful beyond simple file-extension matching. It catches non-technical skill gaps like "you keep writing investor updates."
 - If no vault is found, Tiers 1 and 3 still work. Tier 2's curated sources are skipped with a note suggesting vault setup.
-- Discover is read-only except when the user approves a Tier 2 install. It never modifies project files.
+- Lorg is read-only except when the user approves a Tier 2 install. It never modifies project files.

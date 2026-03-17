@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.11.0
+
+**Skill rename.** Three skills renamed to Gaelic to avoid collisions with superpowers plugin.
+
+- Renamed sotu → slainte (from Irish "slàinte," health)
+- Renamed switch → seach (from Gaelic "seachad," to hand over)
+- Renamed discover → lorg (from Gaelic "lorg," to seek)
+- Config file `.sotu` renamed to `.slainte`
+- Old `.sotu` added to tend's deprecated patterns
+
+## 0.10.1
+
+**Skriv dash rule.** Expanded to ban all dashes as punctuation (em, en, double hyphens), then applied across every living file.
+
 ## 0.10.0
 
 **Vault redesign.** Human knowledge base, not machine sync layer.

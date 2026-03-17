@@ -10,12 +10,12 @@
 - [x] Committed and pushed
 
 ## Backlog
-- Restart Claude Code and test /kerd:tend and /kerd:discover live (v0.10.0 needs restart)
+- Restart Claude Code and test /kerd:tend and /kerd:lorg live (v0.10.0 needs restart)
 - Run /kerd:tend on krutho-founders, krutho-strategy, obair. Will flag old symlinks and Context.md/Log.md for removal
 - Build out Kerd vault files: Playbook, Usage Guide, Architecture Decisions, Install Guide
 - Re-open Obsidian vault pointing to ~/Obsidian/ (manual step)
 - Clean old vault files from ~/Obsidian/kerd/ (symlinks, Context.md, Log.md, Decisions.md). Tend will flag these
-- Test sotu playbook audit on a project with a playbook
+- Test slainte playbook audit on a project with a playbook
 - Adopt third-person description format for skill triggers (low priority)
 - Description optimization for skill triggers (low priority, eval harness limitations)
 

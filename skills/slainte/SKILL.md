@@ -1,20 +1,22 @@
 ---
-name: sotu
-description: "Use when the user says 'sotu', 'audit', 'health check', 'check staleness', 'state of the union', or needs to audit project health across docs, code, site, or dependencies. Read-only audit that reports issues without fixing them."
+name: slainte
+description: "Use when the user says 'slainte', 'sotu', 'audit', 'health check', 'check staleness', 'state of the union', or needs to audit project health across docs, code, site, or dependencies. Read-only audit that reports issues without fixing them."
 ---
 
-# SOTU (State of the Union)
+# Slainte (Project Health)
+
+From Irish "slàinte" (health). Pronounced "SLAHN-chuh".
 
 Read-only audit of project health. Reports issues with severity grades. Does not fix anything. That's the user's call.
 
 ## Config
 
-SOTU uses a `.sotu` config file at the project root to know what to audit. If no config exists on first run, prompt the user to register targets.
+Slainte uses a `.slainte` config file at the project root to know what to audit. If no config exists on first run, prompt the user to register targets.
 
-### Config format (`.sotu`):
+### Config format (`.slainte`):
 
 ```
-# SOTU Audit Targets
+# Slainte Audit Targets
 
 ## docs
 - README.md
@@ -39,17 +41,17 @@ SOTU uses a `.sotu` config file at the project root to know what to audit. If no
 
 ## Commands
 
-### `/sotu` (no args)
+### `/kerd:slainte` (no args)
 
-Show the current `.sotu` config: what's registered under each area. If no config exists, say so and offer to create one.
+Show the current `.slainte` config: what's registered under each area. If no config exists, say so and offer to create one.
 
-### `/sotu add <area> <path>`
+### `/kerd:slainte add <area> <path>`
 
-Register a file or directory under an area. Create `.sotu` if it doesn't exist. Valid areas: `docs`, `code`, `site`, `deps`, `playbook`.
+Register a file or directory under an area. Create `.slainte` if it doesn't exist. Valid areas: `docs`, `code`, `site`, `deps`, `playbook`.
 
-Example: `/sotu add docs README.md`
+Example: `/kerd:slainte add docs README.md`
 
-### `/sotu <area>`
+### `/kerd:slainte <area>`
 
 Run the audit for the specified area. Valid areas: `docs`, `code`, `site`, `deps`, `playbook`, `all`.
 
@@ -113,7 +115,7 @@ Run all areas. Use parallel agents where possible for speed.
 Start with a summary line:
 
 ```
-SOTU: X high, Y medium, Z low
+Slainte: X high, Y medium, Z low
 ```
 
 Then a severity table per area:
