@@ -4,22 +4,22 @@
 (no active session, last completed 2026-03-18)
 
 ### Done this session
-- [x] Vault cleanup and domain files (dian session): Architecture Decisions, Usage Guide, Install Guide
-- [x] Added skills table and project list to vault MOC
-- [x] Ran lorg scan on Kerd (5 Tier 1 matches)
-- [x] Added lorg report saving feature: writes to docs/lorg-report.md + vault (v0.12.0)
-- [x] Fixed stale sotu reference in lorg boundary section
+- [x] Moved vault path from ~/Obsidian/ to ~/eolas/vault/ across all active files (v0.12.1)
+- [x] Audited vault content for stale references, fixed 5 vault files
+- [x] Renamed seach → shakh for voice tool compatibility (v0.13.0)
+- [x] Updated all cross-skill references, docs, README, vault files
 
 ## Backlog
 - Run /kerd:tend on krutho-founders, krutho-strategy, obair to migrate vaults
-- Re-open Obsidian vault pointing to ~/eolas/vault/ (manual step)
+- Update vault.json in other repos to point to ~/eolas/vault/
+- Re-open Obsidian vault in app pointing to ~/eolas/vault/ (manual step)
 - Test slainte playbook audit on a project with a playbook
 - Adopt third-person description format for skill triggers (low priority)
 - Description optimization for skill triggers (low priority, eval harness limitations)
 
 ### Context
-- Version is 0.12.0
-- Lorg now saves reports to docs/lorg-report.md and vault [Name] Lorg Report.md
-- Vault MOC has skills table, project list (7 projects), and lorg report link
+- Version is 0.13.0
+- Vault path is now ~/eolas/vault/ (changed from ~/Obsidian/)
+- Skill "seach" renamed to "shakh" — voice tools couldn't parse the old name
 - Plugin update command is `claude plugin update kerd@kerd-marketplace`
 - marketplace.json URL uses ssh format (git@github.com:), intentional

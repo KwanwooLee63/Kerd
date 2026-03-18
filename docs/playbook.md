@@ -114,8 +114,9 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Shakh-out reflection. Captures learnings to CLAUDE.md and memory files
 - Shakh-in smoke test. Runs project tests if they exist
 
-**Recent changes (as of 2026-03-17):**
-- v0.11.0: Renamed three skills to Gaelic to avoid collisions with superpowers plugin: sotu to slainte, switch to shakh, discover to lorg. Config file `.sotu` renamed to `.slainte`.
+**Recent changes (as of 2026-03-18):**
+- v0.13.0: Renamed seach → shakh for voice tool compatibility. Vault path moved to `~/eolas/vault/`.
+- v0.11.0: Renamed three skills to Gaelic to avoid collisions with superpowers plugin: sotu to slainte, switch to seach, discover to lorg. Config file `.sotu` renamed to `.slainte`.
 - v0.10.1: Expanded skriv dash rule to ban all dashes as punctuation (em, en, double hyphens). Cleaned all living files.
 - v0.10.0: Vault redesign. Living human-readable files replace append-only dumps, no symlinks, approval-gated Status.md overwrites, vault spec at docs/vault-spec.md
 - v0.9.0: Lorg. Skill gap analysis, scans project signals and recommends skills/plugins across three tiers
