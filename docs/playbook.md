@@ -114,15 +114,14 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Seach-out reflection. Captures learnings to CLAUDE.md and memory files
 - Seach-in smoke test. Runs project tests if they exist
 
-**Recent changes (as of 2026-03-15):**
+**Recent changes (as of 2026-03-17):**
+- v0.11.0: Renamed three skills to Gaelic to avoid collisions with superpowers plugin: sotu to slainte, switch to seach, discover to lorg. Config file `.sotu` renamed to `.slainte`.
+- v0.10.1: Expanded skriv dash rule to ban all dashes as punctuation (em, en, double hyphens). Cleaned all living files.
 - v0.10.0: Vault redesign. Living human-readable files replace append-only dumps, no symlinks, approval-gated Status.md overwrites, vault spec at docs/vault-spec.md
 - v0.9.0: Lorg. Skill gap analysis, scans project signals and recommends skills/plugins across three tiers
 - v0.8.0: Tend replaces startup. Structural health check and convergence for new and existing repos, seven audit categories, visual report with fix flow
-- v0.7.0: Obsidian vault integration. Kivna now reads/writes context, decisions, and activity log from `~/Obsidian/kerd/` vault instead of local `kivna/context.md` and checkpoints
-- v0.6.0: Strengthened dian (consistency check in orient, rigorous planning, verify-as-you-go in execute, diff review in close-out) and seach (reflection step on out, smoke test on in)
-- v0.5.0: Mode markers for dian and skriv, `.active-modes` state file, seach-in reports active modes
 
 **Next:**
+- Run `/kerd:tend` on other projects to migrate vaults
 - Test slainte playbook audit on a project with a playbook
 - Consider adding version bumping to the seach-out process
-- Adopt third-person description format for skill triggers (low priority)
