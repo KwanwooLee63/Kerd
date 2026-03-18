@@ -19,7 +19,7 @@ Not a health check. Not about what's broken or unused elsewhere. Purely about fi
 
 - **lorg**: skill/plugin opportunities (what tools would help this project)
 - **tend**: structural health (dirs, vault, config, naming)
-- **sotu**: content health (doc accuracy, staleness)
+- **slainte**: content health (doc accuracy, staleness)
 
 ## The Process
 
@@ -197,7 +197,19 @@ Project profile:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### 6. Post-report walkthrough
+### 6. Save report
+
+Write the full report (everything displayed in step 5) to two locations:
+
+**Repo-side:** `docs/lorg-report.md`. Overwrite if it already exists. This is a working reference, committed to git, available on any machine.
+
+**Vault-side:** `[Name] Lorg Report.md` in the Obsidian vault (e.g., `Kerd Lorg Report.md`). Overwrite if it already exists. This makes the report searchable in Obsidian alongside other project files. Resolve the vault path via `kivna/vault.json`.
+
+Add a date line at the top of both files: `Last scanned: YYYY-MM-DD`
+
+Both files get the identical content. The repo copy travels with git. The vault copy is searchable in Obsidian.
+
+### 7. Post-report walkthrough
 
 After the report, walk through each item individually. Different actions per tier:
 
@@ -238,7 +250,7 @@ To add a source: edit the file directly or ask lorg to add one.
 - **No auto-install.** Every install is prompted and approved individually.
 - **No removal suggestions.** A skill unused in this project may be critical in another. Lorg finds gaps, not waste.
 - **No health checks.** That's tend's job (structure) or sotu's job (content).
-- **No caching of results.** Fresh scan every run. The ecosystem and your project both change.
+- **Fresh scan every run.** The report files get overwritten each run. The ecosystem and your project both change.
 - **No rating or ranking.** Presents what it finds with context. You decide what's valuable.
 
 ## Notes
@@ -246,4 +258,4 @@ To add a source: edit the file directly or ask lorg to add one.
 - The project profile is computed fresh each run. Not stored. Projects evolve, and stale profiles would mislead.
 - Layer 2 (work signals) is what makes lorg genuinely useful beyond simple file-extension matching. It catches non-technical skill gaps like "you keep writing investor updates."
 - If no vault is found, Tiers 1 and 3 still work. Tier 2's curated sources are skipped with a note suggesting vault setup.
-- Lorg is read-only except when the user approves a Tier 2 install. It never modifies project files.
+- Lorg writes two files each run (`docs/lorg-report.md` and the vault report) and optionally installs Tier 2 plugins with approval. It does not modify other project files.
