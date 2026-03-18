@@ -5,7 +5,7 @@
 **Skill rename.** Three skills renamed to Gaelic to avoid collisions with superpowers plugin.
 
 - Renamed sotu → slainte (from Irish "slàinte," health)
-- Renamed switch → seach (from Gaelic "seachad," to hand over)
+- Renamed switch → seach → shakh (from Gaelic "seachad," to hand over. Respelled for voice tools)
 - Renamed discover → lorg (from Gaelic "lorg," to seek)
 - Config file `.sotu` renamed to `.slainte`
 - Old `.sotu` added to tend's deprecated patterns

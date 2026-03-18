@@ -50,7 +50,7 @@ Project profile:
 │                                                  │
 │ Why here: Kerd's session discipline is about     │
 │ continuity across sessions. Episodic memory      │
-│ complements seach/kivna by searching actual      │
+│ complements shakh/kivna by searching actual      │
 │ conversation history, not just session logs.     │
 │                                                  │
 │ Already installed. Try: /episodic-memory:remembering-conversations │

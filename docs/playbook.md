@@ -44,11 +44,11 @@ The plugin manifest (`.claude-plugin/plugin.json`) declares the plugin name, ver
 
 **Directory layout:**
 ```
-skills/           # SKILL.md per skill (dian, lorg, kivna, skriv, slainte, tend, seach)
+skills/           # SKILL.md per skill (dian, lorg, kivna, skriv, slainte, tend, shakh)
 docs/plans/       # historical design docs
 docs/playbook.md  # this file
 kivna/vault.json  # Obsidian vault config
-kivna/sessions/   # session logs written by seach
+kivna/sessions/   # session logs written by shakh
 kivna/.active-modes # ephemeral mode state
 .claude-plugin/   # plugin.json + marketplace.json
 ```
@@ -58,7 +58,7 @@ The project's knowledge layer lives in the Obsidian vault at `~/eolas/vault/kerd
 **Seven skills, each with a single responsibility:**
 - **dian**: session discipline (orient/plan/execute/close-out protocol)
 - **lorg**: skill gap analysis (scan project signals, recommend skills/plugins across tiers)
-- **seach**: git boundary operations (pull on arrive, commit+push on leave)
+- **shakh**: git boundary operations (pull on arrive, commit+push on leave)
 - **kivna**: knowledge management (Obsidian vault: living Status.md, domain knowledge files, import/export)
 - **slainte**: project health audits (docs, code, site, deps, playbook)
 - **skriv**: human writing voice enforcement (audit, fix, session mode)
@@ -68,9 +68,9 @@ The project's knowledge layer lives in the Obsidian vault at `~/eolas/vault/kerd
 
 No external services or APIs. Kerd operates entirely within the local filesystem and git.
 
-The only integration point is the **Claude Code plugin system**. Kerd registers as a plugin and its skills become available as slash commands (`/kerd:dian`, `/kerd:seach`, etc.).
+The only integration point is the **Claude Code plugin system**. Kerd registers as a plugin and its skills become available as slash commands (`/kerd:dian`, `/kerd:shakh`, etc.).
 
-Session logs written by seach go to `kivna/sessions/` and are committed to git, making them available across machines.
+Session logs written by shakh go to `kivna/sessions/` and are committed to git, making them available across machines.
 
 ## Deployment
 
@@ -103,7 +103,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 **Version:** 0.11.0
 
 **Working:**
-- All seven skills functional: dian, lorg, seach, kivna, slainte, skriv, tend
+- All seven skills functional: dian, lorg, shakh, kivna, slainte, skriv, tend
 - Plugin installs from marketplace
 - Session logs, playbook creation, and health audits all operational
 - Obsidian vault integration. Kivna reads/writes living vault files (Status.md, domain knowledge) with approval-gated overwrites
@@ -111,11 +111,11 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Dian playbook creation verified. Skeleton matches expected template
 - Mode markers on dian and skriv. Visible phase/state announcements with `.active-modes` state file
 - Dian rigorous planning (interrogate tasks, push back, no guessing) and execute verification (check each task, record decisions immediately, docs with code)
-- Seach-out reflection. Captures learnings to CLAUDE.md and memory files
-- Seach-in smoke test. Runs project tests if they exist
+- Shakh-out reflection. Captures learnings to CLAUDE.md and memory files
+- Shakh-in smoke test. Runs project tests if they exist
 
 **Recent changes (as of 2026-03-17):**
-- v0.11.0: Renamed three skills to Gaelic to avoid collisions with superpowers plugin: sotu to slainte, switch to seach, discover to lorg. Config file `.sotu` renamed to `.slainte`.
+- v0.11.0: Renamed three skills to Gaelic to avoid collisions with superpowers plugin: sotu to slainte, switch to shakh, discover to lorg. Config file `.sotu` renamed to `.slainte`.
 - v0.10.1: Expanded skriv dash rule to ban all dashes as punctuation (em, en, double hyphens). Cleaned all living files.
 - v0.10.0: Vault redesign. Living human-readable files replace append-only dumps, no symlinks, approval-gated Status.md overwrites, vault spec at docs/vault-spec.md
 - v0.9.0: Lorg. Skill gap analysis, scans project signals and recommends skills/plugins across three tiers
@@ -124,4 +124,4 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 **Next:**
 - Run `/kerd:tend` on other projects to migrate vaults
 - Test slainte playbook audit on a project with a playbook
-- Consider adding version bumping to the seach-out process
+- Consider adding version bumping to the shakh-out process

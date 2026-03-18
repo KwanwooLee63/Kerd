@@ -29,7 +29,7 @@ Every kivna command starts here. Resolve the vault location before doing anythin
 ## Folder Convention
 
 - `kivna/vault.json` vault config (committed to git)
-- `kivna/sessions/` session logs written by seach (committed)
+- `kivna/sessions/` session logs written by shakh (committed)
 - `kivna/.active-modes` ephemeral mode state (not committed)
 - `kivna/input/` drop files here for import (gitignored, transit folder)
 - `kivna/output/` exports land here (gitignored, transit folder)

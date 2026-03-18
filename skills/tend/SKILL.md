@@ -82,7 +82,7 @@ For brand new repos (user provided project name), create missing files using the
 
 ## Session Workflow
 
-When wrapping up a session (`/kerd:seach out` or `/kerd:dian`):
+When wrapping up a session (`/kerd:shakh out` or `/kerd:dian`):
 1. Update `TODO.md`: check off completed items, add new ones.
 2. Update `docs/playbook.md`: if any new steps, tools, or config were added during the session, add them to the playbook. Always update the "Current Status" section.
 
@@ -288,13 +288,13 @@ Fix all? [yes / pick individually / skip]
 
 ### 6. Summary
 
-After fixes are applied, print what was changed. Do NOT commit. Seach owns git boundary operations.
+After fixes are applied, print what was changed. Do NOT commit. Shakh owns git boundary operations.
 
-If this is a brand new repo and all structure was just created, suggest: "Structure ready. Run `/kerd:dian` to start your first session, or `/kerd:seach out` to commit and push."
+If this is a brand new repo and all structure was just created, suggest: "Structure ready. Run `/kerd:dian` to start your first session, or `/kerd:shakh out` to commit and push."
 
 ## No Commit
 
-Tend does NOT commit or push. It makes structural changes and stops. This keeps seach as the sole owner of git boundary operations (Kerd convention). The user commits via `/kerd:seach out` or manually.
+Tend does NOT commit or push. It makes structural changes and stops. This keeps shakh as the sole owner of git boundary operations (Kerd convention). The user commits via `/kerd:shakh out` or manually.
 
 ## Notes
 
