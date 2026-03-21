@@ -105,12 +105,13 @@ Lorg scans the current project and recommends skills or plugins you should be us
 
 The recommendations aren't just based on file types. Lorg reads your README, playbook, TODO, session logs, and vault decisions to extract work themes (fundraising, compliance, content creation, whatever keeps coming up). Each result shows a rich card with what the skill does, why it fits here, and an action prompt (try it, install it, or explore it).
 
-Each scan writes the full report to `docs/lorg-report.md` (committed, available on any machine) and to the Obsidian vault (searchable alongside other project files). Both get overwritten on the next run.
+Each scan writes the full report to `docs/lorg-report.md` (committed, available on any machine) and to the Obsidian vault (searchable alongside other project files). Both get overwritten on the next run. Use `/lorg report` to view the last saved report without rescanning.
 
 The curated source list lives in your Obsidian vault at `discover-sources.json`, synced between machines automatically.
 
 ```
-/lorg
+/lorg                # full scan across all tiers
+/lorg report         # show last saved report
 ```
 
 ## How They Fit Together

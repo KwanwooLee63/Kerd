@@ -1,6 +1,6 @@
 ---
 name: lorg
-description: "Use when the user says 'lorg', 'discover', 'find skills', 'what plugins', 'skill gap', 'what am I missing', 'new skills', 'explore plugins', or wants to find skills and plugins that would help with the current project. Searches installed plugins, marketplace, curated sources, and the web."
+description: "Use when the user says 'lorg', 'discover', 'find skills', 'what plugins', 'skill gap', 'what am I missing', 'new skills', 'explore plugins', 'lorg report', 'last scan', or wants to find skills and plugins that would help with the current project. Searches installed plugins, marketplace, curated sources, and the web. Use 'report' subcommand to show the last saved report without rescanning."
 ---
 
 # Lorg (Skill Gap Analysis)
@@ -13,13 +13,22 @@ Not a health check. Not about what's broken or unused elsewhere. Purely about fi
 
 ## Usage
 
-`/kerd:lorg`: run in the root of a git repo
+`/kerd:lorg`: full scan, build project profile, search all tiers, save report
+`/kerd:lorg report`: display the last saved report without rescanning
 
 ## Boundary with Other Skills
 
 - **lorg**: skill/plugin opportunities (what tools would help this project)
 - **tend**: structural health (dirs, vault, config, naming)
 - **slainte**: content health (doc accuracy, staleness)
+
+## Report Subcommand
+
+When invoked as `/kerd:lorg report`:
+
+1. Check if `docs/lorg-report.md` exists. If it does, read and display its contents. The file includes a `Last scanned: YYYY-MM-DD` date line so the user knows how fresh it is.
+2. If the file doesn't exist, say: "No lorg report found. Run `/kerd:lorg` to scan."
+3. Stop. Do not scan, do not modify any files.
 
 ## The Process
 
@@ -250,7 +259,7 @@ To add a source: edit the file directly or ask lorg to add one.
 - **No auto-install.** Every install is prompted and approved individually.
 - **No removal suggestions.** A skill unused in this project may be critical in another. Lorg finds gaps, not waste.
 - **No health checks.** That's tend's job (structure) or slainte's job (content).
-- **Fresh scan every run.** The report files get overwritten each run. The ecosystem and your project both change.
+- **Fresh scan on `/kerd:lorg`.** The report files get overwritten each scan. Use `/kerd:lorg report` to view the last report without rescanning.
 - **No rating or ranking.** Presents what it finds with context. You decide what's valuable.
 
 ## Notes
