@@ -1,6 +1,6 @@
 ---
 name: switch
-description: "Use when the user says 'switch', 'switching machines', 'wrapping up', 'picking up', 'handoff', or needs to cleanly leave or arrive on a machine. Handles all git boundary operations (pull, push, commit of session state)."
+description: "Use when the user says 'switch', 'switching machines', 'wrapping up', 'picking up', 'handoff', or needs to cleanly leave or arrive on a machine. Handles all git boundary operations (pull, push, commit of session state). Supports 'light' modifier to skip vault and reflection for quick handoffs."
 ---
 
 # Switch (Machine Handoff)
@@ -9,8 +9,10 @@ Clean handoff between machines. Switch owns all git boundary operations: pull, p
 
 ## Usage
 
-`/kerd:switch out` leaving this machine
-`/kerd:switch in` arriving on a new machine
+`/kerd:switch out` leaving this machine (full)
+`/kerd:switch out light` leaving this machine (skip vault, reflection, progress tracking)
+`/kerd:switch in` arriving on a new machine (full)
+`/kerd:switch in light` arriving on a new machine (skip vault, smoke test)
 
 If no argument is given, check for uncommitted changes. If changes exist, assume `out`. If clean, assume `in`.
 
@@ -55,13 +57,19 @@ If appending to an existing file for today (multiple sessions), add a `---` sepa
 
 ### 3. Update the vault
 
+**Skip this step if `light` modifier is set.**
+
 If a `/kerd:dian` session was active, close-out should have already called `/kerd:kivna save`. Verify vault `[Name] Status.md` reflects this session and move on. If no `/kerd:dian` session was running (quick switch without formal session), call `/kerd:kivna save` now. This updates Status.md and proposes updates to other vault files, each with user approval.
 
 ### 4. Update progress tracking
 
+**Skip this step if `light` modifier is set.**
+
 If progress tracking exists (check for `docs/project/progress.md`, `progress.md`, or similar), update it.
 
 ### 5. Reflect and capture learnings
+
+**Skip this step if `light` modifier is set.**
 
 Before committing, reflect on the session:
 
@@ -92,6 +100,8 @@ Run `git status` and confirm the working tree is clean and nothing remains uncom
 
 Print a short summary: what was pushed, what the next session should start with.
 
+If `light` modifier was used, note: "Light handoff: vault and reflection skipped."
+
 ## Switch In (Arriving on This Machine)
 
 Pick up where the other machine left off.
@@ -102,6 +112,8 @@ Pick up where the other machine left off.
 
 ### 2. Smoke test
 
+**Skip this step if `light` modifier is set.**
+
 If the project has a test command (check `package.json` scripts, `Makefile`, `pyproject.toml`, or similar), run it. If tests fail, report the failures in the summary. The user should know the state of the codebase before planning new work. If no test command exists, skip this step.
 
 ### 3. Read TODO.md
@@ -110,6 +122,8 @@ Focus on the `## Current Session` block. This is where the last session left off
 
 ### 4. Read vault
 
+**Skip this step if `light` modifier is set.**
+
 Discover the vault path using `kivna/vault.json` or convention (see `/kerd:kivna` vault discovery). Read `[Name] Status.md` for where the project stands. Read the MOC (`[Name].md`) to discover what other vault files exist and read any that are relevant (Architecture Decisions, Playbook, etc.).
 
 ### 5. Check session logs
@@ -117,6 +131,8 @@ Discover the vault path using `kivna/vault.json` or convention (see `/kerd:kivna
 Read the latest file(s) in `kivna/sessions/` for detailed context on what happened recently.
 
 ### 6. Read progress tracking
+
+**Skip this step if `light` modifier is set.**
 
 If progress tracking exists, read it.
 
@@ -130,8 +146,10 @@ Tell the user:
 - What was done last session
 - What's in progress or queued next
 - Any open questions or decisions from the previous session
-- Any test failures from the smoke test (if applicable)
+- Any test failures from the smoke test (if applicable, full mode only)
 - Suggest what to work on
+
+If `light` modifier was used, note: "Light pickup: vault and smoke test skipped. Run `/kerd:switch in` for full context."
 
 ### 9. Offer dian
 
