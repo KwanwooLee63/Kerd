@@ -2,7 +2,7 @@
 
 "Ceird" means skill in Gaelic. Respelled.
 
-Seven workflow skills for Claude Code. They handle the operational side of working across sessions and machines: when to pull, what to commit, where to put notes, how to audit for drift, how to maintain structural health. They don't generate code or make architectural decisions. They keep the plumbing clean so you can focus on the work.
+Eight workflow skills plus community-contributed modes for Claude Code. Skills handle the operational side of working across sessions and machines: when to pull, what to commit, where to put notes, how to audit for drift, how to maintain structural health. Modes orchestrate skills from Kerd, GSD, Superpowers, and other plugins into guided flows for different types of work. They keep the plumbing clean so you can focus on the work.
 
 ## Install
 
@@ -114,6 +114,26 @@ The curated source list lives in your Obsidian vault at `discover-sources.json`,
 ```
 /lorg                # full scan across all tiers
 /lorg report         # show last saved report
+```
+
+### mode (Workflow Routing)
+
+Mode routes you to the right tools for the type of work you're doing. Each mode is a session configuration: it checks which skills are installed, auto-discovers extras from your plugins, and presents a customizable checklist flow. You edit the flow (skip steps, reorder, add custom steps) before starting, then the mode tracks your progress through the session.
+
+Modes orchestrate across toolkits. A greenfield mode sequences GSD for spec-driven building, Superpowers for TDD and code review, and Kerd for session boundaries. A strategy mode loads skriv for writing voice and brainstorming for exploration. Modes don't call skills directly. They guide you through the flow and remind you what's next.
+
+Nine starter modes ship with Kerd. Community members can contribute new modes by PRing a single markdown file to the `modes/` directory.
+
+| Category | Modes |
+|----------|-------|
+| Development | `greenfield`, `quickfix`, `deepwork`, `maintain` |
+| Business | `strategy`, `writing`, `research` |
+| Operations | `legal`, `sales` |
+
+```
+/mode                # list all modes by category
+/mode greenfield     # start the greenfield flow
+/mode maintain       # start the maintenance flow
 ```
 
 ## How They Fit Together

@@ -44,7 +44,8 @@ The plugin manifest (`.claude-plugin/plugin.json`) declares the plugin name, ver
 
 **Directory layout:**
 ```
-skills/           # SKILL.md per skill (dian, lorg, kivna, skriv, slainte, tend, switch)
+skills/           # SKILL.md per skill (dian, lorg, kivna, mode, skriv, slainte, tend, switch)
+modes/            # workflow mode definitions (one .md per mode, community-contributed)
 docs/plans/       # historical design docs
 docs/playbook.md  # this file
 kivna/vault.json  # Obsidian vault config
@@ -55,7 +56,7 @@ kivna/.active-modes # ephemeral mode state
 
 The project's knowledge layer lives in the Obsidian vault at `~/eolas/vault/kerd/`. The vault is a human knowledge base, living files updated in place, not append-only dumps. Kivna reads and writes vault files (`Kerd Status.md`, plus optional domain files like Architecture Decisions). The vault spec at `docs/vault-spec.md` defines what belongs. The vault config is at `kivna/vault.json`. See `/kerd:kivna` for details.
 
-**Seven skills, each with a single responsibility:**
+**Eight skills, each with a single responsibility:**
 - **dian**: session discipline (orient/plan/execute/close-out protocol)
 - **lorg**: skill gap analysis (scan project signals, recommend skills/plugins across tiers)
 - **switch**: git boundary operations (pull on arrive, commit+push on leave)
@@ -63,6 +64,7 @@ The project's knowledge layer lives in the Obsidian vault at `~/eolas/vault/kerd
 - **slainte**: project health audits (docs, code, site, deps, playbook)
 - **skriv**: human writing voice enforcement (audit, fix, session mode)
 - **tend**: structural health check and convergence
+- **mode**: workflow routing (orchestrates Kerd, GSD, Superpowers, and other plugins into guided flows)
 
 ## Integrations
 
@@ -102,7 +104,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.16.0
+**Version:** 0.17.0
 
 **Working:**
 - All seven skills functional: dian, lorg, switch, kivna, slainte, skriv, tend
@@ -117,8 +119,10 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Switch-in smoke test. Runs project tests if they exist
 - Switch `light` modifier for lower-token handoffs (skips vault, reflection, smoke test)
 - Lorg `report` subcommand to view last scan without rescanning
+- Mode skill for workflow routing with 9 community-contributed starter modes
 
-**Recent changes (as of 2026-03-23):**
+**Recent changes (as of 2026-03-24):**
+- v0.17.0: Mode skill for workflow routing. 9 starter modes across development (greenfield, quickfix, deepwork, maintain), business (strategy, writing, research), and operations (legal, sales). Community-contributed via PR.
 - v0.16.0: Switch `light` modifier. `/kerd:switch in light` and `/kerd:switch out light` skip vault, reflection, and smoke test for faster, lower-token handoffs.
 - v0.15.0: Lorg `report` subcommand. `/kerd:lorg report` displays the last saved scan without rescanning.
 - v0.14.0: Weekly tracker in Kivna save. Renamed switch back from shakh (no actual collision existed). Tend Category 8 (Skill hygiene).
