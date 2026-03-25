@@ -75,31 +75,37 @@ If no extras found, skip this section silently. These are suggestions only, disp
 
 ### 4. Present and customize
 
-Extract all checkbox lines (`- [ ]`) from the mode body. Display as a numbered checklist with all steps enabled:
+Extract all checkbox lines (`- [ ]`) from the mode body. Build a JSON array of step strings (the text after the checkbox marker).
+
+**Interactive picker (default):** The TUI picker needs a real terminal, so prompt the user to run it themselves using the `!` prefix:
+
+```
+To customize the flow interactively, run:
+! python3 <plugin_root>/skills/mode/flow_picker.py '<json_array_of_steps>'
+```
+
+Where `<plugin_root>` is the base directory for this skill (provided in the skill context). The picker renders an interactive checklist — Up/Down or j/k to navigate, Space to toggle steps on/off, Enter to confirm, q to cancel. Parse the JSON output from stdout to determine which steps are enabled.
+
+If the user declines or the picker fails (exit code 3 = no TTY), fall back to text mode.
+
+**Text fallback:** If the picker is skipped, display the flow as a numbered checklist and accept text commands:
 
 ```
 Greenfield flow:
 
   [x] 1. /kerd:switch in — pull, get context
   [x] 2. Confirm: what are we building?
-  [x] 3. /gsd:new-project — questions, research, requirements
-  [x] 4. /gsd:discuss-phase N — capture decisions
-  [x] 5. /gsd:plan-phase N — research + task plans
-  [x] 6. /gsd:execute-phase N — parallel execution
-  [x] 7. /gsd:verify-work N — confirm it works
-  [x] 8. /kerd:slainte docs — health check
-  [x] 9. /kerd:switch out — commit, push, vault
+  ...
 
 Edit the flow? (skip steps, reorder, add custom steps, or 'go' to start)
 ```
 
-Wait for the user to customize or say "go":
 - **Skip:** "skip 4 and 8" removes those steps
 - **Add:** "add 'run migrations' after step 6" inserts a custom step
 - **Reorder:** "move 8 before 7" changes step order
 - **Go:** "go" locks the flow and begins
 
-Multiple edits are fine. Re-display after each edit. Only proceed when the user says "go" (or equivalent: "start", "ready", "let's go").
+In either path, only proceed when the user confirms (Enter in picker, or "go" in text mode).
 
 ### 5. Track progress
 
