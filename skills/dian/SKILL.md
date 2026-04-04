@@ -21,12 +21,14 @@ Dian is a modal skill. It runs across multiple responses. Announce the current p
 - `[dian: close-out]` updating docs, running checks
 - `[dian: closed]` session complete (final marker, then done)
 
-**State file:** When entering a phase, write the current phase to `kivna/.active-modes`. When closing out, remove the dian line from the file (or delete the file if it's the only entry). This lets `/kerd:switch in` report active modes.
+**State file:** When entering a phase, write the current phase to `kivna/.active-modes`. When closing out, remove the dian line from the file (or delete the file if it's the only entry). This lets `/kerd:switch in` report active modes and hooks surface reminders.
 
-Format of `kivna/.active-modes` (one skill per line):
+Format of `kivna/.active-modes` — dian owns one line only:
 ```
-dian: execute
+dian: <phase>
 ```
+
+Example: `dian: execute`. Remove the line entirely when closing out (don't write `dian: closed`). Never touch other skills' lines in this file.
 
 ## The Protocol
 

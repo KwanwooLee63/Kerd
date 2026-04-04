@@ -28,6 +28,15 @@ Create TODO.md if it doesn't exist. Update the `## Current Session` block with:
 - What's next (so the next session knows where to start)
 - Any context that would be lost (decisions made in conversation, things tried that didn't work, open questions)
 
+**Mode snapshot:** If `kivna/.active-modes` contains a mode block, snapshot the mode state into the `### Context` section of TODO.md so cross-machine handoff works without the ephemeral file. Include: mode name, current step number and total, session instruction (if any), and the full steps list with status markers. Example:
+
+```
+### Context
+- Mode active: greenfield (step 4 of 9)
+  Instruction: focus on pricing strategy only
+  Steps: 1 done, 2 done, 3 done, 4 current, 5-9 pending
+```
+
 ### 2. Write session log
 
 Create `kivna/sessions/YYYY-MM-DD.md` (or append if one already exists for today) with:
@@ -138,7 +147,12 @@ If progress tracking exists, read it.
 
 ### 7. Check active modes
 
-If `kivna/.active-modes` exists and is non-empty, read it. Report any active modes in the summary (e.g., "**Active modes:** `dian: execute`"). If the file doesn't exist or is empty, skip this. Don't mention modes.
+Check two sources for mode state:
+
+1. **`kivna/.active-modes`** (same-machine resume): if it exists and is non-empty, read it and report active modes.
+2. **`TODO.md` Context block** (cross-machine handoff): if `.active-modes` doesn't exist or is empty, check TODO.md's `### Context` section for a mode snapshot. If found, report it and offer to restore it to `.active-modes`.
+
+Report any active modes in the summary (e.g., "**Active modes:** `greenfield (step 4 of 9)`"). If neither source has mode state, skip this. Don't mention modes.
 
 ### 8. Summarize
 

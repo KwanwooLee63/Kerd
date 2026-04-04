@@ -46,17 +46,18 @@ The plugin manifest (`.claude-plugin/plugin.json`) declares the plugin name, ver
 ```
 skills/           # SKILL.md per skill (dian, lorg, kivna, mode, skriv, slainte, tend, switch)
 modes/            # workflow mode definitions (one .md per mode, community-contributed)
+hooks/            # opt-in hooks (hooks.json + shell scripts, registered via tend)
 docs/plans/       # historical design docs
 docs/playbook.md  # this file
 kivna/vault.json  # Obsidian vault config
 kivna/sessions/   # session logs written by switch
-kivna/.active-modes # ephemeral mode state
+kivna/.active-modes # ephemeral mode/skill state (gitignored)
 .claude-plugin/   # plugin.json + marketplace.json
 ```
 
 The project's knowledge layer lives in the Obsidian vault at `~/eolas/vault/kerd/`. The vault is a human knowledge base, living files updated in place, not append-only dumps. Kivna reads and writes vault files (`Kerd Status.md`, plus optional domain files like Architecture Decisions). The vault spec at `docs/vault-spec.md` defines what belongs. The vault config is at `kivna/vault.json`. See `/kerd:kivna` for details.
 
-**Eight skills, each with a single responsibility:**
+**Eight skills, each with a single responsibility, plus three opt-in hooks:**
 - **dian**: session discipline (orient/plan/execute/close-out protocol)
 - **lorg**: skill gap analysis (scan project signals, recommend skills/plugins across tiers)
 - **switch**: git boundary operations (pull on arrive, commit+push on leave)
@@ -65,6 +66,11 @@ The project's knowledge layer lives in the Obsidian vault at `~/eolas/vault/kerd
 - **skriv**: human writing voice enforcement (audit, fix, session mode)
 - **tend**: structural health check and convergence
 - **mode**: workflow routing (orchestrates Kerd, GSD, Superpowers, and other plugins into guided flows)
+
+**Three opt-in hooks** (registered via `/kerd:tend`, stored in `.claude/settings.local.json`):
+- **Stop**: reminds about uncommitted changes and active modes on session end
+- **SessionStart**: surfaces stale state (remote drift, last session date, interrupted mode) on same-machine resume
+- **PostToolUse (Skill)**: shows mode progress when the current step's skill completes (read-only)
 
 ## Integrations
 
@@ -104,33 +110,35 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.17.0
+**Version:** 0.19.0
 
 **Working:**
-- All seven skills functional: dian, lorg, switch, kivna, slainte, skriv, tend
+- All eight skills functional: dian, lorg, switch, kivna, slainte, skriv, tend, mode
+- Three opt-in hooks: Stop (uncommitted changes reminder), SessionStart (stale state surfacing), PostToolUse (mode progress)
 - Plugin installs from marketplace
 - Session logs, playbook creation, and health audits all operational
 - Obsidian vault integration. Kivna reads/writes living vault files (Status.md, Weekly.md, domain knowledge) with approval-gated overwrites
-- Tend audit verified. Reports structural drift and fixes with approval
-- Dian playbook creation verified. Skeleton matches expected template
+- Tend audit verified (9 categories including hook hygiene). Reports structural drift and fixes with approval
+- Slainte release audit catches version sync, description sync, skill/mode count drift, namespace issues
+- Unified `.active-modes` schema shared by dian, skriv, mode, and switch
+- Mode tracks progress with structured steps format (stable IDs, concrete args, status markers)
+- Switch snapshots active mode state to TODO.md for cross-machine handoff
 - Mode markers on dian and skriv. Visible phase/state announcements with `.active-modes` state file
-- Dian rigorous planning (interrogate tasks, push back, no guessing) and execute verification (check each task, record decisions immediately, docs with code)
+- Dian rigorous planning and execute verification
 - Switch-out reflection. Captures learnings to CLAUDE.md and memory files
-- Switch-in smoke test. Runs project tests if they exist
-- Switch `light` modifier for lower-token handoffs (skips vault, reflection, smoke test)
+- Switch `light` modifier for lower-token handoffs
 - Lorg `report` subcommand to view last scan without rescanning
 - Mode skill for workflow routing with 9 community-contributed starter modes
 
-**Recent changes (as of 2026-03-24):**
-- v0.17.0: Mode skill for workflow routing. 9 starter modes across development (greenfield, quickfix, deepwork, maintain), business (strategy, writing, research), and operations (legal, sales). Community-contributed via PR.
-- v0.16.0: Switch `light` modifier. `/kerd:switch in light` and `/kerd:switch out light` skip vault, reflection, and smoke test for faster, lower-token handoffs.
-- v0.15.0: Lorg `report` subcommand. `/kerd:lorg report` displays the last saved scan without rescanning.
-- v0.14.0: Weekly tracker in Kivna save. Renamed switch back from shakh (no actual collision existed). Tend Category 8 (Skill hygiene).
-- v0.12.1: Vault path moved to `~/eolas/vault/`.
-- v0.11.0: Renamed sotu to slainte, discover to lorg. Config file `.sotu` renamed to `.slainte`.
-- v0.10.1: Expanded skriv dash rule to ban all dashes as punctuation (em, en, double hyphens). Cleaned all living files.
-- v0.10.0: Vault redesign. Living human-readable files replace append-only dumps, no symlinks, approval-gated Status.md overwrites, vault spec at docs/vault-spec.md
+**Recent changes (as of 2026-04-04):**
+- v0.19.0: Hooks infrastructure (Stop, SessionStart, PostToolUse). Unified `.active-modes` schema. Structured mode steps format. Switch mode snapshot for cross-machine handoff. Tend category 9 (hook hygiene). Slainte release audit category.
+- v0.17.1: Mode interactive phase selection (AskUserQuestion), session instructions.
+- v0.17.0: Mode skill for workflow routing. 9 starter modes. Community-contributed via PR.
+- v0.16.0: Switch `light` modifier for lower-token handoffs.
+- v0.15.0: Lorg `report` subcommand.
 
 **Next:**
+- Merge Kwanwoo's trim PR (#1) — adds ninth skill for post-feature token cleanup
+- KIF (Kerd Interchange Format) for `/kivna out` — TOON + JSON export (v0.20.0)
 - Run `/kerd:tend` on other projects to migrate vaults
-- Test slainte playbook audit on a project with a playbook
+- Lorg ranking and recency rules

@@ -136,6 +136,20 @@ Nine starter modes ship with Kerd. Community members can contribute new modes by
 /mode maintain       # start the maintenance flow
 ```
 
+## Hooks
+
+Kerd ships three opt-in hooks that provide session boundary awareness. They are not active by default. Run `/tend` to register them in your local settings.
+
+**Stop hook:** When a session ends with uncommitted changes or an active mode, prints a one-line reminder to run `/switch out`. Silent when the repo is clean.
+
+**SessionStart hook:** On same-machine resume, checks if the local branch is behind remote, reads the last session date from TODO.md, and reports any interrupted mode. Suggests `/switch in` when there's stale state. Silent on a fresh start.
+
+**Skill completion hook:** When a mode is active and you complete the current step's skill, shows your progress and what's next. Read-only — the mode skill handles state transitions.
+
+```
+/tend                # registers hooks in .claude/settings.local.json
+```
+
 ## How They Fit Together
 
 **Starting a project:** Create a repo, clone it, run `/tend`. It checks what's missing, shows you the plan, and sets up the full structure with your approval. Run `/lorg` to find plugins that fit your stack. Then `/dian` to start your first session.

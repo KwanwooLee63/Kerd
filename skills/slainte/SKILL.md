@@ -106,9 +106,21 @@ For each target registered under `## playbook`:
 5. **Freshness**: when was playbook last modified relative to recent commits? If 10+ commits have landed since the last playbook update, flag as medium
 6. **Section completeness**: are any major sections empty or still showing skeleton placeholder text?
 
+#### release
+
+Kerd-specific release audit. Checks the release checklist rules from CLAUDE.md automatically. Only runs when slainte detects `.claude-plugin/plugin.json` (i.e., in the Kerd repo itself or a Kerd-like plugin repo).
+
+1. **Version sync**: compare version strings across `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json` `metadata.version`, and `.claude-plugin/marketplace.json` `plugins[0].version`. All three must match. Any mismatch is high severity.
+2. **Description sync**: compare `description` in `plugin.json` with `plugins[0].description` in `marketplace.json`. They must match. Mismatch is medium severity.
+3. **Skill count consistency**: count `skills/*/SKILL.md` files and compare against claims in `README.md` (e.g., "Nine workflow skills") and `docs/playbook.md`. Mismatches are high severity.
+4. **Mode count consistency**: count `modes/*.md` files and compare against claims in `README.md` mode table rows. Mismatch is medium severity.
+5. **SKILL frontmatter drift**: for each `skills/*/SKILL.md`, verify the `name` field matches the directory name. Flag mismatches as high.
+6. **Namespace sweep**: scan all `skills/*/SKILL.md` files for slash-command references missing the `kerd:` prefix (e.g., `/dian` instead of `/kerd:dian`). Skip README.md (allowed shorthand). Each hit is medium severity.
+7. **Marketplace URL**: verify `.claude-plugin/marketplace.json` `plugins[0].source.url` points to the canonical repo (not a fork). Mismatch is high severity.
+
 #### all
 
-Run all areas. Use parallel agents where possible for speed.
+Run all areas (including release if `.claude-plugin/plugin.json` exists). Use parallel agents where possible for speed.
 
 ## Output Format
 

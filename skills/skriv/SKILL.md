@@ -14,7 +14,7 @@ Skriv session mode is modal. It persists across responses. Announce state change
 - `[skriv: active]` output at the top of your response when session mode turns on, and at the top of every response while active
 - `[skriv: off]` output when session mode ends
 
-**State file:** When session mode activates, add `skriv: active` to `kivna/.active-modes`. When it deactivates, remove the line (or delete the file if it's the only entry).
+**State file:** When session mode activates, add `skriv: active` to `kivna/.active-modes`. When it deactivates, remove the line (or delete the file if it's the only entry). Never touch other skills' lines in this file.
 
 Audit, fix, and inline modes are one-shot. No markers needed for those.
 

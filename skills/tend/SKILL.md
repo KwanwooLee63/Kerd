@@ -221,6 +221,32 @@ Scan all `skills/*/SKILL.md` files and key docs (`CLAUDE.md`, `README.md`, `docs
 - **Stale skill names**: references to deprecated skill names (`sotu`, `seach`, `shakh`) in active/instructional context (not CHANGELOG, session logs, or deprecated patterns lists). Each hit is a rename that was missed.
 - **Frontmatter drift**: the `name` field in SKILL.md should match its parent directory name. The `description` field should not reference deprecated skill names.
 
+#### Category 9: Hook hygiene
+
+Check whether Kerd hooks are registered in the project's `.claude/settings.local.json`. This is collaborator-local (each developer opts in independently).
+
+Check:
+- `.claude/settings.local.json` exists
+- It contains hook entries for Kerd's Stop, SessionStart, and PostToolUse events pointing to `${CLAUDE_PLUGIN_ROOT}/hooks/`
+
+If hooks are not registered:
+
+```
+⚠ Hook hygiene
+  ┌──────────────────┬───────────────┬─────────────────────────────────┐
+  │ Item             │ Current       │ Proposed                        │
+  ├──────────────────┼───────────────┼─────────────────────────────────┤
+  │ Stop hook        │ not registered│ remind about uncommitted changes │
+  │ SessionStart     │ not registered│ surface stale state on resume    │
+  │ PostToolUse      │ not registered│ mode progress after skill runs   │
+  └──────────────────┴───────────────┴─────────────────────────────────┘
+  Why: Kerd hooks provide session boundary reminders and mode
+       progress tracking. They are read-only and non-blocking.
+  Fix: merge hook entries into .claude/settings.local.json
+```
+
+When fixing, read existing `.claude/settings.local.json` (create if missing), merge the hook entries from `${CLAUDE_PLUGIN_ROOT}/hooks/hooks.json` into the settings without overwriting existing hook entries. Preserve any existing permissions or other settings.
+
 ### 4. Display report
 
 Format the report as a visual table. Show passing categories as one-liners. Show failing/warning categories with current vs proposed tables and a "Why" explanation.

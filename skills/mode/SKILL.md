@@ -137,35 +137,45 @@ The user can pick one of these or choose "Other" to type freeform instructions. 
 
 ### 5. Track progress
 
-Write the active mode to `kivna/.active-modes`:
+Write the active mode to `kivna/.active-modes` using the structured steps format. Each enabled step gets a line with its stable id, concrete skill invocation (with args resolved), label, and status marker.
 
 ```
 mode: greenfield (step 1 of 9)
-instruction: focus on pricing strategy only
+  instruction: focus on pricing strategy only
+  steps:
+    1: /kerd:switch in | open session, set context [current]
+    2: /superpowers:brainstorming | explore the problem space [pending]
+    3: /gsd:new-project | generate roadmap and phase breakdown [pending]
+    4: /gsd:discuss-phase 1 | clarify requirements for phase 1 [pending]
+    5: /gsd:plan-phase 1 | implementation plan for phase 1 [pending]
+    6: /gsd:execute-phase 1 | build phase 1 [pending]
+    7: /gsd:verify-work 1 | verify phase 1 [pending]
+    8: /kerd:slainte | run health checks [pending]
+    9: /kerd:switch out | close session [pending]
 ```
 
-If no session instruction was given, omit the instruction line.
+Step format: `<id>: <skill> [<args>] | <label> [<status>]`
+Status markers: `[done]`, `[current]`, `[pending]`, `[skipped]`
 
-After each step is completed (user confirms it's done, or the invoked skill completes), update the tracker:
+If no session instruction was given, omit the instruction line. Never touch other skills' lines in this file.
 
-```
-mode: greenfield (step 3 of 9)
-instruction: focus on pricing strategy only
-```
+**Expanding repeated phases:** When a mode has "repeat per phase" steps (like greenfield's Build phase), expand them into concrete steps with phase numbers at flow setup time. If the roadmap isn't known yet (e.g., `/gsd:new-project` hasn't run), create placeholder steps for one iteration and note that the list will expand after roadmap creation.
+
+After each step is completed (user confirms it's done, or the invoked skill completes), update the tracker: mark the completed step as `[done]`, advance `[current]` to the next pending step.
 
 Remind the user what's next, and resurface the session instruction if one was set:
 
 ```
-✓ Step 3 complete.
+✓ Step 3 complete: /gsd:new-project
   Instruction: focus on pricing strategy only
-  Next: step 4 — /gsd:discuss-phase N (capture decisions)
+  Next: step 4 — /gsd:discuss-phase 1 (clarify requirements for phase 1)
 ```
 
 If the user goes off-script (does something not in the flow), don't block them. When they come back, show where they are in the flow and what remains.
 
 ### 6. Complete
 
-When all enabled steps are done (or the user says "done"), clear the mode from `.active-modes` and confirm:
+When all enabled steps are done (or the user says "done"), remove the mode block from `.active-modes` (don't just clear it, remove all mode lines) and confirm:
 
 ```
 Mode complete: greenfield (9/9 steps)
