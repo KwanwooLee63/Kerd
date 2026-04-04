@@ -68,7 +68,7 @@ kivna/
 
 ### slainte (Project Health)
 
-Slainte audits project health across five areas: docs, code, site, deps, and playbook. It reads a `.slainte` config file at the project root to know what to check. Each area has specific checks. Docs gets cross-referenced against CLAUDE.md, scanned for stale names and broken links. Code runs tests and the build. Deps checks for outdated packages and security issues. Playbook checks whether `docs/playbook.md` exists, whether its Current Status is accurate, whether the tech stack listed still matches reality, and whether setup steps still point to files that exist.
+Slainte audits project health across six areas: docs, code, site, deps, playbook, and release. It reads a `.slainte` config file at the project root to know what to check. Each area has specific checks. Docs gets cross-referenced against CLAUDE.md, scanned for stale names and broken links. Code runs tests and the build. Deps checks for outdated packages and security issues. Playbook checks whether `docs/playbook.md` exists, whether its Current Status is accurate, whether the tech stack listed still matches reality, and whether setup steps still point to files that exist. Release (Kerd-specific) catches version sync drift, description mismatches, skill/mode count claims, namespace prefix issues, and marketplace URL changes.
 
 Everything gets a severity grade: high (factually wrong, broken build, security vulnerability), medium (stale but not misleading), low (nitpick). Slainte reports problems. It doesn't fix them.
 
@@ -77,6 +77,7 @@ Everything gets a severity grade: high (factually wrong, broken build, security 
 /slainte add docs README.md   # register a target
 /slainte docs         # audit docs area
 /slainte playbook     # audit the playbook
+/slainte release      # audit version sync, counts, namespaces (Kerd repos)
 /slainte all          # audit everything
 ```
 
@@ -94,7 +95,7 @@ Three modes. Audit reviews a file and reports violations with line numbers. Fix 
 
 ### tend (Structural Health)
 
-Tend audits repo infrastructure against current Kerd conventions and fixes what's drifted. Run it on a new repo to set up everything from scratch, or on an existing repo to catch drift after a Kerd update. It checks seven categories: directory structure, required files, vault integration, deprecated patterns, naming consistency, stray/stale files, and .gitignore hygiene.
+Tend audits repo infrastructure against current Kerd conventions and fixes what's drifted. Run it on a new repo to set up everything from scratch, or on an existing repo to catch drift after a Kerd update. It checks nine categories: directory structure, required files, vault integration, deprecated patterns, naming consistency, stray/stale files, .gitignore hygiene, skill hygiene, and hook hygiene.
 
 The report shows each category as passing (✓), failing (✗), or warning (⚠). Failing and warning items get a current-vs-proposed table with reasons. After the report, choose to fix all, pick individually, or skip. Tend makes changes but never commits. Switch owns that boundary.
 

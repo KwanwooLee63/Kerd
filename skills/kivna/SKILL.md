@@ -278,7 +278,7 @@ Set up the Obsidian vault folder for this project. Also triggered automatically 
 - Vault files use self-identifying names (`[Project] Status.md`, not `Status.md`). This prevents collisions in Obsidian's quick switcher across vaults.
 - No symlinks to repo files. The vault contains knowledge written in human form, not mirrors of machine-readable repo files.
 - `kivna/input/` and `kivna/output/` should be in `.gitignore`. They're transit folders, not project content.
-- Exports are written in plain markdown so any LLM can read them.
+- Exports produce `.kif.toon` (token-efficient, LLM-readable) and `.kif.json` (machine-parseable). Both are human-readable.
 - When importing LLM session transcripts, be aggressive about filtering. Most of a chat session is noise. Extract the signal: decisions, code patterns, insights, action items.
 - When importing PDFs or reports, focus on what's actionable for THIS project.
 - Kivna adds `[[wikilinks]]` in vault files when referencing people (`[[people/Name]]`) or other projects (`[[project-name/file]]`). Kivna does NOT create people files, just links.
