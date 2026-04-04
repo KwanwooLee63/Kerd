@@ -46,7 +46,7 @@ If you run it without arguments, it checks for uncommitted changes. Changes pres
 
 Kivna owns the project's knowledge layer, stored in an Obsidian vault at `~/eolas/vault/[project]/`. The vault is a human knowledge base. Every file answers a question someone would actually ask. No symlinks, no append-only logs, no session dumps. Files are living, updated in place with approval.
 
-Save (`/kivna save`) updates the vault's Status.md, updates the Weekly tracker (achievements and risks by week for quick status report generation), and proposes updates to other vault files (Architecture Decisions, Playbook, etc.), each change shown and approved before writing. This is the same save mechanic dian and switch use at session boundaries. Scaffold (`/kivna scaffold`) creates the vault folder with a MOC and Status.md, then suggests what other files might fit the project. Import (`/kivna in`) reads files from `kivna/input/` and integrates relevant knowledge. Export (`/kivna out`) packages your session for another LLM.
+Save (`/kivna save`) updates the vault's Status.md, updates the Weekly tracker (achievements and risks by week for quick status report generation), and proposes updates to other vault files (Architecture Decisions, Playbook, etc.), each change shown and approved before writing. This is the same save mechanic dian and switch use at session boundaries. Scaffold (`/kivna scaffold`) creates the vault folder with a MOC and Status.md, then suggests what other files might fit the project. Import (`/kivna in`) reads files from `kivna/input/` and integrates relevant knowledge, including structured `.kif.json` imports. Export (`/kivna out`) produces two files: `.kif.toon` (token-efficient for LLM handoff) and `.kif.json` (machine-parseable for cross-project import). Exports are repo-grounded: TODO.md, session logs, playbook, and vault status are read first, with conversation context filling gaps.
 
 The folder structure:
 
@@ -59,8 +59,9 @@ kivna/
 ```
 
 ```
-/kivna in                                          # import from inbox
-/kivna out                                         # export session context
+/kivna in                                          # import from inbox (.kif.json, .md, .pdf, etc.)
+/kivna out                                         # export as .kif.toon + .kif.json
+/kivna out --full                                  # export all sections (adds playbook, architecture, memory, mode)
 /kivna save                                        # update vault
 /kivna scaffold                                    # set up Obsidian vault
 ```

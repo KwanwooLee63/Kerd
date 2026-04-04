@@ -106,69 +106,139 @@ Read files from `kivna/input/`, extract what's relevant, write it into the proje
 1. **List the inbox.** `ls kivna/input/`. Show the user what's there. If empty, say so and stop.
 
 2. **Read each file.** Supported formats:
+   - `.kif.json`: Kerd Interchange Format (structured import, see below)
+   - `.kif.toon`: inform user this is the LLM-readable companion — use the `.kif.json` file instead. Skip.
    - `.pdf`: read with the Read tool (supports PDF)
    - `.md`, `.txt`: read directly
    - `.json`, `.jsonl`: read as structured data (likely LLM session exports)
    - `.html`: read and extract text content
    - Other formats: tell the user you can't process them, skip
 
-3. **Summarize what you found.** For each file, tell the user:
+3. **KIF import path.** For `.kif.json` files, parse the structured sections and present each one:
+   - `meta`: show project name, version, date — confirm this is the right export
+   - `status`: show the status summary — offer to update vault Status.md
+   - `backlog`: show items — offer to merge into TODO.md
+   - `decisions`: show decisions — offer to note in session log or vault
+   - `playbook`, `architecture`, `memory`, `mode`: (if present) show each and offer to integrate
+
+   For each section, the user can: accept (integrate), skip, or modify. Do not write anything without approval.
+
+4. **Standard import path.** For non-KIF files, summarize what you found:
    - What it contains (1-2 sentences)
    - What's relevant to this project
    - Where you'd put it (existing doc to update, new file to create, or discard)
 
-4. **Wait for approval.** Do not write anything until the user confirms.
+5. **Wait for approval.** Do not write anything until the user confirms.
 
-5. **Integrate.** For each approved item:
-   - If updating an existing doc, use Edit to add the relevant content
-   - If creating a new doc, prefer putting it in the project's natural doc structure
-   - If the content is a session transcript from another LLM, extract decisions, insights, and action items. Do not copy the raw transcript
-   - Write in the project's voice
+6. **Integrate.** For each approved item:
+   - KIF backlog items: merge into TODO.md Backlog section (skip duplicates)
+   - KIF decisions: append to the current session log in kivna/sessions/
+   - KIF status: update vault Status.md (with approval, same as `/kivna save`)
+   - Non-KIF: if updating an existing doc, use Edit. If creating new, prefer the project's natural doc structure. For LLM transcripts, extract signal only (decisions, insights, action items). Write in the project's voice.
 
-6. **Flag vault knowledge.** If import surfaces knowledge that belongs in a vault file, note it for the user. They can update the vault with `/kerd:kivna save` later.
+7. **Flag vault knowledge.** If import surfaces knowledge that belongs in a vault file, note it for the user. They can update the vault with `/kerd:kivna save` later.
 
-7. **Clean up.** Delete the processed files from `kivna/input/`. Leave any files the user said to skip.
+8. **Clean up.** Delete the processed files from `kivna/input/`. Leave any files the user said to skip.
 
-8. **Report.** Tell the user what was imported and where it went.
+9. **Report.** Tell the user what was imported and where it went.
 
-### `/kerd:kivna out` (Export Session Context)
+### `/kerd:kivna out` (Export — Kerd Interchange Format)
 
-Package the current session's work into a portable file another LLM can use as input.
+Export project context in two formats: `.kif.toon` (token-efficient, for LLM handoff) and `.kif.json` (machine-parseable, for import). Both land in `kivna/output/`.
 
-1. **Gather context.** From the current conversation, collect:
-   - What was done this session (tasks completed, decisions made)
-   - Key files created or modified (with brief descriptions)
-   - Architecture decisions and their reasoning
-   - Open questions or unresolved items
-   - Current project state (what's working, what's blocked)
+**Usage:**
+- `/kerd:kivna out` — default sections (meta, status, backlog, decisions)
+- `/kerd:kivna out --full` — all sections (adds playbook, architecture, memory, mode)
 
-2. **Read TODO.md and any progress tracking** to fill gaps.
+#### Source order (repo-grounded first)
 
-3. **Write the export.** Create `kivna/output/export-YYYY-MM-DD.md` with this structure:
+Gather context from repo artifacts in this order. Only use conversation context to fill gaps that no artifact covers.
 
+1. `TODO.md` — backlog items (unchecked), current session context
+2. `kivna/sessions/` — key decisions from the 3 most recent session logs
+3. `docs/playbook.md` — tech stack, architecture, current status (--full only)
+4. Vault `[Name] Status.md` — where the project stands
+5. Vault architecture/decision files — (--full only)
+6. `~/.claude/projects/*/memory/project_*.md` — project memory entries (--full only)
+7. `kivna/.active-modes` — active mode state (--full only)
+8. Current conversation — fill any remaining gaps (what happened this session that isn't yet in artifacts)
+
+#### Sections
+
+| Section | Default | `--full` | Source |
+|---------|---------|----------|--------|
+| `meta` | yes | yes | repo name, git remote, plugin version, today's date |
+| `status` | yes | yes | vault Status.md |
+| `backlog` | yes | yes | TODO.md unchecked items |
+| `decisions` | yes | yes | last 3 session logs in kivna/sessions/ |
+| `playbook` | no | yes | docs/playbook.md (tech stack, setup, architecture) |
+| `architecture` | no | yes | vault architecture decisions file |
+| `memory` | no | yes | project-type memory entries |
+| `mode` | no | yes | kivna/.active-modes |
+
+#### Write the TOON export
+
+Create `kivna/output/export-YYYY-MM-DD.kif.toon`. TOON format rules:
+
+- Nested objects use YAML-style indentation (key: value, indented children)
+- Uniform arrays use CSV-style tabular layout: `name[count]{field1,field2,...}:` followed by indented comma-delimited rows
+- No quotes around string values unless they contain commas
+- Arrays of non-uniform objects fall back to nested notation
+
+Example:
+
+```toon
+meta:
+  project: Kerd
+  exported: 2026-04-04
+  version: 0.19.0
+  repo: github.com/anthonymaley/Kerd
+
+status:
+  phase: active development
+  summary: Hooks and KIF shipped in v0.19.0
+
+backlog[3]{id,item,priority}:
+  1,Merge trim PR after Kwan approves,high
+  2,Lorg ranking rules,medium
+  3,Shared state contract doc,low
+
+decisions[2]{date,decision,reasoning}:
+  2026-04-04,Hooks are opt-in via tend,Non-invasive for existing users
+  2026-04-04,TOON export + JSON import,Avoids TOON parser dependency
 ```
-# Session Export: [Project Name], [Date]
 
-## What Happened
-[Plain prose summary of the session. What was built, fixed, or decided.]
+Reference: https://github.com/toon-format/toon
 
-## Key Decisions
-[Each decision with its reasoning. Another LLM needs to understand WHY, not just WHAT.]
+#### Write the JSON export
 
-## Files Changed
-[List of files with one-line descriptions of what changed and why]
+Create `kivna/output/export-YYYY-MM-DD.kif.json` alongside the TOON file. Same data, standard JSON:
 
-## Current State
-[What works, what's blocked, what's next]
-
-## Open Questions
-[Anything unresolved that needs input]
-
-## Project Context
-[Brief description of the project, its structure, and conventions (enough for a cold start in another tool)]
+```json
+{
+  "kif_version": "1.0",
+  "meta": {
+    "project": "Kerd",
+    "exported": "2026-04-04",
+    "version": "0.19.0",
+    "repo": "github.com/anthonymaley/Kerd"
+  },
+  "status": {
+    "phase": "active development",
+    "summary": "Hooks and KIF shipped in v0.19.0"
+  },
+  "backlog": [
+    {"id": 1, "item": "Merge trim PR after Kwan approves", "priority": "high"}
+  ],
+  "decisions": [
+    {"date": "2026-04-04", "decision": "Hooks are opt-in via tend", "reasoning": "Non-invasive for existing users"}
+  ]
+}
 ```
 
-4. **Confirm.** Show the user the export path and a summary of what's in it.
+#### Confirm
+
+Show the user both export paths and a one-line summary of what's included (section count, item counts).
 
 ### `/kerd:kivna scaffold` (Vault Scaffold)
 

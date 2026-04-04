@@ -110,7 +110,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.19.0
+**Version:** 0.20.0
 
 **Working:**
 - All eight skills functional: dian, lorg, switch, kivna, slainte, skriv, tend, mode
@@ -131,6 +131,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Mode skill for workflow routing with 9 community-contributed starter modes
 
 **Recent changes (as of 2026-04-04):**
+- v0.20.0: Kerd Interchange Format (KIF). `/kivna out` produces `.kif.toon` + `.kif.json`. Repo-grounded exports (TODO, session logs, playbook, vault first, conversation fills gaps). `/kivna in` parses `.kif.json` with per-section approval. Supports `--full` flag for all sections.
 - v0.19.0: Hooks infrastructure (Stop, SessionStart, PostToolUse). Unified `.active-modes` schema. Structured mode steps format. Switch mode snapshot for cross-machine handoff. Tend category 9 (hook hygiene). Slainte release audit category.
 - v0.17.1: Mode interactive phase selection (AskUserQuestion), session instructions.
 - v0.17.0: Mode skill for workflow routing. 9 starter modes. Community-contributed via PR.
@@ -139,6 +140,6 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 **Next:**
 - Merge Kwanwoo's trim PR (#1) — adds ninth skill for post-feature token cleanup
-- KIF (Kerd Interchange Format) for `/kivna out` — TOON + JSON export (v0.20.0)
-- Run `/kerd:tend` on other projects to migrate vaults
 - Lorg ranking and recency rules
+- Shared state contract doc
+- Run `/kerd:tend` on other projects to migrate vaults
