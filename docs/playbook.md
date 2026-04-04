@@ -133,7 +133,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 **Recent changes (as of 2026-04-04):**
 - v0.21.0: Lorg ranking (scored results, recency-aware filtering, weak match cutoff). Shared state contract doc at docs/state-contract.md.
-- v0.20.0: Kerd Interchange Format (KIF). `/kivna out` produces `.kif.toon` + `.kif.json`. Repo-grounded exports (TODO, session logs, playbook, vault first, conversation fills gaps). `/kivna in` parses `.kif.json` with per-section approval. Supports `--full` flag for all sections.
+- v0.20.0: Kerd Interchange Format (KIF). `/kerd:kivna out` produces `.kif.toon` + `.kif.json`. Repo-grounded exports (TODO, session logs, playbook, vault first, conversation fills gaps). `/kerd:kivna in` parses `.kif.json` with per-section approval. Supports `--full` flag for all sections.
 - v0.19.0: Hooks infrastructure (Stop, SessionStart, PostToolUse). Unified `.active-modes` schema. Structured mode steps format. Switch mode snapshot for cross-machine handoff. Tend category 9 (hook hygiene). Slainte release audit category.
 - v0.17.1: Mode interactive phase selection (AskUserQuestion), session instructions.
 - v0.17.0: Mode skill for workflow routing. 9 starter modes. Community-contributed via PR.

@@ -1,29 +1,32 @@
 # TODO
 
 ## Current Session
-(completed 2026-03-27)
+(completed 2026-04-04)
 
 ### Done this session
-- [x] Switch in — picked up from 2026-03-26 session
-- [x] Reviewed Kwanwoo's trim PR (#1): 2 commits, skill + forward-looking content rescue
-- [x] Identified 5 issues: fork URL in marketplace, version skip, README mode regression, personal plan doc, unrelated .gitattributes
-- [x] Fixed all 5 issues in commit f1a9aa9 on pr/trim-skill branch
-- [x] Pushed fixes and left review comment asking Kwan to approve
+- [x] Switch in — picked up from 2026-03-27 session
+- [x] Explored shodh-memory repo for patterns applicable to Kerd
+- [x] Brainstormed and designed 4 features: Stop hook, SessionStart hook, PostToolUse hook, KIF interchange format
+- [x] Wrote design doc: docs/plans/2026-04-04-hooks-and-kif-design.md
+- [x] Two rounds of design review — fixed 7 issues (step IDs, .active-modes schema, TOON import, hook wiring, parameterized steps, cross-machine scope, gitignore)
+- [x] Built v0.19.0: hooks infrastructure, unified .active-modes schema, slainte release audit, tend category 9
+- [x] Built v0.20.0: KIF (TOON + JSON export/import), repo-grounded kivna out
+- [x] Built v0.21.0: lorg ranking (scored results, recency filtering), shared state contract
+- [x] Fixed P1 hook step matching (concrete invocation not bare name), removed jq dependency, fixed doc drift
+- [x] Ran /kerd:tend — fixed skill hygiene (namespace prefix) and hook hygiene (registered hooks)
 
 ## Backlog
-- Wait for Kwanwoo to approve PR #1, then merge
-- Add trim to maintain mode flow after audit phase
-- Add tend categories 9 (settings hygiene) and 10 (archive structure)
-- Embed demo gif in README
+- Merge Kwanwoo's trim PR (#1) — waiting on his approval
+- Live smoke test of hooks in a fresh session (validate PostToolUse payload shape)
 - Run /kerd:tend on krutho-founders, krutho-strategy, obair to migrate vaults
-- Update vault.json in other repos to point to ~/eolas/vault/
-- Re-open Obsidian vault in app pointing to ~/eolas/vault/ (manual step)
-- Test slainte playbook audit on a project with a playbook
-- Test /kerd:mode greenfield in a real build session
+- Embed demo gif in README
+- Commit or decide on AGENTS.md and docs/demo-mode.* files
+- Clean .DS_Store files from repo
 - Solicit community mode contributions
 
 ### Context
-- Version on main is 0.17.1. PR branch has 0.18.0 (will land when merged).
-- PR #1 (pr/trim-skill) has Kwan's 2 commits + our fix commit. Awaiting his approval.
-- Demo files (docs/demo-mode.cast, .gif, .mp4) still untracked — not yet committed or embedded in README.
-- Trim counter-proposal and review notes are in Claude memory, not committed to repo.
+- Version is 0.21.0 (bumped in all 3 locations)
+- Hooks registered in .claude/settings.local.json but won't activate until next session restart
+- PostToolUse payload shape is the one remaining uncertainty — needs a live test
+- PR #1 (trim) is on pr/trim-skill branch with fix commit f1a9aa9 — Kwan needs to cherry-pick and approve
+- AGENTS.md and demo media files are untracked — skipped by tend, user decision needed

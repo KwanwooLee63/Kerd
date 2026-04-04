@@ -133,7 +133,7 @@ Read files from `kivna/input/`, extract what's relevant, write it into the proje
 6. **Integrate.** For each approved item:
    - KIF backlog items: merge into TODO.md Backlog section (skip duplicates)
    - KIF decisions: append to the current session log in kivna/sessions/
-   - KIF status: update vault Status.md (with approval, same as `/kivna save`)
+   - KIF status: update vault Status.md (with approval, same as `/kerd:kivna save`)
    - Non-KIF: if updating an existing doc, use Edit. If creating new, prefer the project's natural doc structure. For LLM transcripts, extract signal only (decisions, insights, action items). Write in the project's voice.
 
 7. **Flag vault knowledge.** If import surfaces knowledge that belongs in a vault file, note it for the user. They can update the vault with `/kerd:kivna save` later.
