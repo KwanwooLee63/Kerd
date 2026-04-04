@@ -83,7 +83,11 @@ Scan installed plugins and skills:
 1. Read `~/.claude/plugins/` to find all installed plugins. If the directory does not exist or is empty, skip Tier 1 and note: "No installed plugins found. Tier 1 skipped."
 2. For each plugin, read its skills (check `skills/` subdirectories for SKILL.md files, or read the plugin's manifest)
 3. Match each skill's description and capabilities against the project profile
-4. Filter to skills that are relevant to this project but have not been invoked here. Check `kivna/sessions/` and git history for `/[plugin:skill-name]` invocations. If the skill has been invoked in this project, exclude it. If no invocation found, include it as a recommendation.
+4. Filter to skills that are relevant to this project but underused. Check `kivna/sessions/` and git history for `/[plugin:skill-name]` invocations. A skill is included if:
+   - It has never been invoked in this project, OR
+   - It was last invoked more than 30 days ago (stale usage — the user may have forgotten about it)
+
+   Exclude skills invoked within the last 30 days (actively used, no gap to fill).
 5. For each match, read the skill's SKILL.md to get a proper description
 
 Report matches as rich cards:
@@ -176,7 +180,28 @@ Report matches as rich cards:
 └─────────────────────────────────────────────────┘
 ```
 
-### 5. Display report
+### 5. Score and rank results
+
+Score each result before display. Higher scores appear first within each tier.
+
+**Scoring formula:** `relevance = theme_match + tech_match + recency_boost - friction`
+
+| Factor | Range | How to compute |
+|--------|-------|----------------|
+| `theme_match` | 0-40 | Count keywords from Layer 2 (work signals) that appear in the skill's description or README. 10 points per keyword, cap at 40. |
+| `tech_match` | 0-30 | Direct tech stack match (same language, framework, or deployment target). 15 per match, cap at 30. |
+| `recency_boost` | 0-20 | Does the project's TODO.md or recent session logs mention a need this skill fills? 20 if yes, 0 if no. |
+| `friction` | 0-15 | Install friction. 0 for Tier 1 (already installed), 5 for marketplace install, 10 for manual clone, 15 for requires additional setup (API keys, MCP servers, etc.) |
+
+Display the score in each card:
+
+```
+│ Relevance: 65  (theme: 30, tech: 15, recency: 20, friction: 0)
+```
+
+Within each tier, sort results by descending relevance score. Drop results scoring below 15 (too weak a match to be useful).
+
+### 6. Display report
 
 Combine all tiers into a single report:
 
@@ -206,7 +231,7 @@ Project profile:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### 6. Save report
+### 7. Save report
 
 Write the full report (everything displayed in step 5) to two locations:
 
@@ -218,7 +243,7 @@ Add a date line at the top of both files: `Last scanned: YYYY-MM-DD`
 
 Both files get the identical content. The repo copy travels with git. The vault copy is searchable in Obsidian.
 
-### 7. Post-report walkthrough
+### 8. Post-report walkthrough
 
 After the report, walk through each item individually. Different actions per tier:
 
@@ -260,7 +285,7 @@ To add a source: edit the file directly or ask lorg to add one.
 - **No removal suggestions.** A skill unused in this project may be critical in another. Lorg finds gaps, not waste.
 - **No health checks.** That's tend's job (structure) or slainte's job (content).
 - **Fresh scan on `/kerd:lorg`.** The report files get overwritten each scan. Use `/kerd:lorg report` to view the last report without rescanning.
-- **No rating or ranking.** Presents what it finds with context. You decide what's valuable.
+- **Ranked by relevance.** Results are scored (theme match + tech match + recency boost - friction) and sorted within each tier. Weak matches (score below 15) are dropped.
 
 ## Notes
 

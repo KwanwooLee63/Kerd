@@ -49,6 +49,7 @@ modes/            # workflow mode definitions (one .md per mode, community-contr
 hooks/            # opt-in hooks (hooks.json + shell scripts, registered via tend)
 docs/plans/       # historical design docs
 docs/playbook.md  # this file
+docs/state-contract.md # shared state ownership and format rules
 kivna/vault.json  # Obsidian vault config
 kivna/sessions/   # session logs written by switch
 kivna/.active-modes # ephemeral mode/skill state (gitignored)
@@ -110,7 +111,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.20.0
+**Version:** 0.21.0
 
 **Working:**
 - All eight skills functional: dian, lorg, switch, kivna, slainte, skriv, tend, mode
@@ -131,6 +132,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Mode skill for workflow routing with 9 community-contributed starter modes
 
 **Recent changes (as of 2026-04-04):**
+- v0.21.0: Lorg ranking (scored results, recency-aware filtering, weak match cutoff). Shared state contract doc at docs/state-contract.md.
 - v0.20.0: Kerd Interchange Format (KIF). `/kivna out` produces `.kif.toon` + `.kif.json`. Repo-grounded exports (TODO, session logs, playbook, vault first, conversation fills gaps). `/kivna in` parses `.kif.json` with per-section approval. Supports `--full` flag for all sections.
 - v0.19.0: Hooks infrastructure (Stop, SessionStart, PostToolUse). Unified `.active-modes` schema. Structured mode steps format. Switch mode snapshot for cross-machine handoff. Tend category 9 (hook hygiene). Slainte release audit category.
 - v0.17.1: Mode interactive phase selection (AskUserQuestion), session instructions.
@@ -140,6 +142,4 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 **Next:**
 - Merge Kwanwoo's trim PR (#1) — adds ninth skill for post-feature token cleanup
-- Lorg ranking and recency rules
-- Shared state contract doc
 - Run `/kerd:tend` on other projects to migrate vaults
