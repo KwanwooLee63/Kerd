@@ -21,11 +21,11 @@
 - User explicitly rejected making Stop hook blocking (Kerd hooks are reminders, non-blocking by design)
 
 ## Backlog
-- Merge Kwanwoo's trim PR (#1) — waiting on his approval
+- ~~Kwanwoo's trim PR (#1)~~ — cherry-picked onto main as v0.24.0 (branch too stale to merge)
 - Run /kerd:tend on krutho-founders, krutho-strategy, obair to migrate vaults
 - Embed demo gif in README
 - Commit or decide on AGENTS.md and docs/demo-mode.* files
-- Clean .DS_Store files from repo
+- ~~Clean .DS_Store files from repo~~ — done, gitignore already covers them
 - Solicit community mode contributions
-- Consider structured JSON systemMessage output for hooks (deferred from this session)
-- Consider PreCompact hook for preserving mode state during long sessions (deferred)
+- ~~Structured JSON hook output~~ — rejected, plain text is sufficient for reminder hooks
+- ~~PreCompact mode preservation~~ — rejected, no event exists; state already persists on disk via .active-modes

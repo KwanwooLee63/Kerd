@@ -58,7 +58,7 @@ kivna/.active-modes # ephemeral mode/skill state (gitignored)
 
 The project's knowledge layer lives in the Obsidian vault at `~/eolas/vault/kerd/`. The vault is a human knowledge base, living files updated in place, not append-only dumps. Kivna reads and writes vault files (`Kerd Status.md`, plus optional domain files like Architecture Decisions). The vault spec at `docs/vault-spec.md` defines what belongs. The vault config is at `kivna/vault.json`. See `/kerd:kivna` for details.
 
-**Eight skills, each with a single responsibility, plus three opt-in hooks:**
+**Nine skills, each with a single responsibility, plus three opt-in hooks:**
 - **dian**: session discipline (orient/plan/execute/close-out protocol)
 - **lorg**: skill gap analysis (scan project signals, recommend skills/plugins across tiers)
 - **switch**: git boundary operations (pull on arrive, commit+push on leave)
@@ -66,6 +66,7 @@ The project's knowledge layer lives in the Obsidian vault at `~/eolas/vault/kerd
 - **slainte**: project health audits (docs, code, site, deps, playbook)
 - **skriv**: human writing voice enforcement (audit, fix, session mode, self-audit pass)
 - **tend**: structural health check and convergence
+- **trim**: token optimization (archive shipped docs, prune stale context, safety-gated cleanup)
 - **mode**: workflow routing (orchestrates Kerd, GSD, Superpowers, and other plugins into guided flows)
 
 **Three opt-in hooks** (registered via `/kerd:tend`, stored in `.claude/settings.local.json`):
@@ -113,10 +114,10 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.23.0
+**Version:** 0.24.0
 
 **Working:**
-- All eight skills functional: dian, lorg, switch, kivna, slainte, skriv, tend, mode
+- All nine skills functional: dian, lorg, switch, kivna, slainte, skriv, tend, trim, mode
 - Three opt-in hooks: Stop (uncommitted changes reminder), SessionStart (stale state surfacing), PostToolUse (mode progress)
 - Plugin installs from marketplace
 - Session logs, playbook creation, and health audits all operational
@@ -135,7 +136,9 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Lorg `report` subcommand to view last scan without rescanning
 - Mode skill for workflow routing with 9 community-contributed starter modes
 
-**Recent changes (as of 2026-04-04):**
+**Recent changes (as of 2026-04-05):**
+- v0.24.0: Trim skill (community contribution from Kwanwoo Lee). Post-feature token cleanup: archives completed docs with forward-looking content rescue, prunes CLAUDE.md, cleans memory, trims TODO.md, safety-gated by haiku subagent.
+- v0.23.1: Fixed hooks auto-loading bug (renamed hooks.json to hooks.template.json). Full lorg scan.
 - v0.23.0: Switch: branch metadata in session logs, first-class Gotchas section, progressive session log loading on switch-in, stronger gotcha capture in reflection step.
 - v0.22.0: Skriv: self-audit pass, synonym cycling rule, copula avoidance, chatbot residue cleanup.
 - v0.21.0: Lorg ranking (scored results, recency-aware filtering, weak match cutoff). Shared state contract doc at docs/state-contract.md.
@@ -147,5 +150,5 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - v0.15.0: Lorg `report` subcommand.
 
 **Next:**
-- Merge Kwanwoo's trim PR (#1) — adds ninth skill for post-feature token cleanup
+- Add trim to maintain mode flow after audit phase
 - Run `/kerd:tend` on other projects to migrate vaults
