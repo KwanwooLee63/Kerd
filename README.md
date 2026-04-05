@@ -31,7 +31,7 @@ Dian doesn't touch git. No pulls, no pushes. That's switch's job.
 
 ### switch (Machine Handoff)
 
-Switch owns git boundary operations. All of them. When you leave a machine, it reflects on the session (capturing learnings to CLAUDE.md and memory files), writes session state to TODO.md, creates a session log in `kivna/sessions/`, commits everything, and pushes. When you arrive on a new machine, it pulls, runs a smoke test if tests exist, reads the session logs, and tells you where you left off. It also reads vault Status.md (where the project stands and what's next) and reports any active modes left from a previous session.
+Switch owns git boundary operations. All of them. When you leave a machine, it reflects on the session (capturing gotchas and learnings), writes session state to TODO.md, creates a session log in `kivna/sessions/` with branch metadata, commits everything, and pushes. When you arrive on a new machine, it pulls, runs a smoke test if tests exist, reads the most recent session log in full (older logs get skimmed for key decisions and gotchas), and tells you where you left off. It also reads vault Status.md and reports any active modes left from a previous session.
 
 If you run it without arguments, it checks for uncommitted changes. Changes present means you're leaving. Clean repo means you're arriving. Add `light` to skip vault operations, reflection, and smoke tests for a faster handoff with lower token cost.
 

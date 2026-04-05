@@ -45,6 +45,8 @@ Create `kivna/sessions/YYYY-MM-DD.md` (or append if one already exists for today
 # Session YYYY-MM-DD
 
 **Machine:** [hostname from `hostname`]
+**Branch:** [current branch name, e.g. `main` or `feat/trim-skill`]
+**Tracking:** [upstream tracking status, e.g. `origin/main (up to date)` or `origin/feat/trim-skill (3 ahead)`]
 
 ## What Was Done
 [Concrete list of what was accomplished. Be specific: files created, features built, bugs fixed, decisions made.]
@@ -54,6 +56,9 @@ Create `kivna/sessions/YYYY-MM-DD.md` (or append if one already exists for today
 
 ## Commits
 [List commit hashes and messages from this session]
+
+## Gotchas
+[Things that broke unexpectedly, non-obvious behavior, edge cases discovered. These are traps the next session (or the next person) should know about. Skip if none, but actually think about it first.]
 
 ## Insights
 [Observations about the codebase, patterns discovered, things that surprised you. Skip if none.]
@@ -82,14 +87,15 @@ If progress tracking exists (check for `docs/project/progress.md`, `progress.md`
 
 Before committing, reflect on the session:
 
+- **What broke unexpectedly?** Any gotchas, edge cases, or non-obvious behavior discovered? These go in the session log `## Gotchas` section AND in `docs/playbook.md` Gotchas section (so they survive beyond session logs).
 - **What patterns emerged?** Any recurring problems, useful approaches, or workflow improvements worth codifying?
-- **What should be remembered?** Best practices discovered, gotchas encountered, conventions that worked well or didn't.
+- **What should be remembered?** Best practices discovered, conventions that worked well or didn't.
 - **What would make the next session better?** Anything about the project, tooling, or workflow that should be adjusted.
 
 Write actionable learnings to the appropriate place:
+- **Gotchas** → add to `docs/playbook.md` Gotchas section (duplicates what's in the session log, but the playbook is the living reference; session logs are archives)
 - **Project conventions and enforcement rules** → add to `CLAUDE.md` (so they're enforced in future sessions)
 - **Conventions and patterns** → flag for the appropriate vault file (Architecture Decisions, Positioning Contract, etc.), these get proposed during the `/kerd:kivna save` step
-- **Project-specific gotchas** → add to `docs/playbook.md` Gotchas section
 
 Skip this step if the session was trivial (quick fix, single file change). But for any session with meaningful work, take the time. Compounding small improvements across sessions is how projects stay healthy.
 
@@ -137,7 +143,7 @@ Discover the vault path using `kivna/vault.json` or convention (see `/kerd:kivna
 
 ### 5. Check session logs
 
-Read the latest file(s) in `kivna/sessions/` for detailed context on what happened recently.
+Read the most recent file in `kivna/sessions/` in full. For older session logs (if any exist), skim only the `## What's Next`, `## Key Decisions`, and `## Gotchas` sections to find the pickup point and any unresolved issues. Do not read older logs in full unless the user asks.
 
 ### 6. Read progress tracking
 

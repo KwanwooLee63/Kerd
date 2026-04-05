@@ -111,7 +111,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.21.0
+**Version:** 0.23.0
 
 **Working:**
 - All eight skills functional: dian, lorg, switch, kivna, slainte, skriv, tend, mode
@@ -126,12 +126,16 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Switch snapshots active mode state to TODO.md for cross-machine handoff
 - Mode markers on dian and skriv. Visible phase/state announcements with `.active-modes` state file
 - Dian rigorous planning and execute verification
-- Switch-out reflection. Captures learnings to CLAUDE.md and memory files
+- Switch-out reflection with explicit gotcha capture. Captures learnings to CLAUDE.md and memory files, gotchas to playbook
+- Switch session logs include branch metadata and gotchas section
+- Switch-in progressive loading: newest session log in full, older logs skimmed for key decisions and gotchas
 - Switch `light` modifier for lower-token handoffs
 - Lorg `report` subcommand to view last scan without rescanning
 - Mode skill for workflow routing with 9 community-contributed starter modes
 
 **Recent changes (as of 2026-04-04):**
+- v0.23.0: Switch: branch metadata in session logs, first-class Gotchas section, progressive session log loading on switch-in, stronger gotcha capture in reflection step.
+- v0.22.0: Skriv: self-audit pass, synonym cycling rule, copula avoidance, chatbot residue cleanup.
 - v0.21.0: Lorg ranking (scored results, recency-aware filtering, weak match cutoff). Shared state contract doc at docs/state-contract.md.
 - v0.20.0: Kerd Interchange Format (KIF). `/kerd:kivna out` produces `.kif.toon` + `.kif.json`. Repo-grounded exports (TODO, session logs, playbook, vault first, conversation fills gaps). `/kerd:kivna in` parses `.kif.json` with per-section approval. Supports `--full` flag for all sections.
 - v0.19.0: Hooks infrastructure (Stop, SessionStart, PostToolUse). Unified `.active-modes` schema. Structured mode steps format. Switch mode snapshot for cross-machine handoff. Tend category 9 (hook hygiene). Slainte release audit category.
