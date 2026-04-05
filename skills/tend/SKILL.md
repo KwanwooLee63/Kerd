@@ -245,7 +245,15 @@ If hooks are not registered:
   Fix: merge hook entries into .claude/settings.local.json
 ```
 
-When fixing, read existing `.claude/settings.local.json` (create if missing), merge the hook entries from `${CLAUDE_PLUGIN_ROOT}/hooks/hooks.template.json` into the settings without overwriting existing hook entries. Preserve any existing permissions or other settings.
+When fixing, read existing `.claude/settings.local.json` (create if missing), merge the hook entries from `hooks/hooks.template.json` (relative to the Kerd plugin root) into the settings without overwriting existing hook entries. Preserve any existing permissions or other settings.
+
+**Critical: resolve absolute paths.** `${CLAUDE_PLUGIN_ROOT}` does NOT expand in `settings.local.json`. It only works inside the plugin's own `hooks.json`. When writing hook commands to settings.local.json, resolve the absolute path at wiring time:
+- For the installed plugin: find the cache path at `~/.claude/plugins/cache/kerd-marketplace/kerd/<version>/hooks/`
+- For local dev (the Kerd repo itself): use the repo path directly (e.g., `/Users/<name>/Kerd/hooks/`)
+
+The hook command must use the resolved absolute path, e.g.: `bash /Users/anthonymaley/.claude/plugins/cache/kerd-marketplace/kerd/0.29.0/hooks/stop.sh`
+
+Note: when the plugin is updated to a new version, the cache path changes. Hooks wired to the old version path will break. Tend should detect this (hook script file doesn't exist at the wired path) and offer to re-wire.
 
 ### 4. Display report
 
