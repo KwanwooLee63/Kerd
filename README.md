@@ -27,11 +27,13 @@ claude plugins install kerd
 
 ### dian (Session Discipline)
 
-Dian gives a session structure. You start it when you sit down to work, and it walks through four phases: orient (read the project state, cross-check for inconsistencies), plan (propose what to do, ask questions, push back on ambiguity), execute (do the work, verify each task, record decisions immediately), close out (diff review, update docs, update the playbook, run checks, clear the session block). It writes the session plan to TODO.md and keeps you honest about scope creep. If something comes up that isn't in the plan, it goes on the list for later.
+Dian gives a session structure. You start it when you sit down to work, and it walks through four phases: orient (read the project state, check for inconsistencies, report active mode context), plan (propose concrete steps with file paths and verification criteria, surface doubts, push back on ambiguity), execute (do the work, verify each task with evidence before claiming done, escalate after 3 failed fixes), close out (diff review, update docs, update the playbook, run checks, clear the session block). It writes the session plan to TODO.md and enforces scope: out-of-plan work goes to backlog immediately, no tangents.
 
 On close-out, dian creates or updates `docs/playbook.md`, a living guide for rebuilding the project from scratch. Tech stack, setup steps, architecture decisions, integrations, gotchas, current status. It grows with the project, session by session.
 
-During execution, decisions and progress accumulate in repo-side files (session logs, TODO.md). On close-out, dian calls `/kivna save` once, updating the vault's Status.md and proposing updates to any other vault files where new knowledge belongs. One clean vault update per session, not ten incremental dumps.
+During execution, decisions accumulate in TODO.md. On close-out, dian calls `/kivna save` once, updating the vault's Status.md and proposing updates to any other vault files where new knowledge belongs. One clean vault update per session, not ten incremental dumps. Dian does not write session logs — switch owns that at the git boundary.
+
+Dian is mode-aware: if a mode is active, orient reports the mode context and instruction, the plan respects the mode's scope, and close-out doesn't claim the session is done when running as part of a larger mode flow.
 
 Dian announces its current phase with a mode marker (`[dian: orient]`, `[dian: execute]`, etc.) so you always know what's active. When the session closes, it outputs `[dian: closed]` so there's no ambiguity.
 
