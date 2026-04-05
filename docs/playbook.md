@@ -46,7 +46,7 @@ The plugin manifest (`.claude-plugin/plugin.json`) declares the plugin name, ver
 ```
 skills/           # SKILL.md per skill (dian, lorg, kivna, mode, skriv, slainte, tend, switch)
 modes/            # workflow mode definitions (one .md per mode, community-contributed)
-hooks/            # opt-in hooks (hooks.json + shell scripts, registered via tend)
+hooks/            # opt-in hooks (hooks.template.json + shell scripts, registered via tend)
 docs/plans/       # historical design docs
 docs/playbook.md  # this file
 docs/state-contract.md # shared state ownership and format rules

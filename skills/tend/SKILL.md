@@ -245,7 +245,7 @@ If hooks are not registered:
   Fix: merge hook entries into .claude/settings.local.json
 ```
 
-When fixing, read existing `.claude/settings.local.json` (create if missing), merge the hook entries from `${CLAUDE_PLUGIN_ROOT}/hooks/hooks.json` into the settings without overwriting existing hook entries. Preserve any existing permissions or other settings.
+When fixing, read existing `.claude/settings.local.json` (create if missing), merge the hook entries from `${CLAUDE_PLUGIN_ROOT}/hooks/hooks.template.json` into the settings without overwriting existing hook entries. Preserve any existing permissions or other settings.
 
 ### 4. Display report
 
