@@ -13,6 +13,8 @@ claude plugins install kerd
 
 ## What's New
 
+**v0.28.0** — Slainte release audit now verifies cross-doc claims (README descriptions match SKILL.md behavior, playbook matches actual features, state-contract ownership table matches reality). Trim added to maintain mode flow. New `CONTRIBUTING.md` sets PR expectations for community contributions. Mode-to-skill composition conventions documented in playbook.
+
 **v0.27.0** — Switch gained pre-commit summary (shows what's staged before committing), untracked file triage (surfaces forgotten files for commit/gitignore/skip), handoff contract verification on switch-in (flags incomplete handoffs), evidence-cited final confirmation (commit hash, push target, clean tree), and conditional trim suggestion when completed plan docs are detected.
 
 **v0.26.0** — Dian gained execution discipline: hard verification gate (evidence before every "done" claim), concrete plan steps with file paths and verification criteria, 3-fix escalation limit, hard scope-creep stop. Also now mode-aware: reads active mode context in orient, respects mode scope in planning, and doesn't claim "session done" when running as part of a mode flow.

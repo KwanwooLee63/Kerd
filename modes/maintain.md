@@ -7,6 +7,7 @@ core_skills:
   - kerd:slainte
   - kerd:lorg
   - kerd:skriv
+  - kerd:trim
   - kerd:switch
 discover_keywords:
   - "health"
@@ -26,6 +27,10 @@ discover_keywords:
 - [ ] `/kerd:slainte` all -- run content consistency checks across all skills and docs
 - [ ] `/kerd:lorg` -- scan for skill gaps or undiscoverable workflows
 - [ ] `/kerd:skriv` audit on README and key docs -- check writing quality and voice
+
+## Clean
+
+- [ ] `/kerd:trim` -- archive completed docs, prune stale context, rescue forward-looking content
 
 ## Fix
 
