@@ -1,23 +1,24 @@
 # TODO
 
 ## Current Session
-(completed 2026-04-04, session 2)
+(completed 2026-04-04, session 3)
 
 ### Done this session
-- [x] Switch in — picked up from earlier session today
-- [x] Live smoke test of all three hooks (SessionStart, Stop, PostToolUse)
-- [x] Confirmed PostToolUse payload shape — full envelope with session_id, tool_input, tool_response, etc.
-- [x] Hardened skill-complete.sh to guard on tool_response.success
-- [x] Documented payload shape in state-contract.md and design doc
-- [x] Reviewed blader/humanizer — added 4 rules to skriv: self-audit pass, synonym cycling, copula avoidance, chatbot residue (v0.22.0)
-- [x] Reviewed thedotmack/claude-mem — added 3 features to switch: branch metadata, gotcha capture, progressive loading (v0.23.0)
-- [x] Updated vault (Status, MOC, Weekly, Architecture Decisions, Usage Guide)
-- [x] Updated README and playbook for v0.22.0 and v0.23.0
+- [x] Switch in — picked up from session 2
+- [x] Full lorg scan: built project profile, searched all 3 tiers, scored and ranked 24 results
+- [x] Saved lorg report to docs/lorg-report.md and vault (Kerd Lorg Report.md)
+- [x] Installed kepano/obsidian-skills (marketplace + plugin: 5 Obsidian skills for kivna vault writes)
+- [x] Loaded plugin-dev:hook-development reference — compared Kerd hooks against official patterns
+- [x] Fixed hooks auto-loading bug: renamed hooks/hooks.json to hooks.template.json (v0.23.1)
+- [x] Updated tend and playbook to reference hooks.template.json
+- [x] Version bumped to 0.23.1 in all 3 locations
 
 ### Context
-- Version is 0.23.0 (bumped in all 3 locations)
+- Version is 0.23.1
 - Untracked files still pending decision: AGENTS.md, docs/demo-mode.cast, docs/demo-mode.gif, docs/demo-mode.mp4
-- Cached plugin version is still 0.21.0 — switch template loaded from cache doesn't have branch/gotcha fields yet. Users need to reinstall to pick up v0.23.0.
+- obsidian-skills plugin installed (obsidian@obsidian-skills) — requires Claude Code restart to activate
+- Lorg report identified structured JSON output for hooks and PreCompact hook as deferred improvements
+- User explicitly rejected making Stop hook blocking (Kerd hooks are reminders, non-blocking by design)
 
 ## Backlog
 - Merge Kwanwoo's trim PR (#1) — waiting on his approval
@@ -26,3 +27,5 @@
 - Commit or decide on AGENTS.md and docs/demo-mode.* files
 - Clean .DS_Store files from repo
 - Solicit community mode contributions
+- Consider structured JSON systemMessage output for hooks (deferred from this session)
+- Consider PreCompact hook for preserving mode state during long sessions (deferred)
