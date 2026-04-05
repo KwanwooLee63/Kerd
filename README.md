@@ -11,6 +11,16 @@ claude plugins add-marketplace anthonymaley/Kerd
 claude plugins install kerd
 ```
 
+## What's New
+
+**v0.25.0** — Lorg now defaults to Tier 1 only (installed but unused skills). New subcommands for wider search: `/lorg available` (marketplace), `/lorg explore` (web), `/lorg all` (full scan). Each tier tracks its own freshness date and report saves are incremental.
+
+**v0.24.0** — New **trim** skill (community contribution from [Kwanwoo Lee](https://github.com/KwanwooLee63)). Run `/trim` after shipping a feature to archive completed docs, rescue forward-looking content into `docs/deferred.md`, prune stale CLAUDE.md blocks, clean memory, and trim TODO.md. Safety-gated by a haiku subagent that verifies `/switch in` still has full context.
+
+**v0.23.0** — Switch now captures branch metadata and gotchas in session logs. Progressive loading on switch-in: newest log in full, older logs skimmed. Skriv gained a self-audit pass, synonym cycling ban, and chatbot residue cleanup.
+
+**v0.19.0–v0.21.0** — Hooks infrastructure (Stop, SessionStart, skill completion), Kerd Interchange Format (KIF) for cross-project export/import, and scored lorg ranking with recency-aware filtering.
+
 ## Skills
 
 ### dian (Session Discipline)
