@@ -1,31 +1,29 @@
 # TODO
 
 ## Current Session
-(completed 2026-04-04, session 3)
+(completed 2026-04-05)
 
 ### Done this session
-- [x] Switch in — picked up from session 2
-- [x] Full lorg scan: built project profile, searched all 3 tiers, scored and ranked 24 results
-- [x] Saved lorg report to docs/lorg-report.md and vault (Kerd Lorg Report.md)
-- [x] Installed kepano/obsidian-skills (marketplace + plugin: 5 Obsidian skills for kivna vault writes)
-- [x] Loaded plugin-dev:hook-development reference — compared Kerd hooks against official patterns
-- [x] Fixed hooks auto-loading bug: renamed hooks/hooks.json to hooks.template.json (v0.23.1)
-- [x] Updated tend and playbook to reference hooks.template.json
-- [x] Version bumped to 0.23.1 in all 3 locations
+- [x] Switch in — repo up to date, no new remote commits
+- [x] Vault update: Status.md (v0.23.1), MOC version bump, Weekly additions, Architecture Decisions (hooks.json → hooks.template.json)
+- [x] Loaded obsidian-skills reference (obsidian-markdown, obsidian-bases, obsidian-cli) — assessed vault files against Obsidian best practices, concluded no frontmatter needed (consistent convention across all vaults)
+- [x] Cleaned .DS_Store files (local only, gitignore already covers them)
+- [x] Closed two deferred hook items as rejected: structured JSON output (plain text fits reminder hooks), PreCompact hook (no event exists, state persists on disk). Recorded in Architecture Decisions.
+- [x] Cherry-picked trim skill from Kwanwoo's PR #1 onto main (v0.24.0). PR branch too stale to merge (0.17.1 → 0.23.1 drift). Closed PR with comment crediting contribution.
+- [x] Lorg tiered subcommands (v0.25.0): default to Tier 1 only, subcommands for installed/available/explore/all/report, per-tier freshness dates, incremental report saves
+- [x] Added What's New section to README covering v0.19.0–v0.25.0
+- [x] Gitignored AGENTS.md
+- [x] Updated playbook, vault (Status, MOC, Weekly, Architecture Decisions, Usage Guide) across all changes
 
 ### Context
-- Version is 0.23.1
-- Untracked files still pending decision: AGENTS.md, docs/demo-mode.cast, docs/demo-mode.gif, docs/demo-mode.mp4
-- obsidian-skills plugin installed (obsidian@obsidian-skills) — requires Claude Code restart to activate
-- Lorg report identified structured JSON output for hooks and PreCompact hook as deferred improvements
-- User explicitly rejected making Stop hook blocking (Kerd hooks are reminders, non-blocking by design)
+- Version is 0.25.0
+- Untracked files still pending decision: docs/demo-mode.cast, docs/demo-mode.gif, docs/demo-mode.mp4 (AGENTS.md now gitignored)
+- obsidian-skills plugin installed but no vault frontmatter convention adopted yet — deferred to future vault-spec update if wanted
 
 ## Backlog
-- ~~Kwanwoo's trim PR (#1)~~ — cherry-picked onto main as v0.24.0 (branch too stale to merge)
 - Run /kerd:tend on krutho-founders, krutho-strategy, obair to migrate vaults
 - Embed demo gif in README
-- Commit or decide on AGENTS.md and docs/demo-mode.* files
-- ~~Clean .DS_Store files from repo~~ — done, gitignore already covers them
+- Decide on docs/demo-mode.* files (cast, gif, mp4)
 - Solicit community mode contributions
-- ~~Structured JSON hook output~~ — rejected, plain text is sufficient for reminder hooks
-- ~~PreCompact mode preservation~~ — rejected, no event exists; state already persists on disk via .active-modes
+- Add trim to maintain mode flow after audit phase
+- If long-session mode drift appears, fix in mode skill (re-read .active-modes before each step)
