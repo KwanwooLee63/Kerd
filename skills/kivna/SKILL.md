@@ -96,7 +96,9 @@ Update the vault to reflect the current session state. Use it at natural breakpo
 
 5. **Update MOC.** If new vault files were created this session (including `[Name] Weekly.md` on first creation), read `[Name].md` and add links for the new files. Don't scan repo files or manage symlinks.
 
-6. **Confirm.** One-line summary:
+6. **Respect do-not-save markers.** If the user said "don't save this to vault", "this is private", "off the record", or similar during the session, exclude that content from all vault writes. Track these markers in conversation context only — they do not persist to disk (no `.private` file, no frontmatter flag). When proposing vault updates, skip any knowledge the user marked as private. If unsure whether something was marked, ask.
+
+7. **Confirm.** One-line summary:
    > Saved to vault: Status updated, N files updated, MOC refreshed.
 
 ### `/kerd:kivna in` (Import External Knowledge)

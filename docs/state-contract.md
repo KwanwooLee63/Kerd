@@ -172,3 +172,30 @@ Two files per export:
 | lorg-report | - | - | - | - | - | - | - | W | - |
 
 W = writes, R = reads, - = no interaction
+
+## Workflow Ownership
+
+Which skill owns which responsibility. If two skills could do something, only one should.
+
+| Responsibility | Owner | Others must NOT |
+|----------------|-------|-----------------|
+| Git pull/push/commit | **switch** | No other skill touches git boundaries |
+| Session log creation | **switch** | Dian records decisions in TODO.md, not session logs |
+| Session plan (TODO.md Current Session) | **dian** (plan), **switch** (wrap-up) | Mode reads but doesn't write TODO.md |
+| Vault writes | **kivna** (save) | Switch calls kivna save, doesn't write vault directly |
+| Mode state (.active-modes mode block) | **mode** | Dian reads mode state but never writes the mode line |
+| Dian state (.active-modes dian line) | **dian** | Mode reads dian state but never writes the dian line |
+| Skriv state (.active-modes skriv line) | **skriv** | Same rule — each skill owns only its own line |
+| Structural audit and fix | **tend** | Slainte reports content issues but doesn't fix structure |
+| Content audit (read-only) | **slainte** | Slainte never modifies files, only reports |
+| Archiving completed docs | **trim** | Switch suggests trim but doesn't archive |
+| Skill/plugin recommendations | **lorg** | Lorg recommends, never auto-installs |
+| Workflow routing | **mode** | Mode guides, never calls skills directly |
+
+### Conflict resolution
+
+If a skill needs to do something owned by another skill, it calls that skill rather than doing it directly:
+- Dian calls `/kerd:kivna save` at close-out (doesn't write vault files itself)
+- Switch calls `/kerd:kivna save` when no dian session was active
+- Switch suggests `/kerd:trim` but doesn't run trim's steps itself
+- Mode presents steps for the user to invoke, never invokes skills programmatically

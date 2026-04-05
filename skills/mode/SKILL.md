@@ -181,6 +181,17 @@ When all enabled steps are done (or the user says "done"), remove the mode block
 Mode complete: greenfield (9/9 steps)
 ```
 
+## Resume and Recovery
+
+If a mode was active but context may have been lost (long session, context compaction, or new conversation picking up mid-flow), recover before continuing:
+
+1. **Read `.active-modes`.** Check if a mode block exists with steps and status markers. This is the source of truth for mode state.
+2. **Verify coherence.** Does the `[current]` step make sense given what's in TODO.md and recent session logs? If the current step references a skill that was already completed (visible in git log or session log), the state is stale.
+3. **If stale:** Show the user the recovered state and what looks wrong. Ask: "Resume from step N, or recount progress?" If recounting, walk through each step and check git/session evidence for completion. Update status markers accordingly.
+4. **If coherent:** Show a brief status line and continue: "Resuming mode: greenfield (step 4 of 9). Instruction: focus on pricing strategy only."
+
+Do not silently continue with a stale step. Do not restart the mode from scratch unless the user asks.
+
 ## Notes
 
 - Modes are session configurations, not automations. They guide, they don't drive.

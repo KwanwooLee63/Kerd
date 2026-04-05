@@ -13,6 +13,8 @@ claude plugins install kerd
 
 ## What's New
 
+**v0.29.0** — Lorg now dedupes results across tiers and requires specific project signals in explanations (no generic "this helps with testing"). Mode gained a resume/recovery protocol for long sessions or context compaction. Kivna respects do-not-save markers for private session content. State contract expanded with workflow ownership table and conflict resolution rules.
+
 **v0.28.0** — Slainte release audit now verifies cross-doc claims (README descriptions match SKILL.md behavior, playbook matches actual features, state-contract ownership table matches reality). Trim added to maintain mode flow. New `CONTRIBUTING.md` sets PR expectations for community contributions. Mode-to-skill composition conventions documented in playbook.
 
 **v0.27.0** — Switch gained pre-commit summary (shows what's staged before committing), untracked file triage (surfaces forgotten files for commit/gitignore/skip), handoff contract verification on switch-in (flags incomplete handoffs), evidence-cited final confirmation (commit hash, push target, clean tree), and conditional trim suggestion when completed plan docs are detected.

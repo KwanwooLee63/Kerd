@@ -220,6 +220,10 @@ Score each result before display. Higher scores appear first within each tier.
 
 Within each tier, sort results by descending relevance score. Drop results scoring below 15 (too weak a match to be useful).
 
+**Dedupe across tiers:** A plugin or skill that appears in one tier must not appear in another. Tier 1 takes priority over Tier 2, Tier 2 over Tier 3. When running `/kerd:lorg all`, check each Tier 2/3 result against Tier 1 results (by plugin name or repo URL). When running a single tier, also check against preserved results from the report file. If a match is found, drop the lower-tier duplicate.
+
+**Explanation quality:** The "Why here" line in each card must cite specific project signals, not generic descriptions. Bad: "This plugin helps with testing." Good: "Your TODO.md mentions 'add integration tests' and your last 3 session logs show repeated manual test runs." Connect the recommendation to something concrete from the project profile. If you can't name a specific signal, the match is too weak — drop it.
+
 ### 6. Display report
 
 Show a combined report. Tiers that were not scanned this run show their preserved data with the original scan date, or "Not yet scanned" if no data exists.

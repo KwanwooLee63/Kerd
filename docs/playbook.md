@@ -126,7 +126,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.28.0
+**Version:** 0.29.0
 
 **Working:**
 - All nine skills functional: dian, lorg, switch, kivna, slainte, skriv, tend, trim, mode
@@ -149,6 +149,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Mode skill for workflow routing with 9 community-contributed starter modes
 
 **Recent changes (as of 2026-04-05):**
+- v0.29.0: Lorg dedupe across tiers and explanation quality rules. Mode resume/recovery protocol for stale or compacted context. Kivna do-not-save markers for private session content. State-contract workflow ownership table and conflict resolution rules.
 - v0.28.0: Slainte cross-doc claim verification (README vs SKILL.md, playbook vs actual skills, state-contract ownership table, hook template currency). Trim added to maintain mode. CONTRIBUTING.md contributor quality gate. Mode-to-skill composition conventions in playbook.
 - v0.27.0: Switch pre-commit summary (shows staged files before committing), untracked file triage (surfaces forgotten files), handoff contract verification on switch-in (flags partial handoffs), evidence-cited final confirmation (commit hash, push target, clean tree), conditional trim suggestion for completed plan docs.
 - v0.26.0: Dian execution discipline: hard verification gate (identify-run-read-confirm), bite-sized plan steps with concrete file paths and verification criteria, 3-fix escalation limit, hard stop on scope creep, critical review before plan approval. Kerd integration: mode-awareness in orient (reads .active-modes, surfaces mode instruction), mode-aware close-out (doesn't claim "done" mid-flow), fixed session-log ownership (dian writes to TODO.md only, switch owns session logs).
