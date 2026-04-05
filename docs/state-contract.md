@@ -100,7 +100,7 @@ mode: greenfield (step 3 of 9)
 ### Rules
 
 - One file per day. Multiple sessions append with `---` separator.
-- Switch is the sole creator. Dian records decisions inline during execution, switch writes the session log at boundary.
+- Switch is the sole creator. Dian records decisions in TODO.md during execution; switch captures them in the session log at the boundary.
 - Session logs are append-only within a day, overwritten across days (each day starts fresh).
 
 ## Vault Status.md
@@ -165,7 +165,7 @@ Two files per export:
 | File | dian | switch | mode | skriv | kivna | slainte | tend | lorg | hooks |
 |------|------|--------|------|-------|-------|---------|------|------|-------|
 | TODO.md | W | W/R | - | - | R | - | - | R | R |
-| .active-modes | W | R | W | W | - | - | - | - | R |
+| .active-modes | W/R | R | W | W | - | - | - | - | R |
 | sessions/ | - | W | - | - | R | - | - | R | - |
 | vault Status | - | R | - | - | W | - | - | R | - |
 | KIF exports | - | - | - | - | W | - | - | - | - |

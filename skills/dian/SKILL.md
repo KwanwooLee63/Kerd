@@ -44,27 +44,38 @@ Read these files if they exist (skip any that don't):
 4. Progress tracking: check `docs/project/progress.md`, `progress.md`, or `CHANGELOG.md`
 5. `docs/playbook.md`: project playbook (how to rebuild this project from scratch)
 
+**Mode awareness:** Read `kivna/.active-modes`. If a mode is active, report it: what mode, which step, and the session instruction if one was set. Dian should operate within the mode's scope. If the mode says "focus on pricing strategy only," dian's plan should respect that constraint. If no mode is active, proceed normally.
+
 **Consistency sniff test:** After reading, do a quick cross-check. Does CLAUDE.md reference files or conventions that don't match the codebase? Does the playbook's tech stack or architecture still match reality? Does the vault Status mention things that have since changed? Flag any contradictions to the user before planning. Don't build on stale assumptions.
 
-Summarize the current state for the user, including any inconsistencies found.
+Summarize the current state for the user, including any inconsistencies found and active mode context.
 
 ### 2. Plan
 
 Output `[dian: plan]` at the top of your response.
 
-Propose a session plan to the user:
-- What we'll do (numbered steps)
-- What files we'll touch
-- What docs need updating
-- How we'll verify each task worked (what does "done" look like?)
+#### Critical review
 
-**Before writing the plan, interrogate the task.** Ask clarifying questions about anything ambiguous. Push back on things that don't make sense or seem underspecified. Do not guess or infer context. If you're unsure about something, ask. It's cheaper to spend two minutes clarifying than to build the wrong thing and rework it.
+Before writing the plan, surface doubts and unresolved risks. If something about the task feels underspecified, contradictory, or risky, say so now. Do not hide concerns to appear confident. Do not guess or infer context. It's cheaper to spend two minutes clarifying than to build the wrong thing.
 
-**Specifically, challenge yourself on:**
+**Challenge yourself on:**
 - Do I actually understand what the user wants, or am I filling in gaps with assumptions?
 - Are there dependencies between tasks that affect the order?
 - Is anything in the plan vague enough that I might interpret it differently than the user intended?
 - What could go wrong, and how will I catch it?
+
+Ask clarifying questions about anything ambiguous. Push back on things that don't make sense.
+
+#### Write the plan
+
+Propose a session plan to the user. Each step must be concrete and testable:
+
+- **What:** specific action with file paths
+- **Verify:** how to confirm it worked (command to run, output to check, behavior to observe)
+
+Ban vague plan items. "Implement feature X" is not a plan step. "Write the handler in `src/api/handler.ts` that accepts POST requests and returns 201" is. Every step should be small enough that you can verify it independently before moving on.
+
+If a mode is active, scope the plan to the mode's current step and instruction. Don't plan beyond the mode's scope.
 
 Write this as a `## Current Session` block in TODO.md with today's date. Wait for user approval before executing. Do not proceed until the user confirms the plan. A good plan prevents rework.
 
@@ -72,15 +83,45 @@ Write this as a `## Current Session` block in TODO.md with today's date. Wait fo
 
 Output `[dian: execute]` at the top of your response when entering this phase.
 
-Do the work. Commit incrementally if it makes sense. Stay focused on the plan. If scope creep appears, flag it and add it to TODO.md for later rather than chasing it now.
+Do the work. Stay focused on the plan.
 
-**Verify after each task.** Before moving to the next task, confirm the work actually does what was intended. Run tests if they exist, re-read the changed files, check for obvious issues. If something isn't right, fix it now. Don't accumulate problems for close-out to discover.
+#### Verification gate
 
-**Record decisions immediately.** When a significant decision is made during execution (architecture choice, rejected approach, key trade-off), record it in the session log (`kivna/sessions/`) and in TODO.md context. Don't defer decision recording to close-out. Decisions lose their reasoning if you wait. The vault gets updated once at close-out via `/kerd:kivna save`.
+After each task, verify it with evidence before claiming it's done. No exceptions.
 
-**Docs travel with code, enforced.** If a task changes behavior, update the affected docs (README, playbook, CLAUDE.md) in the same commit. Don't defer doc updates to close-out. The principle is: no commit should leave docs inconsistent with code.
+1. **Identify** the check: what command, file read, or test confirms this task worked?
+2. **Run** it. Actually run it. Don't assume.
+3. **Read** the output. Look at what came back.
+4. **Confirm** the claim: does the evidence support "this task is done"?
 
-**No mid-session vault writes.** Work accumulates in repo-side files (session log, TODO.md) during execution. The vault gets one clean update at close-out. This keeps the vault lean and searchable: one session, one update.
+Only then mark the task complete. If you catch yourself thinking "should work", "probably fine", or "seems good" without evidence, stop. Run the check.
+
+#### 3-fix limit
+
+If a task isn't working after 3 attempts, stop. Do not attempt fix #4. Instead:
+- Summarize what was tried and why each attempt failed
+- Surface the problem to the user
+- Ask whether to continue with a different approach, skip the task, or rethink the plan
+
+Three failed fixes usually means the approach is wrong, not the execution.
+
+#### Scope creep
+
+If something comes up that isn't in the plan, stop working on it immediately. Add it to TODO.md backlog. Do not continue on the tangent. Do not "just quickly" do it. Return to the current plan step. The user can reopen the plan if the new work is more important.
+
+#### Decision recording
+
+When a significant decision is made during execution (architecture choice, rejected approach, key trade-off), record it in TODO.md's `### Context` section immediately. Don't defer to close-out. Decisions lose their reasoning if you wait.
+
+Do not write to `kivna/sessions/` during execution. Switch owns session log creation at the git boundary. Dian's decisions accumulate in TODO.md and flow into the session log when switch runs.
+
+#### Docs travel with code
+
+If a task changes behavior, update the affected docs (README, playbook, CLAUDE.md) in the same commit. Don't defer doc updates to close-out. No commit should leave docs inconsistent with code.
+
+#### No mid-session vault writes
+
+Work accumulates in repo-side files (TODO.md) during execution. The vault gets one clean update at close-out. This keeps the vault lean and searchable: one session, one update.
 
 ### 4. Close Out
 
@@ -123,11 +164,14 @@ How to rebuild this project from scratch.
 5. **Diff review**: run `git diff` (or `git diff --cached` if staged) to review everything changed this session. Look for accidental changes, forgotten files, inconsistencies between code and docs, anything that doesn't match the plan. Fix issues before proceeding.
 6. **Staleness sweep**: search for any renamed or changed concepts across `docs/`, `README.md`, and other documentation.
 7. **Run checks**: run the project's build/test command if one exists. Do not close out with failing tests.
-8. **Clear mode marker**: remove the dian line from `kivna/.active-modes`. Output `[dian: closed]` as the final marker.
+8. **Mode-aware completion**: if a mode is active, do NOT suggest the session is done unless the mode flow is also complete. Dian may be one step in a larger mode flow. After dian's close-out, control returns to the mode for the next step. If no mode is active, this is the natural end point.
+9. **Clear mode marker**: remove the dian line from `kivna/.active-modes`. Output `[dian: closed]` as the final marker. Never touch the mode line — mode owns its own state.
 
 ## Principles
 
 - **No git boundary ops.** No `git pull`, no `git push`. Use `/kerd:switch` for that.
-- **Flag scope creep.** If something comes up that isn't in the plan, add it to TODO.md and stay on track.
-- **Incremental commits.** Commit working states, not big bangs.
+- **Evidence before claims.** Every "done" must have a check that was run, output that was read, and a conclusion that follows.
+- **Hard stop on scope creep.** Out-of-plan work goes to backlog. No exceptions without reopening the plan.
+- **Three fixes, then escalate.** Don't thrash. Surface the problem.
 - **Docs travel with code.** If you change behavior, update the docs in the same commit.
+- **Dian doesn't own session logs.** Decisions go to TODO.md. Switch writes the session log at the boundary.

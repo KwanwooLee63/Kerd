@@ -13,6 +13,8 @@ claude plugins install kerd
 
 ## What's New
 
+**v0.26.0** — Dian gained execution discipline: hard verification gate (evidence before every "done" claim), concrete plan steps with file paths and verification criteria, 3-fix escalation limit, hard scope-creep stop. Also now mode-aware: reads active mode context in orient, respects mode scope in planning, and doesn't claim "session done" when running as part of a mode flow.
+
 **v0.25.0** — Lorg now defaults to Tier 1 only (installed but unused skills). New subcommands for wider search: `/lorg available` (marketplace), `/lorg explore` (web), `/lorg all` (full scan). Each tier tracks its own freshness date and report saves are incremental.
 
 **v0.24.0** — New **trim** skill (community contribution from [Kwanwoo Lee](https://github.com/KwanwooLee63)). Run `/trim` after shipping a feature to archive completed docs, rescue forward-looking content into `docs/deferred.md`, prune stale CLAUDE.md blocks, clean memory, and trim TODO.md. Safety-gated by a haiku subagent that verifies `/switch in` still has full context.
