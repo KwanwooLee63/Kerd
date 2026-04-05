@@ -60,7 +60,7 @@ The project's knowledge layer lives in the Obsidian vault at `~/eolas/vault/kerd
 
 **Nine skills, each with a single responsibility, plus three opt-in hooks:**
 - **dian**: session discipline (orient/plan/execute/close-out protocol)
-- **lorg**: skill gap analysis (scan project signals, recommend skills/plugins across tiers)
+- **lorg**: skill gap analysis (tiered subcommands: installed, available, explore, all, report)
 - **switch**: git boundary operations (pull on arrive, commit+push on leave)
 - **kivna**: knowledge management (Obsidian vault: living Status.md, domain knowledge files, import/export)
 - **slainte**: project health audits (docs, code, site, deps, playbook)
@@ -114,7 +114,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.24.0
+**Version:** 0.25.0
 
 **Working:**
 - All nine skills functional: dian, lorg, switch, kivna, slainte, skriv, tend, trim, mode
@@ -133,10 +133,11 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Switch session logs include branch metadata and gotchas section
 - Switch-in progressive loading: newest session log in full, older logs skimmed for key decisions and gotchas
 - Switch `light` modifier for lower-token handoffs
-- Lorg `report` subcommand to view last scan without rescanning
+- Lorg tiered subcommands: installed (default), available, explore, all, report. Per-tier freshness. Incremental saves.
 - Mode skill for workflow routing with 9 community-contributed starter modes
 
 **Recent changes (as of 2026-04-05):**
+- v0.25.0: Lorg tiered subcommands. Default runs Tier 1 only (installed but unused). Subcommands: installed, available, explore, all, report. Per-tier freshness dates. Incremental report saves.
 - v0.24.0: Trim skill (community contribution from Kwanwoo Lee). Post-feature token cleanup: archives completed docs with forward-looking content rescue, prunes CLAUDE.md, cleans memory, trims TODO.md, safety-gated by haiku subagent.
 - v0.23.1: Fixed hooks auto-loading bug (renamed hooks.json to hooks.template.json). Full lorg scan.
 - v0.23.0: Switch: branch metadata in session logs, first-class Gotchas section, progressive session log loading on switch-in, stronger gotcha capture in reflection step.

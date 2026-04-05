@@ -105,16 +105,20 @@ The report shows each category as passing (✓), failing (✗), or warning (⚠)
 
 ### lorg (Skill Gap Analysis)
 
-Lorg scans the current project and recommends skills or plugins you should be using but aren't. It works in three tiers. Tier 1 checks what's already installed but underused (not invoked in the last 30 days). Tier 2 searches the Claude Code marketplace and a curated list of repos you maintain for plugins that fit your project's tech and themes. Tier 3 goes wider: GitHub and web search for trending or new plugins you haven't heard of yet.
+Lorg scans the current project and recommends skills or plugins you should be using but aren't. It works in three tiers, each runnable independently. Tier 1 checks what's already installed but underused (not invoked in the last 30 days). Tier 2 searches the Claude Code marketplace and a curated list of repos you maintain for plugins that fit your project's tech and themes. Tier 3 goes wider: GitHub and web search for trending or new plugins you haven't heard of yet.
 
-The recommendations aren't just based on file types. Lorg reads your README, playbook, TODO, session logs, and vault decisions to extract work themes (fundraising, compliance, content creation, whatever keeps coming up). Results are ranked by relevance (theme match + tech match + recency boost - install friction) so the strongest matches appear first. Weak matches below a threshold are dropped. Each result shows a rich card with what the skill does, why it fits here, its relevance score, and an action prompt.
+The default (`/lorg`) runs Tier 1 only: fast, cheap, no web dependency, most actionable. Use subcommands for wider search. Each tier tracks its own freshness date, and running one tier preserves the others in the report.
 
-Each scan writes the full report to `docs/lorg-report.md` (committed, available on any machine) and to the Obsidian vault (searchable alongside other project files). Both get overwritten on the next run. Use `/lorg report` to view the last saved report without rescanning.
+The recommendations aren't just based on file types. Lorg reads your README, playbook, TODO, session logs, and vault decisions to extract work themes (fundraising, compliance, content creation, whatever keeps coming up). Results are ranked by relevance (theme match + tech match + recency boost - install friction) so the strongest matches appear first. Weak matches below a threshold are dropped.
 
-The curated source list lives in your Obsidian vault at `discover-sources.json`, synced between machines automatically.
+The report is saved to `docs/lorg-report.md` (committed) and the Obsidian vault (searchable). Updates are incremental: only scanned tiers get overwritten.
 
 ```
-/lorg                # full scan across all tiers
+/lorg                # Tier 1 only (installed but unused)
+/lorg installed      # same as default
+/lorg available      # Tier 2 (marketplace + curated sources)
+/lorg explore        # Tier 3 (GitHub + web). Opt-in research.
+/lorg all            # full scan across all tiers
 /lorg report         # show last saved report
 ```
 

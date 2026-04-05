@@ -1,20 +1,33 @@
 ---
 name: lorg
-description: "Use when the user says 'lorg', 'discover', 'find skills', 'what plugins', 'skill gap', 'what am I missing', 'new skills', 'explore plugins', 'lorg report', 'last scan', or wants to find skills and plugins that would help with the current project. Searches installed plugins, marketplace, curated sources, and the web. Use 'report' subcommand to show the last saved report without rescanning."
+description: "Use when the user says 'lorg', 'discover', 'find skills', 'what plugins', 'skill gap', 'what am I missing', 'new skills', 'explore plugins', 'lorg report', 'lorg installed', 'lorg available', 'lorg explore', 'lorg all', 'last scan', or wants to find skills and plugins that would help with the current project. Default scans installed-but-unused skills only (Tier 1). Use subcommands for wider search."
 ---
 
 # Lorg (Skill Gap Analysis)
 
 From Gaelic "lorg" (to seek, track down). Pronounced "LORG".
 
-Scans the current project and recommends skills or plugins you should be using but aren't. Three tiers of widening search radius, all informed by the same project signals.
+Scans the current project and recommends skills or plugins you should be using but aren't. Three tiers of widening search radius, all informed by the same project signals. Each tier runs independently with its own freshness tracking.
 
 Not a health check. Not about what's broken or unused elsewhere. Purely about finding opportunities for THIS project.
 
 ## Usage
 
-`/kerd:lorg`: full scan, build project profile, search all tiers, save report
-`/kerd:lorg report`: display the last saved report without rescanning
+```
+/kerd:lorg                → Tier 1 only (installed but unused). Fast, cheap, no web dependency.
+/kerd:lorg installed      → Tier 1 (same as default)
+/kerd:lorg available      → Tier 2 (marketplace + curated sources)
+/kerd:lorg explore        → Tier 3 (GitHub + web search). Opt-in research, most expensive.
+/kerd:lorg all            → Full scan across all tiers
+/kerd:lorg report         → Display last saved report without rescanning
+```
+
+### When to run each tier
+
+- **Tier 1** (`installed` / default): Normal usage. Run anytime. Cheapest, fastest, most actionable.
+- **Tier 2** (`available`): Before spending time on workflow or tooling gaps. Run when you suspect something exists but don't know where.
+- **Tier 3** (`explore`): Occasional discovery sweep. After a release, or once a month. Most expensive, least reliable.
+- **All**: Periodic full audit. Reasonable cadence: monthly or at major milestones.
 
 ## Boundary with Other Skills
 
@@ -26,7 +39,7 @@ Not a health check. Not about what's broken or unused elsewhere. Purely about fi
 
 When invoked as `/kerd:lorg report`:
 
-1. Check if `docs/lorg-report.md` exists. If it does, read and display its contents. The file includes a `Last scanned: YYYY-MM-DD` date line so the user knows how fresh it is.
+1. Check if `docs/lorg-report.md` exists. If it does, read and display its contents. Each tier section includes its own `Last scanned: YYYY-MM-DD` date so the user knows how fresh each tier is.
 2. If the file doesn't exist, say: "No lorg report found. Run `/kerd:lorg` to scan."
 3. Stop. Do not scan, do not modify any files.
 
@@ -34,7 +47,7 @@ When invoked as `/kerd:lorg report`:
 
 ### 1. Build project profile
 
-Read the project to understand what it needs. Two layers of signals:
+Always runs first, regardless of which tier is requested. The profile is computed fresh each run.
 
 #### Layer 1: Tech signals (file-based, mechanical)
 
@@ -78,6 +91,8 @@ Project profile:
 
 ### 2. Tier 1: Installed but not activated here
 
+**Runs on:** `/kerd:lorg`, `/kerd:lorg installed`, `/kerd:lorg all`
+
 Scan installed plugins and skills:
 
 1. Read `~/.claude/plugins/` to find all installed plugins. If the directory does not exist or is empty, skip Tier 1 and note: "No installed plugins found. Tier 1 skipped."
@@ -100,12 +115,16 @@ Report matches as rich cards:
 │ 2-3 lines max]                                  │
 │                                                 │
 │ Why here: [specific match to project signals]   │
+│ Relevance: 65  (theme: 30, tech: 15,            │
+│   recency: 20, friction: 0)                     │
 │                                                 │
 │ Already installed. Try: /[plugin:skill-name]    │
 └─────────────────────────────────────────────────┘
 ```
 
 ### 3. Tier 2: Available but not installed
+
+**Runs on:** `/kerd:lorg available`, `/kerd:lorg all`
 
 Search two sources:
 
@@ -147,12 +166,16 @@ Report matches as rich cards:
 │ [Description: what it does, 2-3 lines]          │
 │                                                 │
 │ Why here: [specific match to project signals]   │
+│ Relevance: 55  (theme: 20, tech: 30,            │
+│   recency: 0, friction: -5)                     │
 │                                                 │
 │ Install: claude plugin add [owner/repo]         │
 └─────────────────────────────────────────────────┘
 ```
 
 ### 4. Tier 3: Explore the unknown
+
+**Runs on:** `/kerd:lorg explore`, `/kerd:lorg all`
 
 Search beyond known sources:
 
@@ -162,7 +185,7 @@ Search beyond known sources:
 
 Also fetch any URLs listed in `discover-sources.json` `urls` array and scan them for plugin/skill references.
 
-Filter out anything already surfaced in Tiers 1 and 2.
+Filter out anything already surfaced in Tiers 1 and 2 (check both current scan results and any preserved results from the report file).
 
 Report matches as rich cards:
 
@@ -175,6 +198,8 @@ Report matches as rich cards:
 │                                                 │
 │ Why here: [specific match to project signals    │
 │ or themes]                                      │
+│ Relevance: 35  (theme: 20, tech: 15,            │
+│   recency: 0, friction: -10)                    │
 │                                                 │
 │ Explore: [full URL]                             │
 └─────────────────────────────────────────────────┘
@@ -193,21 +218,15 @@ Score each result before display. Higher scores appear first within each tier.
 | `recency_boost` | 0-20 | Does the project's TODO.md or recent session logs mention a need this skill fills? 20 if yes, 0 if no. |
 | `friction` | 0-15 | Install friction. 0 for Tier 1 (already installed), 5 for marketplace install, 10 for manual clone, 15 for requires additional setup (API keys, MCP servers, etc.) |
 
-Display the score in each card:
-
-```
-│ Relevance: 65  (theme: 30, tech: 15, recency: 20, friction: 0)
-```
-
 Within each tier, sort results by descending relevance score. Drop results scoring below 15 (too weak a match to be useful).
 
 ### 6. Display report
 
-Combine all tiers into a single report:
+Show a combined report. Tiers that were not scanned this run show their preserved data with the original scan date, or "Not yet scanned" if no data exists.
 
 ```
 ┌─────────────────────────────────────────────────┐
-│  /kerd:lorg: [project-name]                 │
+│  /kerd:lorg: [project-name]                     │
 └─────────────────────────────────────────────────┘
 
 Project profile:
@@ -215,14 +234,17 @@ Project profile:
   Themes: [extracted work themes]
 
 ━━━ Tier 1: Installed but not activated here ━━━━
+Last scanned: YYYY-MM-DD
 
 [rich cards or "No matches. You're using everything relevant."]
 
 ━━━ Tier 2: Available but not installed ━━━━━━━━━
+Last scanned: YYYY-MM-DD
 
 [rich cards or "No matches found in marketplace or curated sources."]
 
 ━━━ Tier 3: Worth exploring ━━━━━━━━━━━━━━━━━━━━
+Last scanned: YYYY-MM-DD
 
 [rich cards or "No new discoveries this scan."]
 
@@ -231,21 +253,19 @@ Project profile:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### 7. Save report
+### 7. Save report (incremental)
 
-Write the full report (everything displayed in step 5) to two locations:
+Write the report to two locations, updating only the tiers that were scanned:
 
-**Repo-side:** `docs/lorg-report.md`. Overwrite if it already exists. This is a working reference, committed to git, available on any machine.
+**Repo-side:** `docs/lorg-report.md`. If the file exists, read it first and preserve sections for tiers that were not scanned this run. Overwrite only the scanned tier sections and the project profile. Each tier section retains its own `Last scanned: YYYY-MM-DD` date.
 
-**Vault-side:** `[Name] Lorg Report.md` in the Obsidian vault (e.g., `Kerd Lorg Report.md`). Overwrite if it already exists. This makes the report searchable in Obsidian alongside other project files. Resolve the vault path via `kivna/vault.json`.
+**Vault-side:** `[Name] Lorg Report.md` in the Obsidian vault (e.g., `Kerd Lorg Report.md`). Same incremental logic as repo-side. Resolve the vault path via `kivna/vault.json`.
 
-Add a date line at the top of both files: `Last scanned: YYYY-MM-DD`
-
-Both files get the identical content. The repo copy travels with git. The vault copy is searchable in Obsidian.
+Both files get identical content. The repo copy travels with git. The vault copy is searchable in Obsidian.
 
 ### 8. Post-report walkthrough
 
-After the report, walk through each item individually. Different actions per tier:
+After the report, walk through each newly scanned item individually. Different actions per tier:
 
 - **Tier 1:** "Want me to show how to use [skill] in this project?"
 - **Tier 2:** "Install [plugin]?" On approval, run the install command
@@ -254,6 +274,8 @@ After the report, walk through each item individually. Different actions per tie
 No batch actions across tiers. Different trust levels require different handling.
 
 If the user says "skip" or "done" at any point, stop the walkthrough.
+
+Only walk through results from tiers scanned this run. Do not re-walk preserved results from previous scans.
 
 ## Curated Sources
 
@@ -284,7 +306,7 @@ To add a source: edit the file directly or ask lorg to add one.
 - **No auto-install.** Every install is prompted and approved individually.
 - **No removal suggestions.** A skill unused in this project may be critical in another. Lorg finds gaps, not waste.
 - **No health checks.** That's tend's job (structure) or slainte's job (content).
-- **Fresh scan on `/kerd:lorg`.** The report files get overwritten each scan. Use `/kerd:lorg report` to view the last report without rescanning.
+- **Incremental saves.** Running one tier preserves other tiers' data in the report. Only `/kerd:lorg all` refreshes everything.
 - **Ranked by relevance.** Results are scored (theme match + tech match + recency boost - friction) and sorted within each tier. Weak matches (score below 15) are dropped.
 
 ## Notes
