@@ -66,6 +66,7 @@ When mentioned in a prompt ("write this blog post using /kerd:skriv", "review th
 Never use these words or phrases: straightforward, comprehensive, robust, nuanced, leverage, facilitate, delve, realm, landscape, tapestry, multifaceted, it's worth noting, that said, generally speaking, in many cases, certainly, absolutely, I'd be happy to, let me, here's what, notably, ultimately, essentially, at its core, in terms of, strikes a balance, crucial, pivotal, groundbreaking, unleash, harness, navigate (metaphorical), game-changer, revolutionize, cutting-edge, dynamic, innovative, holistic, seamless, transformative, impactful, actionable, meticulous, proactive, intricate, underscore, foster, testament, enhance, captivate, watershed moment, deeply rooted, steadfast, breathtaking, stunning, enduring legacy, lasting legacy, rich cultural heritage, rich history, profound.
 
 Never use these phrase patterns:
+- "serves as" / "functions as" / "acts as" where "is" would work. These are "is" wearing a suit.
 - "stands as a..." / "serves as a testament to..."
 - "plays a vital/significant/crucial role"
 - "leaves a lasting impact"
@@ -91,6 +92,8 @@ Never use these phrase patterns:
 - No weasel attribution. Do not write "some critics argue," "industry experts suggest," "observers have noted" without naming the source. Either cite someone specific or state the claim directly.
 - No promotional inflation. Do not overstate significance. If something is good, say how. Do not call it a "key turning point" or say it "solidified its place."
 - No bold-term-then-definition structure in running prose. That is a glossary, not writing.
+- No synonym cycling. If the right word is "users," keep saying "users." Do not rotate through "individuals," "people," "stakeholders," "end-users" to avoid repetition. Repetition is fine. Elegant variation is an AI tell.
+- No chatbot residue. Remove knowledge-cutoff disclaimers ("as of my last update"), filler phrases ("it's important to note," "in essence," "at the end of the day"), and generic upbeat conclusions ("this is an exciting development," "the future looks bright"). If you catch yourself writing a sentence that could close any article on any topic, delete it.
 
 ### Confidence
 
@@ -106,7 +109,9 @@ Calm, confident, slightly stubborn. No hype. Assume the reader is smart and a li
 
 ### After Drafting
 
-Cut 20%. Remove any sentence that restates a point already made. Remove any paragraph that exists only to transition. If the piece reads fine without a sentence, delete it. One pass of cuts, then stop.
+First, self-audit. Read what you just wrote and ask: "What still makes this sound machine-made?" Answer honestly. Fix the tells you find.
+
+Then cut 20%. Remove any sentence that restates a point already made. Remove any paragraph that exists only to transition. If the piece reads fine without a sentence, delete it. One pass of cuts, then stop.
 
 ### Goal
 

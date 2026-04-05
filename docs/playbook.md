@@ -64,7 +64,7 @@ The project's knowledge layer lives in the Obsidian vault at `~/eolas/vault/kerd
 - **switch**: git boundary operations (pull on arrive, commit+push on leave)
 - **kivna**: knowledge management (Obsidian vault: living Status.md, domain knowledge files, import/export)
 - **slainte**: project health audits (docs, code, site, deps, playbook)
-- **skriv**: human writing voice enforcement (audit, fix, session mode)
+- **skriv**: human writing voice enforcement (audit, fix, session mode, self-audit pass)
 - **tend**: structural health check and convergence
 - **mode**: workflow routing (orchestrates Kerd, GSD, Superpowers, and other plugins into guided flows)
 
