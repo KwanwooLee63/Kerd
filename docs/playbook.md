@@ -114,7 +114,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.26.0
+**Version:** 0.27.0
 
 **Working:**
 - All nine skills functional: dian, lorg, switch, kivna, slainte, skriv, tend, trim, mode
@@ -137,6 +137,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Mode skill for workflow routing with 9 community-contributed starter modes
 
 **Recent changes (as of 2026-04-05):**
+- v0.27.0: Switch pre-commit summary (shows staged files before committing), untracked file triage (surfaces forgotten files), handoff contract verification on switch-in (flags partial handoffs), evidence-cited final confirmation (commit hash, push target, clean tree), conditional trim suggestion for completed plan docs.
 - v0.26.0: Dian execution discipline: hard verification gate (identify-run-read-confirm), bite-sized plan steps with concrete file paths and verification criteria, 3-fix escalation limit, hard stop on scope creep, critical review before plan approval. Kerd integration: mode-awareness in orient (reads .active-modes, surfaces mode instruction), mode-aware close-out (doesn't claim "done" mid-flow), fixed session-log ownership (dian writes to TODO.md only, switch owns session logs).
 - v0.25.0: Lorg tiered subcommands. Default runs Tier 1 only (installed but unused). Subcommands: installed, available, explore, all, report. Per-tier freshness dates. Incremental report saves.
 - v0.24.0: Trim skill (community contribution from Kwanwoo Lee). Post-feature token cleanup: archives completed docs with forward-looking content rescue, prunes CLAUDE.md, cleans memory, trims TODO.md, safety-gated by haiku subagent.

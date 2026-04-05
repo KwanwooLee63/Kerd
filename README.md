@@ -13,6 +13,8 @@ claude plugins install kerd
 
 ## What's New
 
+**v0.27.0** — Switch gained pre-commit summary (shows what's staged before committing), untracked file triage (surfaces forgotten files for commit/gitignore/skip), handoff contract verification on switch-in (flags incomplete handoffs), evidence-cited final confirmation (commit hash, push target, clean tree), and conditional trim suggestion when completed plan docs are detected.
+
 **v0.26.0** — Dian gained execution discipline: hard verification gate (evidence before every "done" claim), concrete plan steps with file paths and verification criteria, 3-fix escalation limit, hard scope-creep stop. Also now mode-aware: reads active mode context in orient, respects mode scope in planning, and doesn't claim "session done" when running as part of a mode flow.
 
 **v0.25.0** — Lorg now defaults to Tier 1 only (installed but unused skills). New subcommands for wider search: `/lorg available` (marketplace), `/lorg explore` (web), `/lorg all` (full scan). Each tier tracks its own freshness date and report saves are incremental.
@@ -45,7 +47,7 @@ Dian doesn't touch git. No pulls, no pushes. That's switch's job.
 
 ### switch (Machine Handoff)
 
-Switch owns git boundary operations. All of them. When you leave a machine, it reflects on the session (capturing gotchas and learnings), writes session state to TODO.md, creates a session log in `kivna/sessions/` with branch metadata, commits everything, and pushes. When you arrive on a new machine, it pulls, runs a smoke test if tests exist, reads the most recent session log in full (older logs get skimmed for key decisions and gotchas), and tells you where you left off. It also reads vault Status.md and reports any active modes left from a previous session.
+Switch owns git boundary operations. All of them. When you leave a machine, it reflects on the session (capturing gotchas and learnings), writes session state to TODO.md, creates a session log in `kivna/sessions/` with branch metadata, then shows a pre-commit summary of what's about to ship. Untracked files get triaged (commit, gitignore, or leave) so nothing drifts silently. The final confirmation cites evidence: commit hash, push target, clean tree status. When you arrive on a new machine, it pulls, verifies the handoff was complete (checks TODO.md and session log for expected sections, flags partial handoffs), runs a smoke test if tests exist, reads the most recent session log in full (older logs get skimmed for key decisions and gotchas), and tells you where you left off. It also reads vault Status.md and reports any active modes left from a previous session.
 
 If you run it without arguments, it checks for uncommitted changes. Changes present means you're leaving. Clean repo means you're arriving. Add `light` to skip vault operations, reflection, and smoke tests for a faster handoff with lower token cost.
 

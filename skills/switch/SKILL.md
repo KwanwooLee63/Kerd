@@ -99,21 +99,46 @@ Write actionable learnings to the appropriate place:
 
 Skip this step if the session was trivial (quick fix, single file change). But for any session with meaningful work, take the time. Compounding small improvements across sessions is how projects stay healthy.
 
-### 6. Stage and commit
+### 6. Pre-commit summary and triage
 
-Stage all work including the session log and doc updates. Use a descriptive commit message.
+Before staging anything, run `git status` and `git diff --stat` to see the actual state of the working tree. Present a summary to the user:
 
-### 7. Push
+```
+About to commit:
+  Modified:  TODO.md, docs/playbook.md, kivna/sessions/2026-04-05.md
+  Untracked: [any new files created this session]
+  
+  Untracked (not part of this session):
+    docs/demo-mode.gif
+    docs/demo-mode.mp4
+```
+
+**Untracked file triage:** If there are untracked files that were NOT created by this session (they existed before switch-out started), surface each one and ask: commit it, add to `.gitignore`, or leave for later? Do not silently ignore untracked files. Do not batch-stage with `git add -A`. Stage files by name.
+
+**Trim suggestion:** If `docs/plans/` or `docs/` contains spec, plan, or design docs whose features are marked complete in TODO.md or playbook, suggest: "Completed plan docs detected. Consider `/kerd:trim` to archive them." This is a suggestion, not a required step.
+
+Wait for the user to confirm what should be committed before staging.
+
+### 7. Stage and commit
+
+Stage the confirmed files by name. Use a descriptive commit message.
+
+### 8. Push
 
 Push to remote. Verify the push succeeds.
 
-### 8. Verify
+### 9. Verify and confirm
 
-Run `git status` and confirm the working tree is clean and nothing remains uncommitted. If uncommitted changes remain, go back to step 6. Do not proceed to the confirm step until the tree is clean.
+Run `git status` and `git log --oneline -1` fresh. Read the output. Report with evidence:
 
-### 9. Confirm
+```
+Pushed: [commit-hash] [commit-message]
+  → origin/[branch] ([N files], [session log], [doc updates])
+  Tree: clean (0 modified, 0 staged, N untracked)
+  Next session: [what to pick up]
+```
 
-Print a short summary: what was pushed, what the next session should start with.
+If the tree is not clean, report what remains and why (e.g., "3 untracked files left per triage decision"). If the push failed, stop and surface the error.
 
 If `light` modifier was used, note: "Light handoff: vault and reflection skipped."
 
@@ -125,33 +150,52 @@ Pick up where the other machine left off.
 
 `git pull`. If there are conflicts, resolve them before proceeding.
 
-### 2. Smoke test
+### 2. Handoff contract verification
+
+After pulling, verify the outgoing machine completed its handoff. Check:
+
+- Does `TODO.md` exist and have a `## Current Session` block?
+- Does the latest file in `kivna/sessions/` have a `## What's Next` section?
+
+If both are present, proceed normally. If either is missing, flag it explicitly:
+
+```
+⚠ Partial handoff detected:
+  - TODO.md missing ## Current Session block
+  - Latest session log missing ## What's Next
+  
+  Proceeding with available context. Some state may be missing.
+```
+
+Do not pretend the pickup is clean when the handoff was incomplete.
+
+### 3. Smoke test
 
 **Skip this step if `light` modifier is set.**
 
 If the project has a test command (check `package.json` scripts, `Makefile`, `pyproject.toml`, or similar), run it. If tests fail, report the failures in the summary. The user should know the state of the codebase before planning new work. If no test command exists, skip this step.
 
-### 3. Read TODO.md
+### 4. Read TODO.md
 
 Focus on the `## Current Session` block. This is where the last session left off.
 
-### 4. Read vault
+### 5. Read vault
 
 **Skip this step if `light` modifier is set.**
 
 Discover the vault path using `kivna/vault.json` or convention (see `/kerd:kivna` vault discovery). Read `[Name] Status.md` for where the project stands. Read the MOC (`[Name].md`) to discover what other vault files exist and read any that are relevant (Architecture Decisions, Playbook, etc.).
 
-### 5. Check session logs
+### 6. Check session logs
 
 Read the most recent file in `kivna/sessions/` in full. For older session logs (if any exist), skim only the `## What's Next`, `## Key Decisions`, and `## Gotchas` sections to find the pickup point and any unresolved issues. Do not read older logs in full unless the user asks.
 
-### 6. Read progress tracking
+### 7. Read progress tracking
 
 **Skip this step if `light` modifier is set.**
 
 If progress tracking exists, read it.
 
-### 7. Check active modes
+### 8. Check active modes
 
 Check two sources for mode state:
 
@@ -160,18 +204,19 @@ Check two sources for mode state:
 
 Report any active modes in the summary (e.g., "**Active modes:** `greenfield (step 4 of 9)`"). If neither source has mode state, skip this. Don't mention modes.
 
-### 8. Summarize
+### 9. Summarize
 
 Tell the user:
 - What was done last session
 - What's in progress or queued next
 - Any open questions or decisions from the previous session
 - Any test failures from the smoke test (if applicable, full mode only)
+- Any handoff issues detected in step 2
 - Suggest what to work on
 
 If `light` modifier was used, note: "Light pickup: vault and smoke test skipped. Run `/kerd:switch in` for full context."
 
-### 9. Offer dian
+### 10. Offer dian
 
 Ask: "Start a `/kerd:dian` session?" If yes, flow into `/kerd:dian` orient. If no, stop. The user wants to do something quick without full session discipline.
 
