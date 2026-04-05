@@ -17,7 +17,7 @@
 
 ## Backlog
 - Merge Kwanwoo's trim PR (#1) — waiting on his approval
-- Live smoke test of hooks in a fresh session (validate PostToolUse payload shape)
+- ~~Live smoke test of hooks in a fresh session (validate PostToolUse payload shape)~~ ✓ confirmed 2026-04-04
 - Run /kerd:tend on krutho-founders, krutho-strategy, obair to migrate vaults
 - Embed demo gif in README
 - Commit or decide on AGENTS.md and docs/demo-mode.* files

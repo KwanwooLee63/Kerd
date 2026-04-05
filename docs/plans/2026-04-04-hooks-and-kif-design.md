@@ -287,3 +287,23 @@ Issues raised during design review, round 2 (2026-04-04):
 5. **P1: Parameterized/repeated steps not uniquely identifiable** — Resolved: steps now use format `<id>: <skill> [<args>] | <label> [<status>]`. Hook matches by step id (the `[current]` marker), not skill name. Mode skill expands repeated steps into concrete entries with arguments at flow setup time.
 6. **P2: SessionStart implies cross-machine but .active-modes is ephemeral** — Resolved: narrowed SessionStart to same-machine resume. `/switch out` snapshots mode state into TODO.md Context block for cross-machine handoff. `/switch in` reads it from there.
 7. **P2: .active-modes not in .gitignore** — Resolved: added to `.gitignore` as implementation step 1. Also noted in schema rules.
+
+## PostToolUse Payload Shape (confirmed 2026-04-04)
+
+Live smoke test confirmed the PostToolUse stdin payload is a full envelope, not just `tool_input`:
+
+```json
+{
+  "session_id": "<uuid>",
+  "transcript_path": "<path to session .jsonl>",
+  "cwd": "<working directory>",
+  "permission_mode": "<e.g. bypassPermissions>",
+  "hook_event_name": "PostToolUse",
+  "tool_name": "Skill",
+  "tool_input": {"skill": "kerd:tend"},
+  "tool_response": {"success": true, "commandName": "kerd:tend"},
+  "tool_use_id": "<tool use id>"
+}
+```
+
+The hook's sed parser extracts `"skill"` from anywhere in the JSON, so it handles this envelope correctly without needing to unwrap `tool_input` first. The `tool_response` field is also available but not currently used.

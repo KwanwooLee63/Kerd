@@ -66,6 +66,9 @@ mode: greenfield (step 3 of 9)
 - Status markers: `[done]`, `[current]`, `[pending]`, `[skipped]`
 - Step IDs are stable integers assigned at mode start.
 - Hooks read this file but never write to it.
+- PostToolUse hook receives a full envelope on stdin (confirmed 2026-04-04):
+  `{session_id, cwd, hook_event_name, tool_name, tool_input: {skill, args}, tool_response: {success, commandName}, tool_use_id}`
+  The hook checks `tool_response.success` before reporting progress and extracts `tool_input.skill` via sed.
 - Switch out snapshots mode state to TODO.md Context block before committing (cross-machine handoff).
 
 ## kivna/sessions/YYYY-MM-DD.md

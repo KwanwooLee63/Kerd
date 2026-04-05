@@ -15,9 +15,14 @@ mode_line=$(grep '^mode:' "kivna/.active-modes" 2>/dev/null || true)
 [ -n "$mode_line" ] || exit 0
 
 # Read the completed skill invocation from stdin (PostToolUse provides tool_input)
-# Parse without jq: extract the "skill" field value and "args" if present
+# Payload is a full envelope: {session_id, tool_name, tool_input: {skill, args}, tool_response: {success}, ...}
+# Parse without jq: extract fields with sed
 input=$(cat)
-# Extract skill name: find "skill":"value" or "skill": "value"
+
+# Only report progress on successful skill runs
+echo "$input" | grep -q '"success"[[:space:]]*:[[:space:]]*true' || exit 0
+
+# Extract skill name from tool_input.skill
 skill_name=$(echo "$input" | sed -n 's/.*"skill"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -1)
 [ -n "$skill_name" ] || exit 0
 
