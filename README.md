@@ -13,6 +13,8 @@ claude plugins install kerd
 
 ## What's New
 
+**v0.30.0** — Switch gained a `low` modifier for minimum viable handoffs on tight token budgets. `switch out low` writes a 3-5 line TODO update, skeleton session log (What Was Done + What's Next), and pushes with compressed narration. `switch in low` pulls, reads TODO current session and latest What's Next, reports active modes, and stops. Degrades thoughtfully — still a real handoff, not a shell shortcut.
+
 **v0.29.0** — Lorg now dedupes results across tiers and requires specific project signals in explanations (no generic "this helps with testing"). Mode gained a resume/recovery protocol for long sessions or context compaction. Kivna respects do-not-save markers for private session content. State contract expanded with workflow ownership table and conflict resolution rules.
 
 **v0.28.0** — Slainte release audit now verifies cross-doc claims (README descriptions match SKILL.md behavior, playbook matches actual features, state-contract ownership table matches reality). Trim added to maintain mode flow. New `CONTRIBUTING.md` sets PR expectations for community contributions. Mode-to-skill composition conventions documented in playbook.
@@ -58,8 +60,10 @@ If you run it without arguments, it checks for uncommitted changes. Changes pres
 ```
 /switch out          # full wrap-up (vault, reflection, commit, push)
 /switch out light    # quick wrap-up (TODO + session log, commit, push)
+/switch out low      # minimum viable handoff (brief TODO, skeleton log, push)
 /switch in           # full pickup (pull, vault, smoke test, session logs)
 /switch in light     # quick pickup (pull, TODO, session log)
+/switch in low       # minimum viable pickup (pull, TODO current session, what's next)
 ```
 
 ### kivna (Knowledge Management)
