@@ -11,33 +11,29 @@ claude plugins add-marketplace anthonymaley/Kerd
 claude plugins install kerd
 ```
 
-## What's New
+## What's New (v0.31.0)
 
-**v0.31.0** — Dian plan phase now starts with task framing: decompose the request into scoped tasks with acceptance criteria and verification before writing the implementation plan. Default one task per session. Fresh-session retry when task framing was the problem.
+**Dian** — Task framing before planning: decompose requests into scoped tasks with acceptance criteria and verification, approve boundaries, then plan implementation. Hard verification gate, 3-fix escalation limit, scope-creep stop, mode-aware orient and close-out. Default one task per session, fresh-session retry when framing was wrong.
 
-**v0.30.0** — Switch gained a `low` modifier for minimum viable handoffs on tight token budgets. `switch out low` writes a 3-5 line TODO update, skeleton session log (What Was Done + What's Next), and pushes with compressed narration. `switch in low` pulls, reads TODO current session and latest What's Next, reports active modes, and stops. Degrades thoughtfully — still a real handoff, not a shell shortcut.
+**Switch** — Pre-commit summary with untracked file triage, handoff contract verification on arrival, evidence-cited confirmation. Three-level modifier: `full` → `light` → `low`. Low mode for minimum viable handoffs on tight token budgets.
 
-**v0.29.0** — Lorg now dedupes results across tiers and requires specific project signals in explanations (no generic "this helps with testing"). Mode gained a resume/recovery protocol for long sessions or context compaction. Kivna respects do-not-save markers for private session content. State contract expanded with workflow ownership table and conflict resolution rules.
+**Trim** — New skill (community contribution from [Kwanwoo Lee](https://github.com/KwanwooLee63)). Post-feature cleanup: archive completed docs with forward-looking content rescue, prune stale CLAUDE.md blocks, clean memory, trim TODO.md. Safety-gated by haiku subagent.
 
-**v0.28.0** — Slainte release audit now verifies cross-doc claims (README descriptions match SKILL.md behavior, playbook matches actual features, state-contract ownership table matches reality). Trim added to maintain mode flow. New `CONTRIBUTING.md` sets PR expectations for community contributions. Mode-to-skill composition conventions documented in playbook.
+**Lorg** — Tiered subcommands: `/lorg` defaults to Tier 1 (installed but unused), `/lorg available` for marketplace, `/lorg explore` for web, `/lorg all` for full scan. Per-tier freshness dates, incremental saves, cross-tier dedupe, signal-grounded explanations.
 
-**v0.27.0** — Switch gained pre-commit summary (shows what's staged before committing), untracked file triage (surfaces forgotten files for commit/gitignore/skip), handoff contract verification on switch-in (flags incomplete handoffs), evidence-cited final confirmation (commit hash, push target, clean tree), and conditional trim suggestion when completed plan docs are detected.
+**Slainte** — Cross-doc claim verification: README descriptions vs SKILL.md behavior, playbook vs actual features, state-contract ownership table vs reality, hook template currency.
 
-**v0.26.0** — Dian gained execution discipline: hard verification gate (evidence before every "done" claim), concrete plan steps with file paths and verification criteria, 3-fix escalation limit, hard scope-creep stop. Also now mode-aware: reads active mode context in orient, respects mode scope in planning, and doesn't claim "session done" when running as part of a mode flow.
+**Mode** — Resume/recovery protocol for stale or compacted context. Verifies coherence against git/session evidence before continuing.
 
-**v0.25.0** — Lorg now defaults to Tier 1 only (installed but unused skills). New subcommands for wider search: `/lorg available` (marketplace), `/lorg explore` (web), `/lorg all` (full scan). Each tier tracks its own freshness date and report saves are incremental.
+**Kivna** — Do-not-save markers for private session content. Conversation-only, excluded from all vault writes.
 
-**v0.24.0** — New **trim** skill (community contribution from [Kwanwoo Lee](https://github.com/KwanwooLee63)). Run `/trim` after shipping a feature to archive completed docs, rescue forward-looking content into `docs/deferred.md`, prune stale CLAUDE.md blocks, clean memory, and trim TODO.md. Safety-gated by a haiku subagent that verifies `/switch in` still has full context.
-
-**v0.23.0** — Switch now captures branch metadata and gotchas in session logs. Progressive loading on switch-in: newest log in full, older logs skimmed. Skriv gained a self-audit pass, synonym cycling ban, and chatbot residue cleanup.
-
-**v0.19.0–v0.21.0** — Hooks infrastructure (Stop, SessionStart, skill completion), Kerd Interchange Format (KIF) for cross-project export/import, and scored lorg ranking with recency-aware filtering.
+**Infrastructure** — CONTRIBUTING.md contributor quality gate, mode-to-skill composition conventions, workflow ownership table in state-contract.md, opt-in hooks with absolute path resolution.
 
 ## Skills
 
 ### dian (Session Discipline)
 
-Dian gives a session structure. You start it when you sit down to work, and it walks through four phases: orient (read the project state, check for inconsistencies, report active mode context), plan (propose concrete steps with file paths and verification criteria, surface doubts, push back on ambiguity), execute (do the work, verify each task with evidence before claiming done, escalate after 3 failed fixes), close out (diff review, update docs, update the playbook, run checks, clear the session block). It writes the session plan to TODO.md and enforces scope: out-of-plan work goes to backlog immediately, no tangents.
+Dian gives a session structure. You start it when you sit down to work, and it walks through four phases: orient (read the project state, check for inconsistencies, report active mode context), plan (decompose the request into scoped tasks with acceptance criteria, approve boundaries, then write concrete implementation steps), execute (do the work, verify each task with evidence before claiming done, escalate after 3 failed fixes), close out (diff review, update docs, update the playbook, run checks, clear the session block). It writes the session plan to TODO.md and enforces scope: out-of-plan work goes to backlog immediately, no tangents. Default one task per session.
 
 On close-out, dian creates or updates `docs/playbook.md`, a living guide for rebuilding the project from scratch. Tech stack, setup steps, architecture decisions, integrations, gotchas, current status. It grows with the project, session by session.
 
