@@ -13,6 +13,8 @@ claude plugins install kerd
 
 ## What's New
 
+**v0.31.0** — Dian plan phase now starts with task framing: decompose the request into scoped tasks with acceptance criteria and verification before writing the implementation plan. Default one task per session. Fresh-session retry when task framing was the problem.
+
 **v0.30.0** — Switch gained a `low` modifier for minimum viable handoffs on tight token budgets. `switch out low` writes a 3-5 line TODO update, skeleton session log (What Was Done + What's Next), and pushes with compressed narration. `switch in low` pulls, reads TODO current session and latest What's Next, reports active modes, and stops. Degrades thoughtfully — still a real handoff, not a shell shortcut.
 
 **v0.29.0** — Lorg now dedupes results across tiers and requires specific project signals in explanations (no generic "this helps with testing"). Mode gained a resume/recovery protocol for long sessions or context compaction. Kivna respects do-not-save markers for private session content. State contract expanded with workflow ownership table and conflict resolution rules.

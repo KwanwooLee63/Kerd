@@ -66,12 +66,25 @@ Before writing the plan, surface doubts and unresolved risks. If something about
 
 Ask clarifying questions about anything ambiguous. Push back on things that don't make sense.
 
+#### Task framing
+
+Before planning implementation, decompose the request into one or more task candidates. For each candidate, write:
+
+- **Scope:** what is included (and what is explicitly out)
+- **Acceptance criteria:** what must be true when the task is done
+- **Files likely touched**
+- **Verification:** how we prove it worked (command to run, output to check, behavior to observe)
+
+Ask the user to approve the task boundaries before writing the detailed plan. Default to one task per dian session. If the user's request naturally splits into multiple tasks, present them as candidates and ask: tackle all in this session, or pick one?
+
+If the output from a task is not good enough after execution, the right move is to refine the task framing (scope, acceptance criteria) and restart with a fresh dian session rather than digging deeper into muddy context.
+
 #### Write the plan
 
-Propose a session plan to the user. Each step must be concrete and testable:
+Propose a session plan based on the approved task framing. Each step must be concrete and testable:
 
 - **What:** specific action with file paths
-- **Verify:** how to confirm it worked (command to run, output to check, behavior to observe)
+- **Verify:** how to confirm it worked
 
 Ban vague plan items. "Implement feature X" is not a plan step. "Write the handler in `src/api/handler.ts` that accepts POST requests and returns 201" is. Every step should be small enough that you can verify it independently before moving on.
 
@@ -103,7 +116,7 @@ If a task isn't working after 3 attempts, stop. Do not attempt fix #4. Instead:
 - Surface the problem to the user
 - Ask whether to continue with a different approach, skip the task, or rethink the plan
 
-Three failed fixes usually means the approach is wrong, not the execution.
+Three failed fixes usually means the approach is wrong, not the execution. If the task framing itself was the problem (scope too broad, acceptance criteria unclear), suggest refining the task and restarting with a fresh dian session rather than continuing in degraded context.
 
 #### Scope creep
 
