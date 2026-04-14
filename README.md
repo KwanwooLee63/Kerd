@@ -11,11 +11,11 @@ claude plugins add-marketplace anthonymaley/Kerd
 claude plugins install kerd
 ```
 
-## What's New (v0.31.0)
+## What's New (v0.32.0)
 
 **Dian** — Task framing before planning: decompose requests into scoped tasks with acceptance criteria and verification, approve boundaries, then plan implementation. Hard verification gate, 3-fix escalation limit, scope-creep stop, mode-aware orient and close-out. Default one task per session, fresh-session retry when framing was wrong.
 
-**Switch** — Pre-commit summary with untracked file triage, handoff contract verification on arrival, evidence-cited confirmation. Three-level modifier: `full` → `light` → `low`. Low mode for minimum viable handoffs on tight token budgets.
+**Switch** — Auto-commit session files without confirmation prompts. Only interrupts with a visible `⚠ INPUT REQUIRED` banner when unexpected files need a decision. Pre-commit summary with untracked file triage, handoff contract verification on arrival, evidence-cited completion banner. Three-level modifier: `full` → `light` → `low`.
 
 **Trim** — New skill (community contribution from [Kwanwoo Lee](https://github.com/KwanwooLee63)). Post-feature cleanup: archive completed docs with forward-looking content rescue, prune stale CLAUDE.md blocks, clean memory, trim TODO.md. Safety-gated by haiku subagent.
 

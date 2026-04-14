@@ -139,51 +139,53 @@ Write actionable learnings to the appropriate place:
 
 Skip this step if the session was trivial (quick fix, single file change). But for any session with meaningful work, take the time. Compounding small improvements across sessions is how projects stay healthy.
 
-### 6. Pre-commit summary and triage
+### 6. Triage, commit, and push
 
-Before staging anything, run `git status` to see the actual state of the working tree.
+Before staging anything, run `git status` to see the actual state of the working tree. Classify every changed or untracked file into two buckets:
 
-**Full/light:** Present a detailed summary, triage untracked files, suggest trim if completed plan docs exist.
+- **Session files** — files this session created or modified (TODO.md, session log, playbook updates, vault files, etc.). These are auto-committed without asking.
+- **Unexpected files** — untracked files that existed before switch-out started, or modifications the session didn't make. These need a decision.
 
-```
-About to commit:
-  Modified:  TODO.md, docs/playbook.md, kivna/sessions/2026-04-05.md
-  Untracked: [any new files created this session]
-  
-  Untracked (not part of this session):
-    docs/demo-mode.gif
-    docs/demo-mode.mp4
-```
+#### Normal path (no unexpected files)
 
-**Untracked file triage (full/light only):** If there are untracked files that were NOT created by this session (they existed before switch-out started), surface each one and ask: commit it, add to `.gitignore`, or leave for later? Do not silently ignore untracked files. Do not batch-stage with `git add -A`. Stage files by name.
+Stage session files by name, commit with a descriptive message, and push. No confirmation prompt. Then show the completion banner (step 7).
 
-**Trim suggestion (full only):** If `docs/plans/` or `docs/` contains spec, plan, or design docs whose features are marked complete in TODO.md or playbook, suggest: "Completed plan docs detected. Consider `/kerd:trim` to archive them." This is a suggestion, not a required step.
+**Trim suggestion (full only):** If `docs/plans/` or `docs/` contains spec, plan, or design docs whose features are marked complete in TODO.md or playbook, append to the completion banner: "Completed plan docs detected. Consider `/kerd:trim` to archive them."
 
-Wait for the user to confirm what should be committed before staging.
+#### Exception path (unexpected files found)
 
-**Low:** One-line summary only. Skip triage unless an obviously risky file is untracked (`.env`, credentials, secrets). Skip trim suggestion. Stage session files (TODO.md, session log) without detailed confirmation.
+If there are unexpected untracked or modified files, stop and show a decision banner before committing:
 
 ```
-Committing: TODO.md, kivna/sessions/2026-04-05.md
+┌─────────────────────────────────────────────┐
+│  ⚠ INPUT REQUIRED — unexpected files found  │
+│                                             │
+│  Session files (will auto-commit):          │
+│    TODO.md, kivna/sessions/2026-04-05.md    │
+│                                             │
+│  Needs decision:                            │
+│    docs/demo-mode.gif — commit / ignore / .gitignore?  │
+│    docs/demo-mode.mp4 — commit / ignore / .gitignore?  │
+└─────────────────────────────────────────────┘
 ```
 
-### 7. Stage and commit
+Wait for the user to decide on each unexpected file. Then stage, commit, and push everything together.
 
-Stage the confirmed files by name. Use a descriptive commit message.
+**Low:** Skip triage entirely unless an obviously risky file is untracked (`.env`, credentials, secrets). Auto-commit session files without any banner.
 
-### 8. Push
+### 7. Completion banner
 
-Push to remote. Verify the push succeeds.
-
-### 9. Verify and confirm
-
-Run `git status` and `git log --oneline -1` fresh. Read the output. Report with evidence:
+Run `git status` and `git log --oneline -1` fresh. Read the output. Show a completion banner with evidence:
 
 ```
-Pushed: [commit-hash] [commit-message]
-  → origin/[branch] ([N files], [session log], [doc updates])
-  Tree: clean (0 modified, 0 staged, N untracked)
-  Next session: [what to pick up]
+┌─────────────────────────────────────────────┐
+│  ✓ Switch out complete                      │
+│                                             │
+│  Pushed: [hash] [message]                   │
+│  → origin/[branch] ([N files])              │
+│  Tree: clean                                │
+│  Next: [what to pick up]                    │
+└─────────────────────────────────────────────┘
 ```
 
 If the tree is not clean, report what remains and why (e.g., "3 untracked files left per triage decision"). If the push failed, stop and surface the error.
