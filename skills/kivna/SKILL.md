@@ -64,12 +64,12 @@ Update the vault to reflect the current session state. Use it at natural breakpo
 3. **Update `[Name] Weekly.md`.** Track achievements and risks on a rolling weekly basis for quick status report generation.
 
    - Find or create the current week's section using the Monday date as anchor: `## Week of YYYY-MM-DD`
-   - Under `### Achievements`, add bullet points for notable work completed this session (features shipped, bugs fixed, decisions made, milestones hit). Be specific and concise — these feed into status reports.
+   - Under `### Achievements`, add bullet points for notable work completed this session. Match vocabulary to the work — features shipped or bugs fixed for code, drafts published or revisions accepted for writing, accounts opened or calls booked for sales, frameworks decided or positions taken for strategy, sources reviewed or findings logged for research. Be specific and concise — these feed into status reports.
    - Under `### Risks`, add any new risks surfaced this session. Each risk gets a status marker: `[open]` or `[mitigated]`. When a previously open risk is resolved, update its marker to `[mitigated]` with a brief note.
    - If the current week section already exists (from an earlier session this week), append new items to the existing lists. Don't duplicate.
    - Weeks are in reverse chronological order (newest first).
    - Show the user what's being added and get approval before writing.
-   - If no achievements or risks surfaced this session, skip this step silently.
+   - If no achievements or risks surfaced this session, skip this step silently. Do not invent achievements to fill the section. "I don't know if anything this session counts as an achievement" is a valid reason to skip.
 
    Format:
 

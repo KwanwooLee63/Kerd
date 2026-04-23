@@ -69,44 +69,46 @@ Create `kivna/sessions/YYYY-MM-DD.md` (or append if one already exists for today
 
 If appending to an existing file for today (multiple sessions), add a `---` separator and a new section with a time or sequence number.
 
-**Full/light template:**
+The session log captures what happened in this session for the next session to pick up cold. Two sections are **required**: `## What Was Done` and `## What's Next`. Four sections are **optional**: `## Key Decisions`, `## Commits`, `## Gotchas`, `## Insights`. Read the rules below before writing.
+
+**Anti-hallucination rule.** Include an optional section ONLY if you can point to specific moments in this session that produced its content. If a section would be empty, **omit the header entirely**. Empty headers are padding. Inventing content to fill structure is hallucination. Do not write "None" or "N/A" — omit the section.
+
+**It is okay not to know.** If you're uncertain why something happened, what something means, or what should come next, say so explicitly. Write "Unclear why this fix worked — needs investigation" or "Don't know what should come next — needs decision" rather than constructing a plausible-sounding explanation. "I don't know" is a valid log entry and a starting point for the next session. Do not guess. Do not jump to conclusions.
+
+**Match vocabulary to the work.** A code session references files, commits, tests. A writing session references drafts, edits, voice. A strategy session references frameworks, positioning, decisions. A sales session references calls, accounts, outreach. A research session references sources, findings, gaps. Use the language of the actual work — do not force code vocabulary onto non-code sessions.
+
+**Commits section** applies only when commits were made in this session. For non-code sessions or sessions with no commits, omit it.
+
+**Full/light template** (bare headers — fill with content from this session, omit any optional header that would be empty):
 
 ```
 # Session YYYY-MM-DD
 
-**Machine:** [hostname from `hostname`]
-**Branch:** [current branch name, e.g. `main` or `feat/trim-skill`]
-**Tracking:** [upstream tracking status, e.g. `origin/main (up to date)` or `origin/feat/trim-skill (3 ahead)`]
+**Machine:** {hostname}
+**Branch:** {current branch}
+**Tracking:** {upstream status, e.g. origin/main (up to date)}
 
 ## What Was Done
-[Concrete list of what was accomplished. Be specific: files created, features built, bugs fixed, decisions made.]
+
+## What's Next
 
 ## Key Decisions
-[Any decisions made during the session with brief reasoning. Skip if none.]
 
 ## Commits
-[List commit hashes and messages from this session]
 
 ## Gotchas
-[Things that broke unexpectedly, non-obvious behavior, edge cases discovered. These are traps the next session (or the next person) should know about. Skip if none, but actually think about it first.]
 
 ## Insights
-[Observations about the codebase, patterns discovered, things that surprised you. Skip if none.]
-
-## What's Next
-[What the next session should pick up]
 ```
 
-**Low template:** Skeleton only. Two sections, no metadata headers.
+**Low template:** Two required sections only, no metadata headers, no optional sections. Use bullets, 3-5 items in What Was Done, 1-2 lines in What's Next.
 
 ```
 # Session YYYY-MM-DD
 
 ## What Was Done
-[Bullet list, 3-5 items max]
 
 ## What's Next
-[1-2 lines]
 ```
 
 ### 3. Update the vault
