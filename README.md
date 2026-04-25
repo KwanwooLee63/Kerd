@@ -11,7 +11,9 @@ claude plugins add-marketplace anthonymaley/Kerd
 claude plugins install kerd
 ```
 
-## What's New (v0.32.0)
+## What's New (v0.34.0)
+
+**Spike** — New mode for high-uncertainty exploration. Directional but exploratory — no plan, no decomposition. Captures both wins AND losses with evidence in a per-topic spec file. Batch-hard for hardware/long-loop tests (default N+1 variants over what was asked). Commit graduation at close-out: each output classified as `keep-as-is`, `extract-and-promote`, or `discard` so working solutions are extractable for the real build. Includes a Removed-from-backlog log for disproven hypotheses.
 
 **Dian** — Task framing before planning: decompose requests into scoped tasks with acceptance criteria and verification, approve boundaries, then plan implementation. Hard verification gate, 3-fix escalation limit, scope-creep stop, mode-aware orient and close-out. Default one task per session, fresh-session retry when framing was wrong.
 
@@ -158,11 +160,11 @@ Mode routes you to the right tools for the type of work you're doing. Each mode 
 
 Modes orchestrate across toolkits. A greenfield mode sequences GSD for spec-driven building, Superpowers for TDD and code review, and Kerd for session boundaries. A strategy mode loads skriv for writing voice and brainstorming for exploration. Modes don't call skills directly. They guide you through the flow and remind you what's next.
 
-Nine starter modes ship with Kerd. Community members can contribute new modes by PRing a single markdown file to the `modes/` directory.
+Ten starter modes ship with Kerd. Community members can contribute new modes by PRing a single markdown file to the `modes/` directory.
 
 | Category | Modes |
 |----------|-------|
-| Development | `greenfield`, `quickfix`, `deepwork`, `maintain` |
+| Development | `greenfield`, `quickfix`, `spike`, `deepwork`, `maintain` |
 | Business | `strategy`, `writing`, `research` |
 | Operations | `legal`, `sales` |
 
