@@ -11,7 +11,9 @@ claude plugins add-marketplace anthonymaley/Kerd
 claude plugins install kerd
 ```
 
-## What's New (v0.34.0)
+## What's New (v0.35.0)
+
+**Spike v1.1** — Six structural additions after first real-world dogfood. Setup gains pre-flight inventory (collect accounts/inputs/scope upfront — prevents trickle-in friction that compounds 5-10x mid-spike) and empirical-primitive-first (run the cheap ground-truth probe across the entire surface before guessing — AASA fetch for tvOS deep-links, curl for APIs, etc). Try gains per-variant verify (test-then-tag in the same loop iteration; no batched verification at close-out), provisional-decline zone (closure claims stay provisional until they survive a configuration change OR an explicit user push-back round, with required "what would change my mind" + "what I haven't yet tried" enumeration), WebFetch-fail-3-alternates (no general-knowledge guessing about external systems; each external claim carries a "verified by [URL]" tag), and matrix trimming (graduate-and-remove without prompting). All changes are structural — required artifacts and gates, not prose reminders.
 
 **Spike** — New mode for high-uncertainty exploration. Directional but exploratory — no plan, no decomposition. Captures both wins AND losses with evidence in a per-topic spec file. Batch-hard for hardware/long-loop tests (default N+1 variants over what was asked). Commit graduation at close-out: each output classified as `keep-as-is`, `extract-and-promote`, or `discard` so working solutions are extractable for the real build. Includes a Removed-from-backlog log for disproven hypotheses.
 

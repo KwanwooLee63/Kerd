@@ -21,17 +21,23 @@ discover_keywords:
 
 - [ ] `/kerd:switch` in light -- minimal session open, no smoke test
 - [ ] Extract the bigger idea -- read CLAUDE.md, TODO.md "Current Session" block, and any `docs/research/` files. State the bigger idea in one line for confirmation. Do NOT decompose into tasks. The direction is the constraint; the spike is the surface area.
+- [ ] Pre-flight inventory -- in one pass, ask the user for everything that will otherwise get trickled in mid-spike: accounts/credentials available vs not, sample inputs (URLs, files, API keys), hardware/environment state, scope limits ("today: prove X. Out of scope: Y, Z."). Capture in TODO.md `### Context`. Skipping this multiplies friction by 5–10x because each missing input becomes a stop-and-ask round.
+- [ ] Empirical primitive first -- name the cheap, fast, ground-truth probe for this domain (e.g. AASA fetch for tvOS deep-links, `curl` for APIs, sample-data fetch for analytics, canary deploy for infrastructure). Run it once across the entire surface BEFORE generating any try matrix. This replaces guessing with observation. Skip ONLY if no such primitive exists for the domain — and say so explicitly.
 - [ ] Identify or create the captured-evidence file -- look for `docs/research/[topic]-spec.md` or equivalent. If one exists, append to it. If not, propose a path and create on first capture, not upfront.
 
 ## Try
 
 - [ ] Generate the try matrix -- batch hard. For hardware/long-loop tests, default to N+1 variants over what was asked. Add the obvious next variants without asking. The round-trip is the bottleneck.
 - [ ] Ship the build -- the user runs the tests on real hardware, real users, real environment. Do not simulate when the real test loop is the whole point.
+- [ ] Verify each variant before tagging it ✓ -- "I added it" never equals "it works." Test the just-added variant in the same loop iteration. Never batch verification to close-out. The most expensive bugs (Infuse `&name=` parameter not working, "Prime was working no?" regression after URL change) come from tagging-then-deferring-verification.
 - [ ] Record results immediately as they come in:
   - **Wins** → captured-evidence file with: what worked, what variant, when verified, what evidence
-  - **Losses** → same file, separate section: what was tried, what failed, when, what evidence (error, decline behavior, output)
+  - **Provisional losses** → captured-evidence file's "provisional decline" zone — NOT promoted to canonical "decline" until the loss survives EITHER (a) one configuration change (e.g. adding `LSApplicationQueriesSchemes`) OR (b) one explicit user push-back round. Each provisional entry must list "what would change my mind" and "what I have not yet tried."
+  - Promote provisional → canonical only after the survival test. Closure-bias is the default failure mode of spike work; this gate is the structural fix for it.
   - Both wins and losses must cite specific session moments. Do not infer outcomes from theory.
-- [ ] Loop back to "Generate the try matrix" with what was learned. Continue until either (a) enough wins to graduate, (b) enough losses to redirect, or (c) the user calls wrap-up.
+- [ ] When external research is needed (docs, AASA, community sources, SDK availability), try ≥3 alternate URLs/search angles before declaring docs unavailable. WebFetch failure ≠ stop. Specifically: don't fall back to general-knowledge guessing about external systems — the assistant's training-data confidence is precisely the wrong tool for spike work. Each external claim must carry a "verified by [URL/doc]" tag.
+- [ ] Trim the matrix as findings stabilize -- when a variant graduates to confirmed-win or canonical-loss, remove it from the active try surface at the next loop iteration. The captured-evidence file retains the full record; the running matrix is for unknowns only. Don't wait for the user to say "remove broken ones."
+- [ ] Loop back to "Generate the try matrix" with what was learned. Continue until either (a) enough wins to graduate, (b) enough canonical losses to redirect, or (c) the user calls wrap-up.
 
 ## Close
 
