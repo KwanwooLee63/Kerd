@@ -13,9 +13,13 @@ claude plugins install kerd
 
 ## What's New (v0.38.0)
 
+> **Editorial note (2026-04-25):** The v0.34.0-v0.38.0 sequence below responded to a calibration failure observed in real-world spike work. A subsequent sensei review of the underlying A3 caught the critical limitation: **these releases ship better text rules + measurement infrastructure (genuine improvement at the existing granularity), not a fix to the granularity problem itself (the diagnosed root cause).** All the new rules live in markdown files read at turn-start — the same granularity the A3 identified as broken. The granularity gap remains open; closing it requires harness-level mechanisms (post-response hooks, output-format requirements) unavailable to skill files alone. See the vault `Kerd Skill Lessons.md` for the full recursive-trap analysis. Reading the entries below: take them as "more specific text rules + measurable baseline," not as a calibration fix.
+
+### v0.38.0
+
 **Slainte + tend** — Evidence-pointer discipline for audit findings. Each slainte finding now requires an `Evidence` column entry citing the specific check (file:line, command run with output, grep result, doc reference). Each tend failing/warning finding's "Why" cell must reference which check detected it AND include a verification step the user can run after the fix lands. Same shape as the global Claim Discipline "verified by [URL]" tag, applied to audit-shaped output. A finding without evidence is a claim without a source.
 
-## What's New (v0.37.0)
+### v0.37.0
 
 **Dian** — Five claim-discipline additions across all four phases. **Step-boundary markers** (`[dian: execute step N/M]`) fire 5-30 times per session within execute, where claim-level failures actually happen — phase markers alone fire 3-4 times, too coarse. **Pre-flight inventory** in orient asks for credentials/inputs/scope upfront so they don't trickle in mid-execute (5-10x friction multiplier). **Plan-step prediction citations** — predictions like "this will fix X" must cite a source or downgrade to "expected outcome — to be verified". **Strong-language gate during execute** sits in front of the existing verification gate; mid-step claims need evidence in the same loop iteration, not deferred to end-of-step. **Close-out summary discipline** applies the global Claim Discipline to TODO summary text. All five implement sensei's "discipline at the granularity of the failure" insight at every dian phase, not just at task completion.
 
