@@ -129,7 +129,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.32.0
+**Version:** 0.34.0
 
 **Working:**
 - All nine skills functional: dian, lorg, switch, kivna, slainte, skriv, tend, trim, mode
@@ -145,13 +145,15 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Mode markers on dian and skriv. Visible phase/state announcements with `.active-modes` state file
 - Dian rigorous planning and execute verification
 - Switch-out reflection with explicit gotcha capture. Captures learnings to CLAUDE.md and memory files, gotchas to playbook
-- Switch session logs include branch metadata and gotchas section
+- Switch session logs use bare-headers template with three rules above the fence (anti-hallucination, okay-not-to-know, match-vocabulary-to-work). Optional sections omitted entirely when empty
 - Switch-in progressive loading: newest session log in full, older logs skimmed for key decisions and gotchas
 - Switch `light` modifier for lower-token handoffs
 - Lorg tiered subcommands: installed (default), available, explore, all, report. Per-tier freshness. Incremental saves.
-- Mode skill for workflow routing with 9 community-contributed starter modes
+- Mode skill for workflow routing with 10 community-contributed starter modes (added `spike` for high-uncertainty exploration)
 
-**Recent changes (as of 2026-04-14):**
+**Recent changes (as of 2026-04-25):**
+- v0.34.0: New `spike` mode for high-uncertainty exploration. Directional but exploratory — no plan, no decomposition. Captures both wins AND losses with evidence in a per-topic spec file. Batch-hard for hardware/long-loop tests (default N+1 variants). Commit graduation at close-out classifies each output as keep-as-is, extract-and-promote, or discard. Includes Removed-from-backlog log for disproven hypotheses.
+- v0.33.0: Switch + kivna template refactor. Dropped bracketed fill-in prompts in favor of bare headers in template fences. Added three rules above the fence: anti-hallucination (omit empty optional sections; don't write "None" or "N/A"), okay-not-to-know ("I don't know" is a valid log entry, don't construct plausible explanations), match-vocabulary-to-work (covers code, writing, strategy, sales, research). Same vocabulary fix to kivna Weekly Achievements.
 - v0.32.0: Switch auto-commit. Session files (TODO.md, session log, playbook) commit and push without confirmation. Only unexpected/unknown files trigger an INPUT REQUIRED banner. Steps 6-9 collapsed into 6-7.
 - v0.31.0: Dian task framing in plan phase. Decompose request into scoped tasks with acceptance criteria and verification before writing implementation plan. Default one task per session. Fresh-session retry when framing was wrong. Inspired by Backlog.md's spec-driven AI development pattern — borrowed the framing, not the tool.
 - v0.30.0: Switch `low` modifier for minimum viable handoffs. Brief TODO (3-5 lines), skeleton session log (What Was Done + What's Next), skip vault/reflection/triage/trim, compressed narration. Switch-in low: pull, TODO current session, latest What's Next, active modes, no dian offer.
