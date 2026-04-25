@@ -259,6 +259,8 @@ Note: when the plugin is updated to a new version, the cache path changes. Hooks
 
 Format the report as a visual table. Show passing categories as one-liners. Show failing/warning categories with current vs proposed tables and a "Why" explanation.
 
+**Evidence tracking for failing/warning findings:** the "Why" cell must reference the source of the finding — which check detected it (e.g. "Category 3 vault.json check: missing field `name`" / "Category 6 staleness scan: file not touched in 60+ days per `git log -1 --format=%at -- <path>`" / "Category 9: hook path resolves to nonexistent file at `<path>`"). When proposing fixes in the Proposed column, include the verification step the user can run after the fix lands (e.g. "verify with: `cat kivna/vault.json` shows the `name` field; `git log -1 -- <path>` shows recent activity"). Findings without a source-of-detection are unverifiable; the proposed fix becomes "trust me" rather than reproducible.
+
 ```
 ┌─────────────────────────────────────────────────┐
 │  /kerd:tend: [project-name]                      │

@@ -139,11 +139,17 @@ Slainte: X high, Y medium, Z low
 
 Then a severity table per area:
 
-| Severity | File | Issue |
-|----------|------|-------|
-| high | `docs/whitepaper.md` | References old project name |
-| medium | `CLAUDE.md` | Test count says 145, actual is 148 |
-| low | `README.md` | Minor formatting inconsistency |
+| Severity | Location | Issue | Evidence |
+|----------|----------|-------|----------|
+| high | `docs/whitepaper.md:12` | References old project name | grep "OldName" → 3 hits at lines 12, 47, 89 |
+| medium | `CLAUDE.md` § Tests | Test count says 145, actual is 148 | `find . -name "*.test.*" \| wc -l` → 148; CLAUDE.md line 67 says 145 |
+| low | `README.md:23` | Minor formatting inconsistency | trailing whitespace per `git diff --check` |
+
+### Evidence specification
+
+Each finding must include an **Evidence** column entry — the specific check that detected it: file:line reference, command run with output, grep result, version comparison, or doc citation. "References old project name" without a line number or grep result is unverifiable; "References old project name (grep 'OldName' → 3 hits at lines 12, 47, 89)" is reproducible. This applies to ALL severity levels — even `low` findings get a citation, because a finding without evidence is a claim without a source.
+
+If a finding cannot be cited (e.g. cross-doc drift detected through reading rather than a specific command), record the comparison method explicitly: "compared README.md `## Skills` count to `skills/` directory count: README says 9, directory has 10."
 
 ### Severity guide:
 - **high**: factually wrong, broken build, missing file, security vulnerability
