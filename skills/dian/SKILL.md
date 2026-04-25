@@ -18,8 +18,11 @@ Dian is a modal skill. It runs across multiple responses. Announce the current p
 - `[dian: orient]` reading context, summarizing state
 - `[dian: plan]` proposing session plan
 - `[dian: execute]` working through tasks
+- `[dian: execute step N/M]` working a specific plan step (fires at step transitions within execute)
 - `[dian: close-out]` updating docs, running checks
 - `[dian: closed]` session complete (final marker, then done)
+
+**Why a step-boundary marker within execute:** phase markers fire 3-4 times per session — too coarse to gate claim-level failures (see global CLAUDE.md Claim Discipline). Step-boundary markers fire 5-30 times per session at the granularity where confident-wrong assertions actually happen. Each step marker is a reminder to re-engage the verification gate, not boilerplate. Don't re-emit the marker mid-step; only at the actual step transition.
 
 **State file:** When entering a phase, write the current phase to `kivna/.active-modes`. When closing out, remove the dian line from the file (or delete the file if it's the only entry). This lets `/kerd:switch in` report active modes and hooks surface reminders.
 
@@ -46,9 +49,11 @@ Read these files if they exist (skip any that don't):
 
 **Mode awareness:** Read `kivna/.active-modes`. If a mode is active, report it: what mode, which step, and the session instruction if one was set. Dian should operate within the mode's scope. If the mode says "focus on pricing strategy only," dian's plan should respect that constraint. If no mode is active, proceed normally.
 
+**Pre-flight inventory:** After reading the context, ask the user for anything execution will need that isn't already in the repo: credentials/access not stored locally, sample inputs not in TODO.md, scope limits not in CLAUDE.md, hardware/environment state, fixtures or test data. Trickle-in friction (each missing input becomes a stop-and-ask round mid-execute) is 5-10x more expensive than collecting upfront. One round of questions in orient prevents many later. If the inventory is genuinely complete from the read, say so explicitly and skip.
+
 **Consistency sniff test:** After reading, do a quick cross-check. Does CLAUDE.md reference files or conventions that don't match the codebase? Does the playbook's tech stack or architecture still match reality? Does the vault Status mention things that have since changed? Flag any contradictions to the user before planning. Don't build on stale assumptions.
 
-Summarize the current state for the user, including any inconsistencies found and active mode context.
+Summarize the current state for the user, including any inconsistencies found, active mode context, and inventory gaps surfaced.
 
 ### 2. Plan
 
@@ -63,6 +68,7 @@ Before writing the plan, surface doubts and unresolved risks. If something about
 - Are there dependencies between tasks that affect the order?
 - Is anything in the plan vague enough that I might interpret it differently than the user intended?
 - What could go wrong, and how will I catch it?
+- If a plan step predicts an outcome ("this will fix the issue", "this approach should scale", "this is the right pattern"), what is the prediction based on? Cite the source — prior session, doc, tested precedent, code reference. If no source exists, downgrade the prediction language to "expected outcome — to be verified after execution".
 
 Ask clarifying questions about anything ambiguous. Push back on things that don't make sense.
 
@@ -109,6 +115,12 @@ After each task, verify it with evidence before claiming it's done. No exception
 
 Only then mark the task complete. If you catch yourself thinking "should work", "probably fine", or "seems good" without evidence, stop. Run the check.
 
+#### Strong-language gate (claim-formation)
+
+The verification gate above covers "done" claims at end-of-step. The same discipline applies to claims made *during* a step. Before tagging anything with "verified", "fixed", "working", "confirmed", "the right approach", "the only way", "impossible", "always", "never" — or asserting platform/library/API specifics: require evidence in this loop iteration (a check run, an output read, a doc cited, a source URL). Without those, downgrade to "added but not yet verified", "the evidence I have suggests", or "from training data; may be wrong". Each external-system claim must carry a "verified by [URL/doc]" tag.
+
+This is the global CLAUDE.md Claim Discipline applied at the moment of writing the assertion within execute, not deferred to end-of-step. The verification gate is a backstop; this gate is the primary line.
+
 #### 3-fix limit
 
 If a task isn't working after 3 attempts, stop. Do not attempt fix #4. Instead:
@@ -142,7 +154,7 @@ Output `[dian: close-out]` at the top of your response.
 
 Before ending the session:
 
-1. **Update TODO.md**: check off completed tasks, add new ones discovered during work, update roadmap statuses, clear the `## Current Session` block.
+1. **Update TODO.md**: check off completed tasks, add new ones discovered during work, update roadmap statuses, clear the `## Current Session` block. Apply Claim Discipline (see global CLAUDE.md) to summary text — don't claim "we verified X" unless we did; downgrade to "we tested with Y; Z untried" when alternates exist; don't promote provisional findings to canonical without the survival test.
 2. **Doc impact assessment**: if the project has a Doc Impact Table in CLAUDE.md, check it. Update ALL affected docs.
 3. **Update the vault**: call `/kerd:kivna save` once. This updates vault `[Name] Status.md` (with approval) and proposes updates to any other vault files where new knowledge belongs. This is the single vault write for the session.
 4. **Update playbook**: if `docs/playbook.md` exists, update it with anything learned this session: new setup steps, new integrations, gotchas discovered, tech stack changes, updated Current Status section. If it doesn't exist, create it from the skeleton:

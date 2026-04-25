@@ -129,7 +129,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 
 ## Current Status
 
-**Version:** 0.36.0
+**Version:** 0.37.0
 
 **Working:**
 - All nine skills functional: dian, lorg, switch, kivna, slainte, skriv, tend, trim, mode
@@ -152,6 +152,7 @@ No CI/CD pipeline, no build artifacts, no environment variables.
 - Mode skill for workflow routing with 10 community-contributed starter modes (added `spike` for high-uncertainty exploration)
 
 **Recent changes (as of 2026-04-25):**
+- v0.37.0: Dian gains five claim-discipline additions across all four phases (step-boundary markers within execute for higher-frequency reminders at the granularity where failures happen; pre-flight inventory in orient; plan-step prediction citations; strong-language gate during execute alongside the verification gate; close-out summary discipline). Global `~/.claude/CLAUDE.md` adds a Claim Discipline section with five gates at claim-formation, sourced from the parallel sensei A3.
 - v0.36.0: Spike v1.2 — three additions imported from a parallel TPS-A3 investigation (sensei skill converged on the same fix shape from a different methodology). Strong-language gate gains an explicit downgrade vocabulary list. Tripwires fire mid-flow when "✓ verified" / strong language / architectural-from-2-obs are about to be written. Self-audit at close-out counts claims vs. citations against the 33-42% confident-wrong baseline from the 3of3 spike, so we can measure whether gates grip across sessions. Also see new vault file `Kerd Skill Lessons.md` for the full retro and synthesized principles.
 - v0.35.0: Spike v1.1 — six structural additions after first real-world dogfood (3of3 tvOS deep-link spike). Setup adds pre-flight inventory and empirical-primitive-first. Try adds per-variant verify, provisional-decline zone (closure claims survive a config change or push-back round before promotion to canonical loss; each entry must enumerate "what would change my mind" and "what I haven't yet tried"), WebFetch-fail-3-alternates with "verified by [URL]" tags on external claims, and matrix trimming. All changes are structural (required artifacts/gates), not prose reminders — addressing the wallpaper-effect of high-frequency identical reminders losing their grip.
 - v0.34.0: New `spike` mode for high-uncertainty exploration. Directional but exploratory — no plan, no decomposition. Captures both wins AND losses with evidence in a per-topic spec file. Batch-hard for hardware/long-loop tests (default N+1 variants). Commit graduation at close-out classifies each output as keep-as-is, extract-and-promote, or discard. Includes Removed-from-backlog log for disproven hypotheses.

@@ -11,7 +11,11 @@ claude plugins add-marketplace anthonymaley/Kerd
 claude plugins install kerd
 ```
 
-## What's New (v0.36.0)
+## What's New (v0.37.0)
+
+**Dian** — Five claim-discipline additions across all four phases. **Step-boundary markers** (`[dian: execute step N/M]`) fire 5-30 times per session within execute, where claim-level failures actually happen — phase markers alone fire 3-4 times, too coarse. **Pre-flight inventory** in orient asks for credentials/inputs/scope upfront so they don't trickle in mid-execute (5-10x friction multiplier). **Plan-step prediction citations** — predictions like "this will fix X" must cite a source or downgrade to "expected outcome — to be verified". **Strong-language gate during execute** sits in front of the existing verification gate; mid-step claims need evidence in the same loop iteration, not deferred to end-of-step. **Close-out summary discipline** applies the global Claim Discipline to TODO summary text. All five implement sensei's "discipline at the granularity of the failure" insight at every dian phase, not just at task completion.
+
+**Global CLAUDE.md Claim Discipline section** (~/.claude/CLAUDE.md) — Five gates at claim-formation: strong-language vocabulary (downgrade absent ≥3 obs or citation), doc-fetch for external facts, verification-after-change, negative-result-to-systemic-cause, provisional-tagging default. Applies to all sessions, not just Kerd. Sourced from the parallel sensei A3; converged with spike v1.1's structural rules from a different methodology. Both interventions are hypotheses awaiting empirical measurement against the 33-42% confident-wrong baseline.
 
 **Spike v1.2** — Three additions imported from a parallel TPS-A3 investigation (Toyota sensei skill ran the same retro on the same calibration failure and converged on the same fix shape). Strong-language gate adds an explicit downgrade vocabulary list — "verified", "definitively", "impossible", "always", "never", "private mechanism", "service-policy", "closed", "decline" — that requires ≥3 confirming observations OR a documented citation, otherwise downgrades to "tested but not yet verified". Tripwires fire mid-flow (not at close-out) when "✓ verified" is about to be written without retest, when strong-language vocabulary is used without citation, or when an architectural claim comes from 1-2 negative observations. Self-audit at close-out counts strong-language claims vs. citations against a measurable baseline (33-42% confident-wrong rate from the 3of3 spike) so we can tell whether the gates actually grip across sessions.
 
