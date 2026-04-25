@@ -11,7 +11,9 @@ claude plugins add-marketplace anthonymaley/Kerd
 claude plugins install kerd
 ```
 
-## What's New (v0.35.0)
+## What's New (v0.36.0)
+
+**Spike v1.2** — Three additions imported from a parallel TPS-A3 investigation (Toyota sensei skill ran the same retro on the same calibration failure and converged on the same fix shape). Strong-language gate adds an explicit downgrade vocabulary list — "verified", "definitively", "impossible", "always", "never", "private mechanism", "service-policy", "closed", "decline" — that requires ≥3 confirming observations OR a documented citation, otherwise downgrades to "tested but not yet verified". Tripwires fire mid-flow (not at close-out) when "✓ verified" is about to be written without retest, when strong-language vocabulary is used without citation, or when an architectural claim comes from 1-2 negative observations. Self-audit at close-out counts strong-language claims vs. citations against a measurable baseline (33-42% confident-wrong rate from the 3of3 spike) so we can tell whether the gates actually grip across sessions.
 
 **Spike v1.1** — Six structural additions after first real-world dogfood. Setup gains pre-flight inventory (collect accounts/inputs/scope upfront — prevents trickle-in friction that compounds 5-10x mid-spike) and empirical-primitive-first (run the cheap ground-truth probe across the entire surface before guessing — AASA fetch for tvOS deep-links, curl for APIs, etc). Try gains per-variant verify (test-then-tag in the same loop iteration; no batched verification at close-out), provisional-decline zone (closure claims stay provisional until they survive a configuration change OR an explicit user push-back round, with required "what would change my mind" + "what I haven't yet tried" enumeration), WebFetch-fail-3-alternates (no general-knowledge guessing about external systems; each external claim carries a "verified by [URL]" tag), and matrix trimming (graduate-and-remove without prompting). All changes are structural — required artifacts and gates, not prose reminders.
 
