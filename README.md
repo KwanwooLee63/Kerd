@@ -2,7 +2,7 @@
 
 "Ceird" means skill in Gaelic. Respelled.
 
-Nine workflow skills plus community-contributed modes for Claude Code. Skills handle the operational side of working across sessions and machines: when to pull, what to commit, where to put notes, how to audit for drift, how to maintain structural health. Modes orchestrate skills from Kerd, GSD, Superpowers, and other plugins into guided flows for different types of work. They keep the plumbing clean so you can focus on the work.
+Ten workflow skills plus community-contributed modes for Claude Code. Skills handle the operational side of working across sessions and machines: when to pull, what to commit, where to put notes, how to audit for drift, how to maintain structural health. Modes orchestrate skills from Kerd, GSD, Superpowers, and other plugins into guided flows for different types of work. They keep the plumbing clean so you can focus on the work.
 
 ## Install
 
@@ -11,9 +11,13 @@ claude plugins add-marketplace anthonymaley/Kerd
 claude plugins install kerd
 ```
 
-## What's New (v0.38.0)
+## What's New (v0.39.0)
 
 > **Editorial note (2026-04-25):** The v0.34.0-v0.38.0 sequence below responded to a calibration failure observed in real-world spike work. A subsequent sensei review of the underlying A3 caught the critical limitation: **these releases ship better text rules + measurement infrastructure (genuine improvement at the existing granularity), not a fix to the granularity problem itself (the diagnosed root cause).** All the new rules live in markdown files read at turn-start — the same granularity the A3 identified as broken. The granularity gap remains open; closing it requires harness-level mechanisms (post-response hooks, output-format requirements) unavailable to skill files alone. See the vault `Kerd Skill Lessons.md` for the full recursive-trap analysis. Reading the entries below: take them as "more specific text rules + measurable baseline," not as a calibration fix.
+
+### v0.39.0
+
+**Interrogate** — New skill: `/kerd:interrogate`. Produces a co-signed plan-readiness document by interviewing the user across every viability axis of a plan or idea (technical, business, legal, operational). Designed to prevent the convergence pull in normal brainstorming — verbose framing, premature multiple-choice, unilateral declarations of "done." Discipline anchored in user-veto on stop, mandatory frontmatter session state for deterministic resume, and a structural document check before recitation gate. Output lives at `docs/interrogations/YYYY-MM-DD-<topic>.md`. Does NOT produce the implementation plan itself — produces readiness; transition to `superpowers:writing-plans` after sign-off. Design at `docs/plans/2026-05-02-interrogate-design.md`.
 
 ### v0.38.0
 
@@ -65,6 +69,19 @@ Dian doesn't touch git. No pulls, no pushes. That's switch's job.
 
 ```
 /dian
+```
+
+### interrogate (Plan Readiness)
+
+Interrogate produces a co-signed plan-readiness document by interviewing you across every viability axis of a plan or idea: technical, business, legal, operational. It's built to resist the convergence pull in normal brainstorming — verbose framing that buries the question, premature multiple-choice that narrows the answer space, unilateral declarations of "done" before you've signed off. Discipline is anchored in three places: user-veto on stop (only you can end the interview), mandatory frontmatter session state so a fresh session can resume deterministically, and a structural document check before recitation so the model can't claim coverage that isn't on the page.
+
+Run it with no argument for a zero-path interview (start from an idea), or pass a plan reference to interrogate an existing draft. Output lives at `docs/interrogations/YYYY-MM-DD-<topic>.md`. Interrogate does not produce the implementation plan itself — it produces readiness. After sign-off, transition to `superpowers:writing-plans` to draft the plan.
+
+Design at `docs/plans/2026-05-02-interrogate-design.md`.
+
+```
+/kerd:interrogate              # zero-path: interview from an idea
+/kerd:interrogate <plan-ref>   # interrogate an existing plan draft
 ```
 
 ### switch (Machine Handoff)
