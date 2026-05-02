@@ -18,10 +18,11 @@ Every change to a skill (new skill, modified behavior, renamed command, changed 
 
 2. **Update README.md**. If the skill's behavior, usage, or output changed, update its section in the README. If a new skill was added, add a new section following the existing pattern.
 
-3. **Update plugin descriptions**: if the change affects what Kerd does at a high level, update:
-   - `.claude-plugin/plugin.json` → `description`
-   - `.claude-plugin/marketplace.json` → `metadata.description`
-   - `.claude-plugin/marketplace.json` → `plugins[0].description`
+3. **Update plugin descriptions**: if the change affects what Kerd does at a high level, update both *capability-list* locations and keep them byte-identical:
+   - `.claude-plugin/plugin.json` → `description` (capability list)
+   - `.claude-plugin/marketplace.json` → `plugins[0].description` (capability list — same string as plugin.json above)
+
+   The `metadata.description` field in `marketplace.json` is intentionally a different shape — a marketplace one-liner ("Kerd: opinionated workflow skills…"), not the capability list. Don't homogenize them. Update `metadata.description` only when the marketplace summary itself needs to change (rebrand, scope shift), as a separate decision.
 
 4. **Update skill trigger description**: the `description` field in the skill's SKILL.md frontmatter controls when Claude invokes it. If behavior changed, update the trigger description to match.
 
