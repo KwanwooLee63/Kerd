@@ -1,23 +1,21 @@
 # TODO
 
 ## Current Session
-(2026-05-02, completed)
+(2026-05-04, completed)
 
 ### Done this session
-- [x] Brainstormed and shipped **v0.39.0 interrogate skill** — `/kerd:interrogate` produces a co-signed plan-readiness document by interviewing across all viability axes. Standalone skill (option A over mode or dian flag). Discipline anchored in user-veto on stop, mandatory frontmatter session state for deterministic resume, structural document check before recitation gate.
-- [x] Multi-round design refinement before freezing the spec: sign-off ritual evolved (typed `signed` over commit-message); `final-session-state:` block at sign-off; status semantics (one sentence each for viable/not-yet-viable/blocked/deferred); scope reframed as boundary concept (in + out together); axis renamed `Scope` → `Scope viability` and `Viability conditions` → `Overall viability` to avoid collisions; structural doc check on Unknown↔Status; canonical template + zero-path initialization note.
-- [x] Implementation via SDD with spec review only (option b — skip code-quality reviewer for markdown/JSON tasks). 11 tasks, 11 spec reviews, all PASS. One real finding caught by Task 8 spec mismatch (metadata.description drift).
-- [x] Two commits shipped to origin/main:
-  - `6e0faf8` feat(interrogate): new skill for plan-readiness interrogation (v0.39.0)
-  - `ed824de` docs(claude-md): release checklist — describe metadata.description as separate shape
-- [x] CLAUDE.md release checklist updated: only the two capability-list locations (plugin.json description + plugins[0].description) need byte-identical sync. metadata.description is intentionally a separate marketplace one-liner, updated only as its own decision.
-- [x] User caught calibration error: cache was 0.38.0 (not 0.32.0 as I'd been claiming all session, citing 2026-04-25 TODO.md as current state). Concrete user-pushback signal — exactly the externally-anchored truth signal yesterday's sensei review named as load-bearing.
+- [x] Witnessed first interactive smoke test of `/kerd:interrogate` against `3of3/docs/plans/integration-spike.md`. Live trace shared. Failure modes on turn 1: question-bundling, implicit multiple-choice ("plan as written / current state / revised plan"), wrong "guess". Agent self-corrected after pushback. Structural anchors did partial work — frontmatter session state gave deterministic resume despite bumpy path. **2 user-pushback signals on turn 1** — first concrete data points against the 33-42% confident-wrong baseline.
+- [x] Diagnosed **closing-section "What I don't know" anti-pattern** (from a non-Kerd, non-interrogate session) as drift in global `~/.claude/CLAUDE.md`. The Thinking Discipline rule "Surface the gap so we can work on it together" had degraded into a closing-template cop-out — passive multiple-choice dumping decisions on user.
+- [x] Added **Closing-uncertainty gate** to `~/.claude/CLAUDE.md` (gate #6). Locates failure at response-end formation; three downgrades (single direct question / explicit default / silence); priority rule (most-blocking question only).
+- [x] Audited entire global CLAUDE.md. Three findings: (a) source rule at line 9-11 still seeded the pathology; (b) Claim Discipline intro framed layering as binary when actual is three-layer; (c) yesterday's TODO-staleness pattern had no corresponding gate.
+- [x] Shipped 4 more edits: tightened line 9-13 ("ask a question now, not append a list of doubts later" — directive replaces cooperative); rewrote Claim Discipline intro for three layers (turn-start, mid-claim, response-end) with each gate located on the layer map; added **Question-formation gate** (#7) covering bundling/multiple-choice/verbose-framing — promoting interrogate-internal discipline to global floor; added **Memory-citation gate** (#8) with internal-vs-external distinction to keep it operationally cheap.
+- [x] Net: 5 → 8 gates over 3 days. No Kerd repo commits — all work in global file. Vault Skill Lessons gained two new entries (cooperative-wording trap, skill-internal-discipline-that-should-be-global).
 
 ### Context
-- **Plugin cache now at 0.39.0** (user installed during this session; was 0.38.0 before). Restart Claude Code to pick up v0.39.0 in active sessions — current running session still loads 0.38.0 from cache.
-- **Interrogate skill is on disk + cached, NOT yet invokable in this session.** The `/kerd:interrogate` command in this conversation returned "Unknown command" because the running session was loaded with 0.38.0 cache. Post-restart, it'll be live.
-- **First interactive smoke test pending.** Recommend: `/kerd:interrogate docs/plans/2026-05-02-interrogate-design.md` (meta — interrogate the design itself; failure modes easier to spot when you know what should be there). Or zero-path on a real upcoming idea. Either tells you something.
-- **Empirical test against the recursive trap.** The interrogate skill ships as text-rules-at-turn-start — same layer yesterday's sensei review flagged as wrong granularity for calibration. Discipline is structurally anchored (user-veto, frontmatter session state, structural doc check) which should make it more robust than pure text rules — but "should" is a hypothesis. First real session is the test bed. If the agent declares done unilaterally, pads responses, or offers multiple-choice during interview, that's data toward Path B.
+- **New gates on disk but not active in this conversation.** Current Claude Code session loaded `~/.claude/CLAUDE.md` before today's edits. Restart needed before the gates bind decisions. Same lag as plugin cache.
+- **Interrogate test on 3of3 left mid-stream** at Scope axis, gather-level. Document at `3of3/docs/interrogations/2026-05-02-integration-spike.md`. Pending question: which artifact is under interrogation (original plan as written / current state of execution / revised plan).
+- **Question-formation gate makes interrogate's bundling-prevention partially redundant.** Two parallel experiments now: skill-layer structural anchors (frontmatter session state, user-veto on stop) and global-layer text gates. If both grip, text rules at the right granularity work. If both fail in the same shape, text rules anywhere are insufficient and Path B (Stop hooks scanning for structural patterns) is next.
+- **Cadence is high.** 3 gates added in 3 days. Layer-map approach proving its worth, but file is in active growth mode — worth watching whether new patterns continue to surface or whether the gates catch them.
 
 ## Backlog
 - **First interactive smoke test of `/kerd:interrogate`** — meta path (interrogate the design doc) or real path (next upcoming idea). Watch for: declaring done before user-veto, response verbosity, multiple-choice slips, sliding sideways instead of drilling.
