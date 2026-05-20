@@ -1,6 +1,6 @@
 ---
 name: trim
-description: "Use when the user says 'trim', '/trim', 'token trim', or 'feature complete cleanup'. Archives completed feature docs, prunes stale CLAUDE.md content, cleans stale memory entries, and trims completed TODO items. Run this after every feature is shipped."
+description: "Use when the user says 'trim', '/trim', 'token trim', or 'feature complete cleanup'. Archives completed feature docs, prunes stale CLAUDE.md content, cleans and consolidates memory files, and trims completed TODO items. Run this after every feature is shipped."
 ---
 
 # Trim (Token Optimization — Light Pass)
@@ -77,13 +77,39 @@ Do not remove:
 - Token efficiency rules
 - Session workflow
 
-### 4. Clean memory files
+### 4. Clean and consolidate memory files
 
-Scan the project's `memory/` directory (typically at `~/.claude/projects/<project-id>/memory/`) for `project_*.md` entries. For each one, check whether the stated purpose is still relevant. Flag entries where:
-- The feature described has shipped and the entry is no longer actionable
-- A decision described has been reversed or superseded
+Locate the project's memory directory at `~/.claude/projects/<project-id>/memory/`, where `<project-id>` is derived from the project's working directory path (separators replaced by dashes). This directory lives inside `~/.claude/`, not inside the project repo itself. Read `MEMORY.md` for the index, then read each memory file's frontmatter and content.
 
-Present each candidate to the user. Remove only with their confirmation. Never remove `feedback_*.md` or `user_*.md` entries — those are permanent.
+#### 4a. Staleness scan
+
+Check every memory file for staleness. Apply type-specific criteria:
+
+| Type | Stale when | Caution level |
+|------|-----------|---------------|
+| `project_*.md` | Feature shipped and no longer actionable, decision reversed or superseded, information outdated by current codebase state | Normal — flag freely |
+| `reference_*.md` | Tool/service/URL no longer used by the project, resource deprecated or moved | Normal — flag freely |
+| `feedback_*.md` | Guidance fully codified in a CLAUDE.md rule or global rule file AND the memory adds nothing beyond what the rule says | High — only flag exact duplicates of existing rules. When in doubt, keep. |
+| `user_*.md` | Never stale | Skip — never flag for removal |
+
+For each stale candidate, present: the file name, its description from frontmatter, why it appears stale, and for feedback files, which rule file makes it redundant.
+
+#### 4b. Consolidation scan
+
+Look for memory files that overlap and could be merged:
+
+- **Same topic, different files** — e.g., two `project_` files about the same feature, or two `feedback_` files about the same behavioral pattern
+- **Subset relationship** — one file's content is entirely covered by another
+- **Natural grouping** — several small related memories that would read better as one file (e.g., three feedback memories about subagent model selection → one combined file)
+
+For each consolidation candidate, present: which files to merge, what the merged file would be named, and a brief preview of the merged content.
+
+#### 4c. Execute with approval
+
+Remove stale files and write consolidated files only with user confirmation. After changes:
+1. Delete removed/merged source files
+2. Write any new consolidated files with proper frontmatter (name, description, type)
+3. Rewrite `MEMORY.md` index to reflect the new state — remove deleted entries, add consolidated entries, keep surviving entries unchanged
 
 ### 5. Trim TODO.md
 
@@ -105,6 +131,6 @@ Report a concise summary:
 - N docs archived → listed by feature name
 - N forward-looking items rescued → written to `docs/deferred.md`
 - N CLAUDE.md blocks removed
-- N memory entries removed
+- N memory entries removed, N consolidated
 - N TODO items removed
 - Safety gate result

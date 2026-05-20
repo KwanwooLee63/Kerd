@@ -39,7 +39,7 @@ claude plugins install kerd
 
 **Switch** — Auto-commit session files without confirmation prompts. Only interrupts with a visible `⚠ INPUT REQUIRED` banner when unexpected files need a decision. Pre-commit summary with untracked file triage, handoff contract verification on arrival, evidence-cited completion banner. Three-level modifier: `full` → `light` → `low`.
 
-**Trim** — New skill (community contribution from [Kwanwoo Lee](https://github.com/KwanwooLee63)). Post-feature cleanup: archive completed docs with forward-looking content rescue, prune stale CLAUDE.md blocks, clean memory, trim TODO.md. Safety-gated by haiku subagent.
+**Trim** — New skill (community contribution from [Kwanwoo Lee](https://github.com/KwanwooLee63)). Post-feature cleanup: archive completed docs with forward-looking content rescue, prune stale CLAUDE.md blocks, clean and consolidate memory files (staleness scan + overlap merging across all types), trim TODO.md. Safety-gated by haiku subagent.
 
 **Lorg** — Tiered subcommands: `/lorg` defaults to Tier 1 (installed but unused), `/lorg available` for marketplace, `/lorg explore` for web, `/lorg all` for full scan. Per-tier freshness dates, incremental saves, cross-tier dedupe, signal-grounded explanations.
 
@@ -181,7 +181,7 @@ The report is saved to `docs/lorg-report.md` (committed) and the Obsidian vault 
 
 ### trim (Token Optimization)
 
-Trim keeps active context lean. Run it after every feature ships. It archives completed spec and plan docs, prunes stale CLAUDE.md guidance blocks, cleans up project memory entries that are no longer actionable, and removes checked-off TODO items. Before archiving any doc, trim rescues forward-looking content — deferred tasks, future phase notes, known limitations, and cross-cutting concerns — into `docs/deferred.md` so nothing project-relevant gets buried. A safety gate (haiku subagent) verifies that `/switch in` would still have all the context it needs before anything is finalized.
+Trim keeps active context lean. Run it after every feature ships. It archives completed spec and plan docs, prunes stale CLAUDE.md guidance blocks, cleans and consolidates memory files, and removes checked-off TODO items. Before archiving any doc, trim rescues forward-looking content — deferred tasks, future phase notes, known limitations, and cross-cutting concerns — into `docs/deferred.md` so nothing project-relevant gets buried. Memory cleanup scans all memory types for staleness (with type-appropriate caution levels) and identifies overlapping files that can be merged. A safety gate (haiku subagent) verifies that `/switch in` would still have all the context it needs before anything is finalized.
 
 ```
 /trim
