@@ -1,26 +1,24 @@
 # TODO
 
 ## Current Session
-(2026-05-20)
+(2026-05-20, session 2)
 
 ### Done this session
-- [x] Synced fork: reset local main to upstream/main (v0.39.0), force-pushed origin/main
-- [x] Abandoned `pr/trim-skill` branch (upstream incorporated trim differently)
-- [x] Created `feat/trim-memory-cleanup` branch from synced main
-- [x] Enhanced trim Step 4: expanded from `project_*.md` only to all memory types with type-specific caution levels, added consolidation scan (same-topic merging, subset detection, natural grouping), added MEMORY.md index rewrite after changes
-- [x] Bumped version to v0.40.0 (plugin.json, marketplace.json x2)
-- [x] Updated README.md trim description
-- [x] Committed and pushed to origin/feat/trim-memory-cleanup
+- [x] Switched local Kerd plugin source from upstream (`anthonymaley/Kerd`) to local directory (`C:\Users\aweso\Documents\Work\Kerd`)
+- [x] Cleared stale plugin cache (`~/.claude/plugins/cache/kerd-marketplace/`)
+- [x] Verified v0.40.0 trim skill with consolidation scan loads from local path
 
 ### What's Next
+- [ ] Test `/kerd:trim` in another project to validate v0.40.0 changes
 - [ ] Create PR to upstream (anthonymaley/Kerd) for trim memory cleanup
 - [ ] Clean up stale local branches (pr/trim-skill)
+- [ ] After testing, swap plugin source back to upstream if desired
 
 ### Context
 - On `feat/trim-memory-cleanup` branch, tracking origin/feat/trim-memory-cleanup
-- PR not yet created (deferred, late session)
-- Commit: `3d6fc13` feat(trim): expand memory cleanup with consolidation and cross-type staleness scan (v0.40.0)
-- Untracked: `.claude/`, `.session-start-sha`, `docs/archive/` (pre-existing, not part of this session)
+- Plugin now reads from local disk (directory source), not GitHub cache
+- Change was in `~/.claude/settings.json` (not in this repo) — will not appear in this repo's git diff
+- Untracked: `.claude/`, `.session-start-sha`, `docs/archive/` (pre-existing)
 
 ## Backlog
 - **First interactive smoke test of `/kerd:interrogate`** — meta path (interrogate the design doc) or real path (next upcoming idea). Watch for: declaring done before user-veto, response verbosity, multiple-choice slips, sliding sideways instead of drilling.
